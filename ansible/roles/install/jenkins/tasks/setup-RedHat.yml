@@ -1,0 +1,54 @@
+---
+- name: Ensure dependencies are installed.
+  package:
+    name:
+      - curl
+      - java
+      - initscripts
+      - "{{ 'libselinux-python' if ansible_python['version']['major'] < 3 else 'python3-libselinux' }}"
+    state: present
+  become: yes
+  become_user: root
+  tags:
+      - "jenkins"
+      - "download"
+
+- name: Ensure Jenkins repo is installed.
+  get_url:
+    url: "{{ jenkins_repo_url }}"
+    dest: /etc/yum.repos.d/jenkins.repo
+  become: yes
+  become_user: root
+  tags:
+      - jenkins
+      - download
+
+- name: Add Jenkins repo GPG key.
+  rpm_key:
+    state: present
+    key: "{{ jenkins_repo_key_url }}"
+  become: yes
+  become_user: root
+  tags:
+      - jenkins
+      - download
+
+- name: download...
+  get_url:
+    url: "{{ jenkins_pkg_url }}/jenkins-{{ jenkins_version }}-1.1.noarch.rpm"
+    dest: "{{jenkins_src_parent_dir}}/jenkins-{{ jenkins_version }}-1.1.noarch.rpm"
+  become: yes
+  become_user: root
+  tags:
+      - jenkins
+      - download
+
+- name: install...
+  command: rpm -i {{jenkins_src_parent_dir}}/jenkins-{{ jenkins_version }}-1.1.noarch.rpm
+  args:
+      creates: /var/lib/jenkins
+  become: yes
+  become_user: root
+  tags:
+      - jenkins
+      - install

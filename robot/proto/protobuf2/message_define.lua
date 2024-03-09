@@ -1,0 +1,17 @@
+return {
+	C2S_CheckName = 103,
+	C2S_CreateRole = 100,
+	C2S_EnterGame = 101,
+	C2S_ExitGame = 102,
+	C2S_Ping = 1,
+	S2C_BeReplace = 10108,
+	S2C_CreateRoleFail = 10100,
+	S2C_CreateRoleSuccess = 10101,
+	S2C_EnterGameFail = 10102,
+	S2C_EnterGameSuccess = 10103,
+	S2C_Hello = 10106,
+	S2C_Kick = 10105,
+	S2C_NameIsValid = 10107,
+	S2C_Pong = 10001,
+	S2C_ReEnterGame = 10104,
+}

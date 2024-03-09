@@ -1,0 +1,72 @@
+---
+- name: download...
+  get_url:
+      url: "{{luarocks_url}}"
+      dest: "{{luarocks_src_parent_dir}}/{{luarocks_tgz}}"
+      checksum: "{{luarocks_checksum}}"
+  become: yes
+  become_user: root
+  tags:
+      - luarocks
+      - download
+
+- name: unarchive...
+  unarchive:
+      remote_src: yes
+      src: "{{luarocks_src_parent_dir}}/{{luarocks_tgz}}"
+      dest: "{{luarocks_src_parent_dir}}"
+  become: yes
+  become_user: root
+  tags:
+      - luarocks
+      - install
+
+- name: configure...
+  shell: ./configure --lua-version={{lua_ver}} --with-lua-include=/usr/local/include
+  args:
+      chdir: "{{luarocks_src}}"
+      creates: "{{luarocks_src}}/config.unix"
+  tags:
+      - luarocks
+      - install
+
+- name: make build install...
+  shell: make build install
+  args:
+      chdir: "{{luarocks_src}}"
+      creates: "/usr/local/bin/luarocks"
+  become: yes
+  become_user: root
+  tags:
+      - luarocks
+      - install
+
+- name: versioned luarocks
+  shell: cp /usr/local/bin/luarocks /usr/local/bin/luarocks-{{lua_ver}}
+  args:
+      creates: /usr/local/bin/luarocks-{{lua_ver}}
+  become: yes
+  become_user: root
+  tags:
+      - luarocks
+      - install
+
+- name: install ldoc
+  shell: luarocks install ldoc
+  args:
+      creates: "/usr/local/bin/ldoc"
+  become: yes
+  become_user: root
+  tags:
+      - ldoc
+      - download
+
+- name: install luacheck
+  shell: luarocks install luacheck
+  args:
+      creates: "/usr/local/bin/luacheck"
+  become: yes
+  become_user: root
+  tags:
+      - luacheck
+      - download

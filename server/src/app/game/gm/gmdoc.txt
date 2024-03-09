@@ -1,0 +1,392 @@
+buildgmdoc,!!!
+
+[gm]
+
+[init]
+
+[player]
+: 
+@usage
+: addRes id 
+: addRes 101 100 <=> id101(MIT)100
+: addRes 102 200 <=> id102()200
+
+: 
+@usage
+: costRes id 
+: costRes 101 100 <=> id101(MIT)100
+: costRes 102 200 <=> id102()200
+
+: 
+@usage
+: addItem id  (id   1 2 3 4)
+: addItem 6101001 30 <=> 30
+: addItem 6204001 30 <=> 30
+: addItem 6301001 1 2101001 1 1 <=> 1 1
+
+: 1
+@usage
+: addBuildItem ID  
+: addBuildItem 1301001 1 1
+
+: 1
+@usage
+: addHeroItem ID   1 2 3
+: addHeroItem 2201001 1 1
+
+: 1
+@usage
+: addWarShipItem ID   1 2 3 4
+: addWarShipItem 3401001 1
+
+: 
+@usage
+: delItem id 
+: delItem 6101001 30 <=> 30
+: delItem 6204001 200 <=> 200
+
+: 
+@usage
+: expandItemBagSpace
+: expandItemBagSpace
+
+: 
+@usage
+: move2ItemBag ID 
+: move2ItemBag 25010013555552 9 <=> ID25010013555552
+: move2ItemBag 25010013555552 10 <=> ID25010013555552
+: move2ItemBag 25010013555552 11 <=> ID25010013555552
+
+: 
+@usage
+: moveOutItemBag ID posX posZ
+: moveOutItemBag 25010013555552 9 9<=> ID25010013555552
+: moveOutItemBag 25010013555552 10 11<=> ID25010013555552
+: moveOutItemBag 25010013555552 11 122<=> ID25010013555552
+
+: 
+@usage
+: generateHero id 
+: generateHero 2501001 1 <=> id2501001,1
+: generateHero 2501001 2 <=> id2501001,2
+
+: 
+@usage
+: delHero id
+: delHero 2225669887222  <=> id2225669887222
+
+: 
+@usage
+: generateWarShip id 
+: generateWarShip 3501001 1 <=> id3501001,1
+: generateWarShip 3501001 2 <=> id3501001,2
+
+: 
+@usage
+: delWarShip id
+: delWarShip 2225669887222  <=> id2225669887222
+
+: 
+@usage
+: composeItem ID 
+: composeItem 2225669887222 37 <=> 372225669887222
+
+: 
+@usage
+: cancelComposeItem ID
+: cancelComposeItem 2225669887222 <=> 2225669887222
+
+: 
+@usage
+: speedComposeItem ID
+: speedComposeItem 2225669887222 <=> ID2225669887222
+
+: 
+@usage
+: repairItems IDs
+: repairItems 2225669887222
+
+: 
+@usage
+: repairSpeed ID
+: repairSpeed 2225669887222
+
+: 
+@usage
+: getRepairItems
+: getRepairItems
+
+: 
+@usage
+: addItemLife ID 
+: addItemLife 2225669887222 -20
+
+: 
+@usage
+: queryAllResPlanetBrief
+: queryAllResPlanetBrief
+
+: 
+@usage
+: lookResPlanet 
+: lookResPlanet 1
+
+: 
+@usage
+: resPlanetBuild2ItemBag  ID
+: resPlanetBuild2ItemBag 1 2225669887222
+
+: 
+@usage
+: itemBagBuild2ResPlanet  ID x z
+: itemBagBuild2ResPlanet 1 2225669887222 22 22
+
+: 
+@usage
+: queryBoatRes
+: queryBoatRes
+
+: 
+@usage
+: pickBoatRes
+: pickBoatRes
+
+: 
+@usage
+: addBoatRes Id 
+: addBoatRes 101 100
+
+: 
+@usage
+: addBuild2ResBoat ID  
+: addBuild2ResBoat 1301001 1
+
+: 
+@usage
+: beginAttackResPlanet 
+: beginAttackResPlanet 1
+
+: 
+@usage
+: endAttackResPlanet
+: endAttackResPlanet 1 1
+
+
+[test]
+: 
+@usage
+: echo 
+: echo hello
+
+
+[admin]
+: 
+@usage
+: rebindserver ID ID
+
+: 
+@usage
+: rebindaccount ID 
+
+: 
+@usage
+: delrole ID []
+
+: 
+@usage
+: recover_role ID
+
+: 
+@usage
+: clone ID []
+
+: /tmp/ID.json
+@usage
+: serialize ID
+
+: 
+@usage
+: deserialize  []
+
+: /
+: openserver id 1|0
+@usage
+openserver game1 1        <=> game1
+openserver game1 0        <=> game1
+
+
+[gm]
+
+[helper]
+: GM.txt
+@usage buildgmdoc
+
+: 
+@usage help []
+
+
+[init]
+
+[sys]
+: 
+@usage
+: stop
+
+: 
+@usage
+: restart
+
+: 
+@usage
+: disconnect [id]
+
+: 
+@usage
+: kick [ID [ID]...]
+
+: 
+@usage
+: kickall
+
+: lua
+@usage
+: exec lua
+
+: 
+@usage
+: dofile lua ...
+: dofile tmp.lua
+
+: 
+@usage
+: hotfix  ...
+
+: 
+@usage
+: hotfixAll
+
+: /
+@usage
+: loglevel []
+:
+loglevel     <=> 
+loglevel debug/trace/info/warn/error/fatal  <=> 
+
+: /
+@usage
+: date []
+: date        <=> 
+: date 2019/11/28 10:10:10        <=> 2019/11/28 10:10:10
+
+: 
+@usage
+: ntpdate
+: ntpdate <=> 
+
+: 
+@usage
+: info []
+
+: 
+@usage
+: bugreport ()  
+
+: 
+@usage
+: check_cluster
+
+: id
+@usage
+: close_link id
+: close_link 0       <=> 
+: close_link 1802    <=> 1802
+
+@usage
+: close_login 1(+)|0(+)
+: close_login 1        <=> +
+: close_login 0        <=> +
+
+: 
+@usage
+: recvclient cmd args(lua table)
+: recvclient C2S_Ping {str="hello"}
+: sh gm.sh 1000001 recvclient C2S_Ping '{str=\"hello\"}'
+
+: 
+@usage
+: sendclient cmd args(lua table)
+: sendclient S2C_Pong {str="hello",time=1604913284000,token="test"}
+: sh gm.sh 1000001 sendclient S2C_Pong '{str=\"hello\",time=1604913284000,token=\"test\"}'
+
+: rpc#call
+@usage
+: call    [1(lua) 2...]
+: call center .main ping
+: call center :00000008 ping
+: call center .main exec#logger.print "one" 1 {"table"}
+: sh gm.sh 0 call center .main exec#SERVICE_NAME
+: sh gm.sh 0 call center .main exec#gg.serviceName
+: sh gm.sh 0 call center .main exec#logger.print '\"one\" 1 {\"table\"}'
+
+: rpc#send
+@usage
+: send    [1(lua) 2...]
+: send center .main ping
+: send center :00000008 ping
+: send game1 :00000008 gm#kick 1000001 1000002
+: send center .main exec#logger.print "one" 1 {"table"}
+: sh gm.sh 0 send center .main exec#logger.print '\"one\" 1 {\"table\"}'
+
+: proxy.call/send
+@usage
+: proxy call/send   [1(lua) 2...]
+: proxy call center ping
+: proxy send center ping
+: proxy call center exec#SERVICE_NAME
+: proxy send center exec#logger.print "one" 1 {"table"}
+: proxy send :00000008 gm#help "help"
+: proxy send :00000008 gm#kick 1000001 1000002
+: sh gm.sh 0 proxy call center exec#gg.serviceName
+: sh gm.sh 0 proxy send center exec#logger.print '\"one\" 1 {\"table\"}'
+
+: profile
+@usage
+: 0=,1=,2=cpu(),3=(+),4=,5=cpu,6=
+ startProfile topN  ()
+ startProfile 20 2 20000  <=> 20s20cpu
+ proxy send :0000002b gm#startProfile 20 2 20000  <=> :0000002b20s20cpu
+
+: profile
+@usage
+stopProfile
+: stopProfile  <=> profile
+: proxy send :0000002b gm#stopProfile  <=> :0000002bprofile
+
+: 
+@usage
+snapshot (diff/refcount/tablecount/find) [value]
+: snapshot diff    <=> ,diff
+: snapshot refcount 100    <=> 100
+: snapshot tablecount 100  <=> 100table
+: snapshot find 0x7fa830f63580  <=> 
+: snapshot clear           <=> 
+ proxy send :0000002b gm#snapshot diff  <=> :0000002b,diff
+
+: ldoc,../doc/server
+
+: ip
+@usage:
+: set_net_delay 0/(0) [ip]
+: set_net_delay 100 192.168.30.150  <=> 192.168.30.150ip100ms
+: set_net_delay 0 192.168.30.150  <=> 192.168.30.150ip
+: set_net_delay 100  <=> 100ms
+: set_net_delay 0  <=> 
+
+: 
+@usage:
+: show_net_delay [ip]
+: show_net_delay 100 192.168.30.150  <=> ,IP
+: show_net_delay <=> ,
+
+: pingpong
+

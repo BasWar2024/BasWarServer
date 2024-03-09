@@ -1,0 +1,22 @@
+- hosts: "{{servers}}"
+  gather_facts: no
+  #serial: 1   # how many hosts shuld manage at a signle time
+
+  tasks:
+    # - name: clear killed status
+    #   shell: cd {{gg_workspace}}/{{inventory_hostname}} && sh clear_killed_status.sh
+
+    # - name: wait for stop
+    #   wait_for:
+    #     path: "{{gg_workspace}}/{{inventory_hostname}}/skynet.pid"
+    #     state: absent
+    #     timeout: 300
+
+    - name: start
+      shell: cd {{gg_workspace}}/{{inventory_hostname}} && sh start.sh
+
+    - name: wait for start
+      wait_for:
+        path: "{{gg_workspace}}/{{inventory_hostname}}/skynet.pid"
+        state: present
+        timeout: 300

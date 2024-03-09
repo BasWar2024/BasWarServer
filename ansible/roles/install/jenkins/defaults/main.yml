@@ -1,0 +1,3 @@
+---
+jenkins_version: "2.263"
+jenkins_src_parent_dir: /usr/local/src

@@ -1,0 +1,33 @@
+[all:vars]
+# you can redefine in host
+ansible_host=172.23.25.94
+ansible_ssh_port=22
+home=$HOME
+gg_workspace="{{home}}/apps/{{appId}}"
+
+# hosts
+[hosts]
+local ansible_host=127.0.0.1
+login
+center
+develop
+develop2
+robot
+client
+
+# groups
+[allserver]
+center
+develop
+develop2
+
+# 
+[global]
+center
+
+[scenemgr]
+
+
+[game]
+develop
+develop2

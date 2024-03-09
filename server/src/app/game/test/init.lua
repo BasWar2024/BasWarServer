@@ -1,0 +1,6 @@
+require "app.game.test.unittest"
+require "app.game.test.testChannel"
+require "app.game.test.testI18N"
+require "app.game.test.testByteStream"
+require "app.game.test.testClusterQueue"
+require "app.game.test.testScene"

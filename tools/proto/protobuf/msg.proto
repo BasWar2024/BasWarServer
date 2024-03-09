@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+// [1100,1200)
+// C2S
+// @id=1100
+message C2S_Msg_GM {
+    string cmd = 1;         // gm
+}
+
+// S2C
+
+// 
+// @id=11100
+message S2C_Msg_Error {
+    string err = 1;
+}
+
+// GM
+// @id=11101
+message S2C_Msg_GM {
+    string content = 1;     // 
+}
+
+// 
+// @id=11102
+message S2C_Msg_Say {
+    string content = 1;     // 
+}

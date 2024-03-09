@@ -1,0 +1,6 @@
+require "gg.init"
+require "common.init"
+require "app.example.gg.init"
+require "app.example.cluster.init"
+require "app.example.client.init"
+require "app.example.gm.init"

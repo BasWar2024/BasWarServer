@@ -1,0 +1,8 @@
+- hosts: "{{servers}}"
+  gather_facts: no
+  #serial: 1   # howw many hosts shuld manage at a signle time
+  order: reverse_inventory
+
+  tasks:
+    - name: stop
+      shell: cd {{gg_workspace}}/{{inventory_hostname}} && sh stop.sh

@@ -1,0 +1,1 @@
+require "gg.client.client"

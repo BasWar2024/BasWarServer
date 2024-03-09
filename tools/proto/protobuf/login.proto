@@ -1,0 +1,151 @@
+syntax = "proto3";
+import "common.proto";
+
+// [100,200)
+// C2S
+
+message DeviceType {
+    int32 registerLoginType = 1;    // /(0-1-2-3-4-)
+    string deviceCode = 2;          // 
+    string network = 3;             // WIFI/2G/3G/4G/5G
+    string wifiName = 4;            // SSID
+    int32 deviceType = 5;           // 0-1-; 2-,3--pc
+    string deviceModel = 6;         // 
+    string os = 7;                  // 
+    int32 channelId = 8;            // 
+    string lang = 9;                // zh_CN:,zh_TW:,en_US:
+}
+
+message CheckTokenType {
+    string token = 1;       // token
+    string account = 2;     // 
+    string version = 3;     // ::1.0.0
+    string forward = 4;     // ,CreateRole--,EnterGame--
+    DeviceType device = 5;  // 
+}
+
+// @id=100
+message C2S_CreateRole {
+    CheckTokenType checktoken = 1;
+    string account = 3;     // 
+    string name = 4;        // 
+    int32 heroId = 5;       // ID
+}
+
+// @id=101
+message C2S_EnterGame {
+    CheckTokenType checktoken = 1;
+    int64 roleid = 2;            // ID
+}
+
+// 
+// @id=102
+message C2S_ExitGame {
+}
+
+// @id=103
+message C2S_CheckName {
+    string name = 1;         // 
+}
+
+// @id=1
+message C2S_Ping {
+    string str = 1;
+}
+
+
+// S2C
+
+message RoleType {
+    int64 roleid = 1;
+    string name = 2;
+    int32 heroId = 3;               // id
+    int32 level = 4;                // 
+    string createServerId = 5;      // 
+    string currentServerId = 6;     // 
+    int32 createTime = 7;           // 
+    string account = 8;             // 
+}
+
+
+// 
+// @id=10100
+message S2C_CreateRoleFail {
+    int32 status = 1;       // http
+    int32 code = 2;         // 
+    string message = 3;     // 
+}
+
+// 
+// @id=10101
+message S2C_CreateRoleSuccess {
+    RoleType role = 1;    // 
+}
+
+// 
+// @id=10102
+message S2C_EnterGameFail {
+    int32 status = 1;       // http
+    int32 code = 2;         // 
+    string message = 3;     // 
+}
+
+
+// : S2C_EnterGameSuccess -> Other Proto
+// @id=10103
+message S2C_EnterGameSuccess {
+    string account = 1;         // 
+    int32 linkid = 2;           // ID
+    int32 mapId = 3;            // ID
+}
+
+// : 
+// @id=10104
+message S2C_ReEnterGame {
+    string token = 1;           // token
+    int64 roleid = 2;           // ID
+    string go_serverid = 3;     // ID
+    string ip = 4;              // #ip
+    int32 tcp_port = 5;         // #tcp_port
+    int32 kcp_port = 6;         // #kcp_port
+    int32 websocket_port = 7;   // #websocket_port
+}
+
+// 
+// @id=10105
+message S2C_Kick {
+    string reason = 1;
+}
+
+// @id=10001
+message S2C_Pong {
+    string str = 1;        // C2S_Ping#str
+    int64 time = 2;        // ()
+    string token = 3;      // token(token)
+}
+
+// 
+// @id=10106
+message S2C_Hello {
+    int32 randseed = 1;       // 
+}
+
+// 
+// @id=10107
+message S2C_NameIsValid {
+    string name = 1;         // 
+    bool ok = 2;             // 
+    string errmsg = 3;       // 
+}
+
+// 
+// @id=10108
+message S2C_BeReplace {
+    string ip = 1;       // ip
+}
+
+// 
+// @id=10109
+message S2C_EnterGameFinish {
+    BriefType brief = 1;       // 
+}

@@ -1,0 +1,11 @@
+- hosts: "{{servers}}"
+  roles:
+      - install/common
+      - install/python
+      - install/mongodb
+      - install/protobuf3
+      - install/jenkins
+      - install/lua
+      - install/luarocks
+      - install/redis
+      - install/openresty

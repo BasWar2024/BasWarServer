@@ -1,0 +1,17 @@
+# usage: ansible-playbook --limit $servers -i hosts/$appType.$env status.yml
+
+---
+- hosts: all
+  serial: 1
+  gather_facts: no
+  tasks:
+    - name: run script
+      shell: "sh status.sh"
+      args:
+        chdir: "{{gg_workspace}}/{{inventory_hostname}}"
+      register: script_contents
+
+    - name: check the return result
+      fail:
+        msg: "{{inventory_hostname}} not running"
+      when: script_contents.stdout.strip() != "start"

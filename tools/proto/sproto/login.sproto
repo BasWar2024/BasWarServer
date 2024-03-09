@@ -1,0 +1,161 @@
+# [100,200)
+
+# C2S
+.DeviceType {
+    # 
+    registerLoginType 0 : integer   # /(0-1-2-3-4-)
+    deviceCode 1 : string           # 
+    network 2 : string              # WIFI/2G/3G/4G/5G
+    wifiName 3 : string             # SSID
+    deviceType 4 : integer          # 0-1-; 2-,3--pc
+    deviceModel 5 : string          # 
+    os 6 : string                   # 
+    channelId 7 : integer           # 
+    lang 8 : string                 # zh_CN:,zh_TW:,en_US:
+}
+
+.CheckTokenType {
+    token 0 : string                #token
+    account 1 : string              #
+    version 2 : string              #::1.0.0
+    forward 3 : string              #,CreateRole--,EnterGame--
+    device 4 : DeviceType           #
+}
+
+C2S_CreateRole 100 {
+    request {
+        checktoken 0: CheckTokenType  # token
+        roleid 1 : integer    # (,ID)
+        account 2 : string    # 
+        name 3 : string       # 
+        heroId 4 : integer    # id
+    }
+}
+
+C2S_EnterGame 101 {
+    request {
+        checktoken 0: CheckTokenType  # token
+        roleid 1 : integer            # id
+    }
+}
+
+C2S_ExitGame 102 {
+}
+
+C2S_CheckName 103 {
+    request {
+        name 0 : string         #
+    }
+}
+
+# 
+# : (Queue,)
+C2S_EnterGameFinish 104 {
+}
+
+
+#ping+pong
+C2S_Ping 1 {
+    request {
+        str 0 : string
+    }
+}
+
+#S2C
+.RoleType {
+    roleid 0 : integer              # ID
+    name 1 : string                 # 
+    heroId 2 : integer              #id
+    level 3 : integer               # 
+    createServerId 4 : string       # 
+    currentServerId 5 : string      # 
+    createTime 6 : integer          # 
+    account 7 : string              # 
+
+}
+
+# 
+S2C_CreateRoleFail 10100 {
+    request {
+        status 0 : integer          # http
+        code 1 : integer            # 
+        message 2 : string          # 
+    }
+}
+
+# 
+S2C_CreateRoleSuccess 10101 {
+    request {
+        role 0 : RoleType    # 
+    }
+}
+
+# 
+S2C_EnterGameFail 10102 {
+    request {
+        status 0 : integer          # http
+        code 1 : integer            # 
+        message 2 : string          # 
+    }
+}
+
+
+# : S2C_EnterGameSuccess -> Other Proto
+S2C_EnterGameSuccess 10103 {
+    request {
+        account 0 : string          # 
+        linkid 1 : integer          # ID
+        mapId 2 : integer           # id
+    }
+}
+
+# : 
+S2C_ReEnterGame 10104 {
+    request {
+        token 0 : string                # token
+        roleid 1 : integer              # ID
+        go_serverid 2 : string          # ID
+        ip 3 : string                   # #ip
+        tcp_port 4 : integer            # #tcp_port
+        kcp_port 5 : integer            # #kcp_port
+        websocket_port 6 : integer      # #websocket_port
+    }
+}
+
+# 
+S2C_Kick 10105 {
+    request {
+        reason 0 : string
+    }
+}
+
+S2C_Pong 10001 {
+    request {
+        str 0 : string                  # C2S_Ping#str
+        time 1 : integer                # ()
+        token 2 : string                # token(token)
+    }
+}
+
+# 
+S2C_Hello 10106 {
+    request {
+        randseed 0 : integer       # 
+    }
+}
+
+# 
+S2C_NameIsValid 10107 {
+    request {
+        name 0 : string         # 
+        ok 1 : boolean          # 
+        errmsg 2 : string       # 
+    }
+}
+
+# 
+S2C_BeReplace 10108 {
+    request {
+        ip 0 : string       # ip
+    }
+}
