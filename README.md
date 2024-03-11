@@ -1,4 +1,4 @@
-GalaxyblitzServer is the source code of the Galaxyblitz server. It uses C language to write the underlying framework and Lua language to write functional logic.
+BasWarServer is the source code of the BasWar server. It uses C language to write the underlying framework and Lua language to write functional logic.
 The game communication protocol uses Google Protobuf. The database uses MongoDB. Data caching uses Redis.  
 
 Catalog description:  
@@ -11,7 +11,7 @@ robot folder is a directory of stress test scripts, which can generate a large n
 robot/start.sh is the script to start the robot.  
 robot/stop.sh is the script for closing the robot.  
 
-server folder is the main logic of the Galaxyblitz server.  
+server folder is the main logic of the BasWar server.  
 server/start.sh starts the game server script.  
 server/stop.sh closes the game server script.  
 server/src/app/login is the login verification module, responsible for account registration, login verification, and creation of player data.  
