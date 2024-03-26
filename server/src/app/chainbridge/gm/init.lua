@@ -1,0 +1,1 @@
+require "app.chainbridge.gm.gm"

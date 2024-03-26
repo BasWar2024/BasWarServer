@@ -1,4 +1,4 @@
----rpc
+---rpc""
 --@module game.api.rpc
 --@author sundream
 --@release 2018/12/25 10:30:00
@@ -9,16 +9,16 @@
 --params:
 --  type=table encode=json
 --  {
---      module     [optional] type=string help=,_G
---      cmd         [required] type=string help=
---      args        [required] type=list encode=json help=
+--      module     [optional] type=string help="",""_G""
+--      cmd         [required] type=string help=""
+--      args        [required] type=list encode=json help=""
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=number help=
---      result =    [required] type=list help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=number help=""
+--      result =    [required] type=list help=""
 --  }
 --example:
 --  curl -v 'http://127.0.0.1:4000/api/rpc' -d '{"sign":"debug","cmd":"tonumber","args":"[\"10\"]"}'

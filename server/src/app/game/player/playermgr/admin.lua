@@ -1,29 +1,29 @@
----
+---""
 --@script app.game.player.playermgr.admin
 --@author sundream
 --@release 2019/8/15 10:00:00
 --@usage
---:
---R1GS1,GS2,LS
---DB:
---1. C->GS1:    GS1
---2. GS1->GS2:  R1GS2,GS2,R1
---3. GS2->LS:   ,R2
---4. GS2:       R1,
---5. GS2->GS1:  GS2GS1,,<R1,R2>
---6. GS1:       
---7. GS1->LS:   R1
---8. GS1->C:    
---DB:
---2~7: GS1->LS: 
+--"":
+--""R1""GS1"",""GS2,""LS
+--""DB"":
+--1. C->GS1:    ""GS1""
+--2. GS1->GS2:  ""R1""GS2,""GS2"",""R1
+--3. GS2->LS:   "",""R2
+--4. GS2:       ""R1"",""
+--5. GS2->GS1:  GS2""GS1"","",""<R1,R2>
+--6. GS1:       ""
+--7. GS1->LS:   ""R1""
+--8. GS1->C:    ""
+--""DB"":
+--""2~7"": GS1->LS: ""
 local cplayermgr = reload_class("cplayermgr")
 
 
----
---@param[type=int] roleid ID
---@param[type=string] new_serverid ID
---@return[type=bool] 
---@return[type=string] ,
+---""
+--@param[type=int] roleid ""ID
+--@param[type=string] new_serverid ""ID
+--@return[type=bool] ""
+--@return[type=string] "",""
 function cplayermgr:rebindserver(roleid,new_serverid)
     return self:loadplayer_callback(roleid,function (player)
         local new_roleid
@@ -48,7 +48,7 @@ function cplayermgr:rebindserver(roleid,new_serverid)
                 return false,response.message
             end
         end
-        -- 
+        -- ""
         if player.linkobj then
             player.pid = new_roleid
             self:go_server(player,new_serverid)
@@ -60,11 +60,11 @@ function cplayermgr:rebindserver(roleid,new_serverid)
     end)
 end
 
----
---@param[type=int] roleid ID
---@param[type=string] new_account 
---@return[type=bool] 
---@return[type=string] ,
+---""
+--@param[type=int] roleid ""ID
+--@param[type=string] new_account ""
+--@return[type=bool] ""
+--@return[type=string] "",""
 function cplayermgr:rebindaccount(roleid,new_account)
     return self:loadplayer_callback(roleid,function (player)
         local call_ok,ok,err = pcall(function ()
@@ -88,11 +88,11 @@ function cplayermgr:rebindaccount(roleid,new_account)
     end)
 end
 
----
---@param[type=int] roleid ID
---@param[type=bool,opt] forever 
---@return[type=bool] 
---@return[type=string] ,
+---""
+--@param[type=int] roleid ""ID
+--@param[type=bool,opt] forever ""
+--@return[type=bool] ""
+--@return[type=string] "",""
 function cplayermgr:delrole(roleid,forever)
     local status,response = gg.loginserver:delrole(roleid,forever)
     if status ~= 200 then
@@ -110,10 +110,10 @@ function cplayermgr:delrole(roleid,forever)
     return true
 end
 
----
---@param[type=int] roleid ID
---@return[type=bool] 
---@return[type=string] ,
+---""
+--@param[type=int] roleid ""ID
+--@return[type=bool] ""
+--@return[type=string] "",""
 function cplayermgr:recover_role(roleid)
     local status,response = gg.loginserver:recover_role(roleid)
     if status ~= 200 then
@@ -125,10 +125,10 @@ function cplayermgr:recover_role(roleid)
     return true
 end
 
----
---@param[type=int] roleid ID
---@return[type=bool] 
---@return[type=string] ,
+---""
+--@param[type=int] roleid ""ID
+--@return[type=bool] ""
+--@return[type=string] "",""
 function cplayermgr:clone(role_data,account)
     role_data = gg.deepcopy(role_data)
     local serverid = skynet.config.id

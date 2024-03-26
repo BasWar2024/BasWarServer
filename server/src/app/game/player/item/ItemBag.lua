@@ -2,10 +2,10 @@ local ItemBag = class("ItemBag")
 
 function ItemBag:ctor(param)
     self.player = param.player
-    self.maxSpace = param.maxSpace or gg.getGlobalCgfIntValue("ItemBagInitSpace", 50)    -- 
-    self.expandSpace = 0                                                                 -- 
-    self.items = {}                                                                      -- id -> 
-    self.composeItems = {}                                                               -- id --> 
+    --self.maxSpace = param.maxSpace or gg.getGlobalCfgIntValue("ItemBagInitSpace", 50)  -- ""
+    self.maxSpace = 9999                                                                 -- "",""
+    self.expandSpace = 0                                                                 -- "", ""=maxSpace+expandSpace
+    self.items = {}                                                                      -- id -> ""
 end
 
 -- @override
@@ -14,28 +14,19 @@ function ItemBag:newItem(param)
     return ggclass.Item.create(param)
 end
 
-function ItemBag:newComposeItem(param)
-    param.player = self.player
-    return ggclass.ComposeItem.create(param)
-end
-
 function ItemBag:serialize()
     local data = {}
     data.maxSpace = self.maxSpace
     data.expandSpace = self.expandSpace
     data.items = {}
-    data.composeItems = {}
     for _, item in pairs(self.items) do
         table.insert(data.items, item:serialize())
-    end
-    for _, composeItem in pairs(self.composeItems) do
-        table.insert(data.composeItems, composeItem:serialize())
     end
     return data
 end
 
 function ItemBag:deserialize(data)
-    self.maxSpace = data.maxSpace or gg.getGlobalCgfIntValue("ItemBagInitSpace", 50)
+    self.maxSpace = data.maxSpace or 9999
     self.expandSpace = data.expandSpace or 0
     if data.items and next(data.items) then
         for _, itemData in pairs(data.items) do
@@ -46,35 +37,32 @@ function ItemBag:deserialize(data)
             end
         end
     end
-    if data.composeItems and next(data.composeItems) then
-        for _, composeItemData in pairs(data.composeItems) do
-            local composeItem = self:newComposeItem(composeItemData)
-            if composeItem then
-                composeItem:deserialize(composeItemData)
-                self.composeItems[composeItem.item.id] = composeItem
-            end
-         end
-    end
+
 end
 
 function ItemBag:getItemCfg(cfgId)
     return ggclass.Item.getItemCfg(cfgId)
 end
 
+function ItemBag:getItemEffectCfg(cfgId)
+    local itemCfg = cfg.get("etc.cfg.itemEffect")
+    return itemCfg[cfgId]
+end
 
---- 
+--- ""
 function ItemBag:canOverlay(item,maxNum)
     if item.num >= maxNum then
         return false
     end
-    return item:canOverlay()
+    return true
 end
 
 function ItemBag:getMaxSpace()
     return self.expandSpace + self.maxSpace
 end
---- 
---@param[type=integer] needSpace 
+
+--- ""
+--@param[type=integer] needSpace ""
 function ItemBag:spaceIsEnough(needSpace)
     if needSpace <= 0 then
         return true
@@ -88,6 +76,7 @@ function ItemBag:spaceIsEnough(needSpace)
     return false
 end
 
+--""
 function ItemBag:getItemsByItemType(itemType)
     local list = {}
     for _, v in pairs(self.items) do
@@ -98,18 +87,7 @@ function ItemBag:getItemsByItemType(itemType)
     return list
 end
 
--- 
-function ItemBag:getAvailableItemsByItemType(itemType)
-    local list = {}
-    for _, v in pairs(self.items) do
-        if v.itemType == itemType and not v:isUsing() then
-            table.insert(list, v)
-        end
-    end
-    return list
-end
-
---- 
+--- ""
 function ItemBag:getItemsByCfgId(cfgId)
     local list = {}
     for k, v in pairs(self.items) do
@@ -120,127 +98,161 @@ function ItemBag:getItemsByCfgId(cfgId)
     return list
 end
 
---- 
-function ItemBag:getLeftOverlayNum(cfgId)
-    local num = 0
-    local items = self:getItemsByCfgId(cfgId)
-    local itemCfg = self:getItemCfg(cfgId)
-    for i,item in ipairs(items) do
-        num = num + itemCfg.maxNum - item.num
-    end
-    return num
-end
-
---- 
+--- ""
 function ItemBag:getItemNumByCfgId(cfgId)
     local items = self:getItemsByCfgId(cfgId)
     local num = 0
-    for i,item in ipairs(items) do
+    for i,item in pairs(items) do
         num = num + item.num
     end
     return num
 end
 
--- 
---@param[type=integer] id id
+--- ""
+function ItemBag:getItemNumByItemType(itemType)
+    local num = 0
+    for k, item in pairs(self.items) do
+        if item.itemType == itemType then
+            num = num + item.num
+        end
+    end
+    return num
+end
+
+-- ""
+function ItemBag:getAllItems()
+    return self.items
+end
+
+-- ""
+--@param[type=integer] id ""id
 function ItemBag:getItem(id)
     return self.items[id]
 end
 
--- 
---@param[type=integer] id id
-function ItemBag:isItemInBag(id)
-    return self.items[id] ~= nil
-end
-
--- 
---@param[type=integer] id id
-function ItemBag:isItemInComposing(id)
-    return self.composeItems[id] ~= nil
-end
-
--- 
---@param[type=integer] id id
---@param[type=table] attrs 
-function ItemBag:update(id, attrs, source)
-    local player = self.player
-    local item = self:getItem(id)
-    if not item then
-        return
+-- ""
+--@param[type=integer] cfgId ""id
+function ItemBag:isItemEnough(cfgId, count)
+    local itemNum = self.player.itemBag:getItemNumByCfgId(cfgId)
+    if itemNum < count then
+        self.player:say(util.i18nFormat(errors.ITEM_NOT_ENOUGH))
+        return false
     end
-    if attrs and next(attrs) then
-        for k, v in pairs(attrs) do
-            if item[k] then
-                item:setAttr(k, v)
-            end
+    return true
+end
+
+--- ""
+--@param[type=table] dict "" {cfgId1 = count1, cfgId2 = count2,...}
+function ItemBag:isItemDictEnough(dict)
+    for k, v in pairs(dict) do
+        if not self:isItemEnough(k, v) then
+            return false
         end
     end
-    if not source.notNotify then
-        gg.client:send(self.player.linkobj,"S2C_Player_ItemUpdate",{item=item:pack()})
-    end
+    return true
 end
 
---- 
---@param[type=table] item 
---@param[type=string] reason 
+--- ""
+--@param[type=table] item ""
+--@param[type=table] source"" {logType = xxx, notNotify = xxx}
 function ItemBag:addItemObj(item, source)
+    if not source or not source.logType or not gamelog[source.logType] then
+        logger.logf("info","logType", "op=ItemBag:addItemObj " .. debug.traceback())
+        return false
+    end
     local id = assert(item.id, "item.id is nil")
-    local reason = source.reason
+    if self.items[id] then
+        return false
+    end
     local cfgId = assert(item.cfgId, "item.cfgId is nil")
     self.items[id] = item
     if not source.notNotify then
         gg.client:send(self.player.linkobj,"S2C_Player_ItemAdd",{item=item:pack()})
     end
+    if source.logType ~= gamelog.DRAW_CARD and item.itemType == constant.ITEM_SKILL  then
+        local skillCfgId = self:getItemCfg(item.cfgId).skillCfgID[1]
+        local skillCfg = ggclass.Hero.getHeroSkillCfg(skillCfgId, 0, 1)
+        local data = {}
+        data[skillCfgId] = { cfgId = skillCfgId, quality = skillCfg.quality }
+        self.player.drawCardBag:isNewGet(data)
+    end
+    gg.internal:send(".gamelog", "api", "addItemLog", self.player.pid, self.player.platform, item.id, item.cfgId, "add", 0, item.num, item.num, source.logType, gamelog[source.logType])
+    return true
 end
 
---- id
---@param[type=integer] id id
---@param[type=string] reason 
-function ItemBag:delItem(id, source)
+--- ""id""
+--@param[type=integer] id ""id
+--@param[type=table] source"" {logType = xxx, notNotify = xxx}
+function ItemBag:delItemObj(id, source)
+    if not source or not source.logType or not gamelog[source.logType] then
+        logger.logf("info","logType", "op=ItemBag:delItemObj " .. debug.traceback())
+        return
+    end
     local item = self.items[id]
     if not item then
-        self.player:say(i18n.format("no item"))
+        self.player:say(util.i18nFormat(errors.ITEM_NOT_EXIST))
         return
     end
     self.items[id] = nil
     if not source.notNotify then
         gg.client:send(self.player.linkobj,"S2C_Player_ItemDel",{id=id})
     end
+    gg.internal:send(".gamelog", "api", "addItemLog", self.player.pid, self.player.platform, item.id, item.cfgId, "del", item.num, -item.num, 0, source.logType, gamelog[source.logType])
     return item
 end
 
---- 
---@param[type=table] item 
---@param[type=integer] change 
---@param[type=table] source 
+--- ""
+--@param[type=table] item ""
+--@param[type=integer] change ""
+--@param[type=table] source"" {logType = xxx, notNotify = xxx}
 function ItemBag:costItemNum(item, change, source)
+    if not source or not source.logType or not gamelog[source.logType] then
+        logger.logf("info","logType", "op=ItemBag:costItemNum " .. debug.traceback())
+        return
+    end
     local old = item.num
     local new  = item.num - change
     assert(new >= 0)
-    self:update(item.id,{ num = new }, source)
+    item.num = new
+    gg.internal:send(".gamelog", "api", "addItemLog", self.player.pid, self.player.platform, item.id, item.cfgId, "dec", old, -change, new, source.logType, gamelog[source.logType])
+    if not source.notNotify then
+        gg.client:send(self.player.linkobj,"S2C_Player_ItemUpdate",{ item=item:pack() })
+    end
     if item.num <= 0 then
-        self:delItem(item.id, source)
+        self:delItemObj(item.id, source)
     end
 end
 
---- 
---@param[type=table] item 
---@param[type=integer] change 
---@param[type=table] source 
-function ItemBag:addItemNum(item,change,source)
+--- ""
+--@param[type=table] item ""
+--@param[type=integer] change ""
+--@param[type=table] source"" {logType = xxx, notNotify = xxx}
+function ItemBag:addItemNum(item, change, source)
+    if not source or not source.logType or not gamelog[source.logType] then
+        logger.logf("info","logType", "op=ItemBag:addItemNum " .. debug.traceback())
+        return
+    end
     local maxNum = self:getItemCfg(item.cfgId).maxNum
     local old = item.num
     local new = old + change
     assert(new <= maxNum)
-    self:update(item.id,{ num = new }, source)
+    gg.internal:send(".gamelog", "api", "addItemLog", self.player.pid, self.player.platform, item.id, item.cfgId, "inc", old, change, new, source.logType, gamelog[source.logType])
+    item.num = new
+    if not source.notNotify then
+        gg.client:send(self.player.linkobj,"S2C_Player_ItemUpdate",{ item=item:pack() })
+    end
 end
 
---- ()
---@param[type=integer] cfgId id
---@param[type=integer] num 
---@param[type=table] source 
---@return[type=integer] 
+--- ""("")
+--@param[type=integer] cfgId ""id
+--@param[type=integer] num ""
+--@param[type=table] source"" {logType = xxx, notNotify = xxx}
+--@return[type=integer] ""
 function ItemBag:costItem(cfgId,num,source)
+    if not source or not source.logType or not gamelog[source.logType] then
+        logger.logf("info","logType", "op=ItemBag:costItem " .. debug.traceback())
+        return num
+    end
     local leftNum = num
     local items = self:getItemsByCfgId(cfgId)
     table.sort(items,function (item1,item2)
@@ -262,111 +274,407 @@ function ItemBag:costItem(cfgId,num,source)
     return leftNum
 end
 
---- 
---@param[type=integer] cfgId id
---@param[type=integer] num 
---@param[type=table] targetParam 
---@return[type=table] source {reason,isSys}
-function ItemBag:addItem(cfgId,num,targetParam,source)
+--- ""id""("")
+--@param[type=table] dict "" {cfgId1 = count1, cfgId2 = count2,...}
+--@param[type=table] source"" {logType = xxx, notNotify = xxx}
+--@return[type=table] "" {cfgId1 = count1, cfgId2 = count2,...}
+function ItemBag:costItemDict(dict, source)
+    if not source or not source.logType or not gamelog[source.logType] then
+        logger.logf("info","logType", "op=ItemBag:costItemDict " .. debug.traceback())
+        return dict
+    end
+    local ret = {}
+    for k, v in pairs(dict) do
+        ret[k] = self:costItem(k, v, source)
+    end
+    return ret
+end
+
+--- ""
+--@param[type=integer] cfgId ""id
+--@param[type=integer] num ""
+--@param[type=table] source"" {logType = xxx, notNotify = xxx}
+--@param[type=table] args "", "" id  { id = xxx }
+--@return[type=integer, type=table] "",""
+function ItemBag:addItem(cfgId, num, source, args)
+    if not source or not source.logType or not gamelog[source.logType] then
+        logger.logf("info","logType", "op=ItemBag:addItem " .. debug.traceback())
+        return -1
+    end
     assert(num > 0, "require num>0, num="..tostring(num))
     local itemCfg = self:getItemCfg(cfgId)
     if not itemCfg then
-        self.player:say(i18n.format("itemConfig[%d] is not exist", cfgId))
+        self.player:say(util.i18nFormat(errors.CFG_NOT_EXIST))
         return -1
     end
+    
     local itemType = itemCfg.itemType
-    if itemType >= constant.ITEM_WAR_SHIP then
-        if not targetParam or not targetParam.targetCfgId or not targetParam.targetQuality or not targetParam.targetLevel then
-            self.player:say("argument error, when item is warship or hero or build, need target cfgId and quality and level")
-            return -1
-        end
-        if itemType == constant.ITEM_WAR_SHIP then
-            local warShip = self.player.warShipBag:generateWarShip(targetParam.targetCfgId, targetParam.targetQuality)
-            if not warShip then
-                self.player:say("argument error, config not exists")
-                return -1
-            end
-            targetParam.skillLevel1 = targetParam.skillLevel1 or warShip.skillLevel1
-            targetParam.skillLevel2 = targetParam.skillLevel2 or warShip.skillLevel2
-            targetParam.skillLevel3 = targetParam.skillLevel3 or warShip.skillLevel3
-            targetParam.skillLevel4 = targetParam.skillLevel4 or warShip.skillLevel4
-            targetParam.skillLevel5 = targetParam.skillLevel5 or warShip.skillLevel5
-            targetParam.life = targetParam.life or warShip.life
-            targetParam.curLife = targetParam.curLife or warShip.curLife
-        elseif itemType == constant.ITEM_HERO then
-            local hero = self.player.heroBag:generateHero(targetParam.targetCfgId, targetParam.targetQuality)
-            if not hero then
-                self.player:say("argument error, config not exists")
-                return -1
-            end
-            targetParam.skillLevel1 = targetParam.skillLevel1 or hero.skillLevel1
-            targetParam.skillLevel2 = targetParam.skillLevel2 or hero.skillLevel2
-            targetParam.skillLevel3 = targetParam.skillLevel3 or hero.skillLevel3
-            targetParam.life = targetParam.life or hero.life
-            targetParam.curLife = targetParam.curLife or hero.curLife
-        elseif itemType == constant.ITEM_BUILD then
-            local build = self.player.buildBag:generateBuild(targetParam.targetCfgId, targetParam.targetQuality)
-            if not build then
-                self.player:say("argument error, config not exists")
-                return -1
-            end
-            targetParam.life = targetParam.life or build.life
-            targetParam.curLife = targetParam.curLife or build.curLife
-        elseif itemType == constant.ITEM_MINING_MACHINE then --,,
-            local build = self.player.buildBag:generateBuild(targetParam.targetCfgId, targetParam.targetQuality)
-            if not build then
-                self.player:say("argument error, config not exists")
-                return -1
-            end
-            targetParam.life = targetParam.life or build.life
-            targetParam.curLife = targetParam.curLife or build.curLife
-        end
+    local param = { cfgId = cfgId, num = num }
+    if args then
+        param.id = args.id
     end
-
-    local param = {}
-    param.cfgId = cfgId
-    if targetParam then
-        param.id = targetParam.id
-        param.targetCfgId = targetParam.targetCfgId
-        param.targetQuality = targetParam.targetQuality
-        param.targetLevel = targetParam.targetLevel
-        param.skillLevel1 = targetParam.skillLevel1
-        param.skillLevel2 = targetParam.skillLevel2
-        param.skillLevel3 = targetParam.skillLevel3
-        param.skillLevel4 = targetParam.skillLevel4
-        param.skillLevel5 = targetParam.skillLevel5
-        param.life = targetParam.life
-        param.curLife = targetParam.curLife
-        param.ver = targetParam.ver
-    end
+    local autoUseItems = {}
     local modifiedItems = {}
     local maxNum = itemCfg.maxNum
     local leftNum = num
     local items = self:getItemsByCfgId(cfgId)
     for i,item in ipairs(items) do
-        if self:canOverlay(item, maxNum) then
+        if self:canOverlay(item, maxNum) then --""
             local addNum = math.min(leftNum,maxNum - item.num)
             leftNum = leftNum - addNum
             self:addItemNum(item, addNum, source)
-            table.insert(modifiedItems, item)
+            if itemCfg.isAutoUse and itemCfg.isAutoUse == 1 then
+                local _id = item.id
+                local isOk = self:autoUseItem(_id, addNum)
+                if isOk then
+                    if self:getItem(_id) then
+                        table.insert(modifiedItems, item)
+                    end
+                end
+            else
+                table.insert(modifiedItems, item)
+            end
         end
         if leftNum <= 0 then
             break
         end
     end
+    
     while leftNum > 0 do
-        -- 
-        if not self:spaceIsEnough(1) then
-            break
-        end
         local itemNum = math.min(leftNum,maxNum)
-        leftNum = leftNum - itemNum
         param.num = itemNum
         local item = self:newItem(param)
-        self:addItemObj(item, source)
-        table.insert(modifiedItems, item)
+        if self:addItemObj(item, source) then
+            leftNum = leftNum - itemNum
+            if itemCfg.isAutoUse and itemCfg.isAutoUse == 1 then
+                local _id = item.id
+                local isOk = self:autoUseItem(_id, itemNum)
+                if isOk then
+                    if self:getItem(_id) then
+                        table.insert(modifiedItems, item)
+                    end
+                end
+            else
+                table.insert(modifiedItems, item)
+            end
+        else
+            break
+        end
     end
+
+    if itemType and itemType >= constant.AUTOPUSH_CFGID_NEW_ITEM_13 and itemType <= constant.AUTOPUSH_CFGID_NEW_ITEM_16 and itemCfg.isAutoUse == 0 then
+        self.player.autoPushBag:setAutoPushStatus(itemType)
+    end
+
     return num - leftNum, modifiedItems
+end
+
+--- ""
+--@param[type=integer] id ""id
+--@param[type=integer] count ""
+function ItemBag:resolveItem(id, count)
+    local item = self.items[id]
+    if not item then
+        self.player:say(util.i18nFormat(errors.ITEM_NOT_EXIST))
+        return
+    end
+    local itemCfg = self:getItemCfg(item.cfgId)
+    if not itemCfg then
+        self.player:say(util.i18nFormat(errors.CFG_NOT_EXIST))
+        return
+    end
+    if itemCfg.canResolve ~= 1 then
+        self.player:say(util.i18nFormat(errors.ITEM_CANNOT_RESOLVE))
+        return
+    end
+    if count <= 0 or count > item.num then
+        self.player:say(util.i18nFormat(errors.ITEM_COUNT_LESS))
+        return
+    end
+    local resolveItem = itemCfg.resolveItem
+    local itemDict = {}
+    local items = {}
+    local resDict = {}
+    if resolveItem and next(resolveItem) then
+        for i = 1, count do
+            for k,v in pairs(resolveItem) do
+                local cfgId = math.floor(tonumber(v[1]))
+                local value = math.floor(tonumber(v[2]))
+                if constant.RES_KEYS[cfgId] then
+                    resDict[cfgId] = value
+                else
+                    itemDict[cfgId] = (itemDict[cfgId] or 0) + value
+                end
+            end
+        end
+    end
+    for cfgId, value in pairs(itemDict) do
+        local num = 0
+        local res = {}
+        num,res = self:addItem(cfgId, value, { logType=gamelog.ITEM_RESOLVE })
+        for k,v in pairs(res) do
+            local item = v:pack()
+            if not items[id] then
+                items[id] = {id = item.id, cfgId = item.cfgId, num = num}
+            else
+                items[id].num = items[id].num + num
+            end
+        end
+    end
+    self.player.resBag:addResDict(resDict,{ logType=gamelog.ITEM_RESOLVE })
+    self:costItemNum(item, count, { logType=gamelog.ITEM_RESOLVE })
+    return items, resDict
+end
+
+--- ""
+--@param[type=integer] id ""id
+--@param[type=integer] count ""
+function ItemBag:autoUseItem(id, count)
+    local item = self.items[id]
+    if not item then
+        return
+    end
+    local itemCfg = self:getItemCfg(item.cfgId)
+    if not itemCfg then
+        return
+    end
+    -- if itemCfg.canUse ~= 1 then
+    --     return
+    -- end
+    if count <= 0 or count > item.num then
+        return
+    end
+    if itemCfg.unique and itemCfg.unique == 1 then
+        local ret = gg.shareProxy:call("getUsedItem",  self.player.pid, item.cfgId)
+        if ret == "1" then
+            self.player:say(util.i18nFormat(errors.ITEM_ONLY_USE_ONCE))
+            return
+        end
+    end
+
+    self:useItemEffect(id, count, itemCfg)
+    self:costItemNum(item, count, { logType=gamelog.ITEM_USE })
+
+    if itemCfg.unique and itemCfg.unique == 1 then
+        gg.shareProxy:send("setUsedItem",  self.player.pid, item.cfgId)
+    end
+
+    return true
+end
+
+--- ""
+--@param[type=integer] id ""id
+--@param[type=integer] count ""
+function ItemBag:useItem(id, count)
+    local item = self.items[id]
+    if not item then
+        self.player:say(util.i18nFormat(errors.ITEM_NOT_EXIST))
+        return
+    end
+    local itemCfg = self:getItemCfg(item.cfgId)
+    if not itemCfg then
+        self.player:say(util.i18nFormat(errors.CFG_NOT_EXIST))
+        return
+    end
+    if itemCfg.canUse ~= 1 then
+        self.player:say(util.i18nFormat(errors.ITEM_CANNOT_USE))
+        return
+    end
+    -- ""
+    if itemCfg.unique and itemCfg.unique == 1 then
+        local ret = gg.shareProxy:call("getUsedItem",  self.player.pid, item.cfgId)
+        if ret == "1" then
+            self.player:say(util.i18nFormat(errors.ITEM_ONLY_USE_ONCE))
+            return
+        end
+    end
+    
+    if itemCfg.useNeedBaseLevel then -- ""
+        local baselLevel = self.player.buildBag:getBuildLevelByCfgId(constant.BUILD_BASE)
+        if baselLevel < itemCfg.useNeedBaseLevel then
+            self.player:say(util.i18nFormat(errors.ITEM_NOT_BASE_LEVEL))
+            return
+        end
+    end
+
+    if count <= 0 or count > item.num then
+        self.player:say(util.i18nFormat(errors.ITEM_COUNT_LESS))
+        return
+    end
+    self:useItemEffect(id, count, itemCfg)
+    self:costItemNum(item, count, { logType=gamelog.ITEM_USE })
+
+    if itemCfg.unique and itemCfg.unique == 1 then
+        gg.shareProxy:send("setUsedItem",  self.player.pid, item.cfgId)
+    end
+
+    gg.client:send(self.player.linkobj,"S2C_Player_UseItem",{cfgId = item.cfgId, count = count})
+end
+
+function ItemBag:useItemEffect(id, count, itemCfg)
+    for i=1,count do
+        for _, cfgId in pairs(itemCfg.effect) do
+            local effectCfg = self:getItemEffectCfg(cfgId)
+            -- ""
+            if effectCfg.effectType == constant.ITEM_EFFECT_TYPE_RES then
+                local resDict = {}
+                local addRes = effectCfg.value
+                if addRes and next(addRes) then
+                    local resCfgId = math.floor(tonumber(addRes[1]))
+                    local value = math.floor(tonumber(addRes[2]))
+                    resDict[resCfgId] = value
+                    self.player.resBag:addResDict(resDict, { logType=gamelog.ITEM_USE, extraId = id })
+                end
+            end
+
+            -- ""
+            if effectCfg.effectType == constant.ITEM_EFFECT_TYPE_HERO then
+                local addHero = effectCfg.value
+                if addHero and next(addHero) then
+                    local heroCfgId = math.floor(tonumber(addHero[1]))
+                    local quality = math.floor(tonumber(addHero[2]))
+                    local level = math.floor(tonumber(addHero[3]))
+                    local life = ggclass.Hero.randomHeroLife(quality)
+                    local param = {
+                        cfgId = heroCfgId,
+                        quality = quality,
+                        level = level,
+                        life = life,
+                        curLife = life,
+                    }
+                    local hero = self.player.heroBag:newHero(param)
+                    if hero then
+                        local ret = self.player.heroBag:addHero(hero, { logType = gamelog.ITEM_USE, notNotify = false })
+                    end
+                end
+            end
+
+            -- ""
+            if effectCfg.effectType == constant.ITEM_EFFECT_TYPE_WARSHIP then
+                local addWarShip = effectCfg.value
+                if addWarShip and next(addWarShip) then
+                    local heroCfgId = math.floor(tonumber(addWarShip[1]))
+                    local quality = math.floor(tonumber(addWarShip[2]))
+                    local level = math.floor(tonumber(addWarShip[3]))
+                    local life = ggclass.WarShip.randomWarShipLife(quality)
+                    local param = {
+                        cfgId = heroCfgId,
+                        quality = quality,
+                        level = level,
+                        life = life,
+                        curLife = life,
+                    }
+                    local warship = self.player.warShipBag:newWarShip(param)
+                    if warship then
+                        local ret = self.player.warShipBag:addWarShip(warship, { logType = gamelog.ITEM_USE, notNotify = false })
+                    end
+                end
+            end
+
+            -- ""
+            if effectCfg.effectType == constant.ITEM_EFFECT_TYPE_CARD then
+                local addCard = effectCfg.value
+                if addCard and next(addCard) then
+                    self:addItem(addCard[1], addCard[2], {logType = gamelog.ITEM_USE})
+                end
+            end
+
+            -- ""
+            if effectCfg.effectType == constant.ITEM_EFFECT_TYPE_BUILD_QUEUE then
+                self.player.rechargeActivityBag:addBuildQueueTimeByTime(effectCfg.value[1])
+            end
+
+            -- ""
+            if effectCfg.effectType == constant.ITEM_EFFECT_TYPE_BUILD then
+                local addBuild = effectCfg.value
+                if addBuild and next(addBuild) then
+                    local heroCfgId = math.floor(tonumber(addBuild[1]))
+                    local quality = math.floor(tonumber(addBuild[2]))
+                    local level = math.floor(tonumber(addBuild[3]))
+                    local life = ggclass.Build.randomBuildLife(quality)
+                    local param = {
+                        cfgId = heroCfgId,
+                        quality = quality,
+                        level = level,
+                        life = life,
+                        curLife = life,
+                        chain = constant.BUILD_CHAIN_TOWER,
+                    }
+                    local build = self.player.buildBag:newBuild(param)
+                    if build then
+                        local ret = self.player.buildBag:addBuild(build, { logType = gamelog.ITEM_USE, notNotify = false })
+                    end
+                end
+            end
+        end
+    end
+end
+
+function ItemBag:dismantleSkillCard(skillCardData)
+    if not next(skillCardData) then
+        return
+    end
+    local getItemDict = {}
+    local resDict = {}
+    for _,skillCard in pairs(skillCardData) do
+        local itemDict = {}
+        itemDict, resDict = self:resolveItem(skillCard.id, skillCard.num)
+        if next(itemDict) and next(resDict) then
+            table.insert(getItemDict, itemDict)
+        end
+    end
+    local items = {}
+    for k,v in pairs(getItemDict) do
+       for kk,vv in pairs(v) do
+            table.insert(items, vv)
+       end
+    end
+    local resInfo = {}
+    for cfgId,num in pairs(resDict) do
+        if num > 0 then
+            table.insert(resInfo, { resCfgId = cfgId, count = num})
+        end
+    end
+    gg.client:send(self.player.linkobj,"S2C_Player_DismantleReward", { result = true, items = items})
+    if next(resInfo) then
+        gg.client:send(self.player.linkobj, "S2C_Player_TipNote",  { tipType = 1, resInfo = resInfo })
+    end
+    
+end
+
+function ItemBag:sellSkillCard(itemData)
+    local delItems = {}
+    local rewardCount = 0
+    for _,data in ipairs(itemData) do
+        -- ""
+        local item = self.items[data.id]
+        if not item then
+            self.player:say(util.i18nFormat(errors.ITEM_NOT_EXIST))
+            return
+        end
+        if not self:isItemEnough(item.cfgId, data.num) then
+            return
+        end
+        local itemCfg = self:getItemCfg(item.cfgId)
+        if not itemCfg then
+            self.player:say(util.i18nFormat(errors.ITEM_CFG_NOT_EXIST))
+            return
+        end
+        local skillCfg = gg.getExcelCfgByFormat("skillConfig", itemCfg.skillCfgID[1], itemCfg.skillCfgID[2])
+        -- ""
+        local sellingPrice = gg.getGlobalCfgTableValue("SellingPrice", {})
+        local resNum = sellingPrice[skillCfg.quality]
+        rewardCount = rewardCount + math.floor(resNum * data.num)
+        table.insert(delItems, {item = item, num = data.num})
+    end
+    for _,data in pairs(delItems) do
+        self:costItemNum(data.item, data.num, { logType=gamelog.SELL_ITEM })
+    end
+    self.player.resBag:addRes(constant.RES_STARCOIN, rewardCount, {logType=gamelog.SELL_ITEM})
+    local resInfo = {}
+    table.insert(resInfo, { resCfgId = constant.RES_STARCOIN, count = rewardCount})
+    resInfo.resCfgId = constant.RES_STARCOIN
+    gg.client:send(self.player.linkobj, "S2C_Player_TipNote",  { tipType = 1, resInfo = resInfo })
 end
 
 function ItemBag:packItems()
@@ -377,191 +685,20 @@ function ItemBag:packItems()
     return itemData
 end
 
---- 
+--- ""
 function ItemBag:expandItemBag()
-    local expandSpace = gg.getGlobalCgfIntValue("ItemBagExpandSpace", 5)
-    local cost = gg.getGlobalCgfIntValue("ItemBagUpCost", 666)
-    local costRate = gg.getGlobalCgfIntValue("ItemBagUpCostRate", 1000)
-    local upgradeCount = math.floor(self.expandSpace / expandSpace)
-    for i=1, upgradeCount do
-        cost = math.floor(cost * (costRate + 10000) / 10000)
-    end
-    if cost > 0 then
-        if not self.player.resBag:enoughRes(constant.RES_STARCOIN, cost) then
-            self.player:say(i18n.format("StarCoin is not enough"))
-            return
-        end
-    end
-    self.expandSpace = self.expandSpace + expandSpace
-    if cost > 0 then
-        self.player.resBag:costRes(constant.RES_STARCOIN, cost)
-    end
-    gg.client:send(self.player.linkobj,"S2C_Player_ExpandItemBag",{expandSpace=self.expandSpace})
-end
-
---- 
---@param[type=integer] id id
---@param[type=integer] hour 
---@return[type=table]
-function ItemBag:playerItemCompose(id, hour)
-    local item = self:getItem(id)
-    if not item then
-        self.player:say(i18n.format("you have not this item"))
-        return
-    end
-    local count = table.count(self.composeItems)
-    if count >= gg.getGlobalCgfIntValue("ComposeCount",3) then
-        self.player:say(i18n.format("compose total is full"))
-        return
-    end
-    local itemCfg = ggclass.Item.getItemCfg(item.cfgId)
-    if not itemCfg then
-        self.player:say(i18n.format("item is not config"))
-        return
-    end
-    if hour*3600 < itemCfg.minComposeTime or hour*3600 > itemCfg.maxComposeTime then
-        self.player:say(i18n.format("time is not valid"))
-        return
-    end
-    if self:getItemNumByCfgId(item.cfgId) < itemCfg.composeNeed then
-        self.player:say(i18n.format("item num is not enough"))
-        return
-    end
-    if itemCfg.composeNeedStartCoin and itemCfg.composeNeedStartCoin > 0 then
-        if not self.player.resBag:enoughRes(constant.RES_STARCOIN, itemCfg.composeNeedStartCoin) then
-            self.player:say(i18n.format("less StarCoin"))
-            return
-        end
-    end
-    if itemCfg.composeNeedIce and itemCfg.composeNeedIce > 0 then
-        if not self.player.resBag:enoughRes(constant.RES_ICE, itemCfg.composeNeedIce) then
-            self.player:say(i18n.format("less Ice"))
-            return
-        end
-    end
-    if itemCfg.composeNeedCarboxyl and itemCfg.composeNeedCarboxyl > 0 then
-        if not self.player.resBag:enoughRes(constant.RES_CARBOXYL, itemCfg.composeNeedCarboxyl) then
-            self.player:say(i18n.format("less Carboxyl"))
-            return
-        end
-    end
-    if itemCfg.composeNeedTitanium and itemCfg.composeNeedTitanium > 0 then
-        if not self.player.resBag:enoughRes(constant.RES_TITANIUM, itemCfg.composeNeedTitanium) then
-            self.player:say(i18n.format("less Titanium"))
-            return
-        end
-    end
-    if itemCfg.composeNeedGas and itemCfg.composeNeedGas > 0 then
-        if not self.player.resBag:enoughRes(constant.RES_GAS, itemCfg.composeNeedGas) then
-            self.player:say(i18n.format("less Gas"))
-            return
-        end
-    end
-    local composeItem = self:newComposeItem({player = self.player, hour=hour})
-    composeItem.item = self:newItem(item:pack())
-    composeItem.item.num = itemCfg.composeNeed
-    self.composeItems[id] = composeItem
-
-    if itemCfg.composeNeedStartCoin and itemCfg.composeNeedStartCoin > 0 then
-        self.player.resBag:costRes(constant.RES_STARCOIN, itemCfg.composeNeedStartCoin)
-    end
-    if itemCfg.composeNeedIce and itemCfg.composeNeedIce > 0 then
-        self.player.resBag:costRes(constant.RES_ICE, cfg.composeNeedIce)
-    end
-    if itemCfg.composeNeedCarboxyl and itemCfg.composeNeedCarboxyl > 0 then
-        self.player.resBag:costRes(constant.RES_CARBOXYL, itemCfg.composeNeedCarboxyl)
-    end
-    if itemCfg.composeNeedTitanium and itemCfg.composeNeedTitanium > 0 then
-        self.player.resBag:costRes(constant.RES_TITANIUM, itemCfg.composeNeedTitanium)
-    end
-    if itemCfg.composeNeedGas and itemCfg.composeNeedGas > 0 then
-        self.player.resBag:costRes(constant.RES_GAS, itemCfg.composeNeedGas)
-    end
-    composeItem:setNextTick(hour*3600)
-    self:costItem(item.cfgId, itemCfg.composeNeed, { reason="" })
-
-    gg.client:send(self.player.linkobj,"S2C_Player_ItemComposeAdd",{ item = composeItem:pack() })
-
-
-end
-
---- 
---@param[type=integer] id id
---@return[type=table]
-function ItemBag:playerItemComposeCancel(id)
-    local composeItem = self.composeItems[id]
-    if not composeItem then
-        self.player:say(i18n.format("you have not this item"))
-        return
-    end
-    if composeItem:getLessTick() <= 0 then
-        self.player:say(i18n.format("you have composed item"))
-        return
-    end
-    composeItem:initNextTick()
-    self:addItem(composeItem.item.cfgId, composeItem.item.num, composeItem.item:serialize(), {reason=""})
-    self.composeItems[id] = nil
-    gg.client:send(self.player.linkobj,"S2C_Player_ItemComposeCancel",{ item = composeItem.item:pack() })
-end
-
---- 
---@param[type=integer] id id
---@return[type=table]
-function ItemBag:playerItemComposeSpeed(id, mit)
-    local composeItem = self.composeItems[id]
-    if not composeItem then
-        self.player:say(i18n.format("you have not this item"))
-        return
-    end
-    if composeItem:getLessTick() <= 0 then
-        self.player:say(i18n.format("you have composed item"))
-        return
-    end
-    local lessTick = composeItem:getLessTick()
-    local hour = math.ceil(lessTick/3600)
-    local costPerHour = gg.getGlobalCgfIntValue("ComposeSpeedCostPerHour", 2)
-    local cost = hour * costPerHour
-    if not self.player.resBag:enoughRes(constant.RES_MIT, cost) then
-        self.player:say(i18n.format("less mit"))
-        return
-    end
-    self.player.resBag:costRes(constant.RES_MIT, cost)
-    composeItem:setNextTick(0)
-    composeItem:checkComposeFinish()
-end
-
-function ItemBag:packComposeItems()
-    local items = {}
-    for _, v in pairs(self.composeItems) do
-        table.insert(items, v:pack())
-    end
-    return items
+    
 end
 
 function ItemBag:onSecond()
-    self:checkComposeFinish()
-end
-
-function ItemBag:checkComposeFinish(notNotify)
-    local removeList = {}
-    for id, composeItem in pairs(self.composeItems) do
-        local isFinished = composeItem:checkComposeFinish(notNotify)
-        if isFinished then
-            removeList[#removeList+1] = id
-        end
-    end
-    for _, v in pairs(removeList) do
-        self.composeItems[v] = nil
-    end
 end
 
 function ItemBag:onload()
-    self:checkComposeFinish(false)
+    
 end
 
 function ItemBag:onlogin()
     gg.client:send(self.player.linkobj,"S2C_Player_ItemBag",{expandSpace=self.expandSpace, maxSpace=self.maxSpace, items=self:packItems()})
-    gg.client:send(self.player.linkobj,"S2C_Player_ComposeItemData",{items=self:packComposeItems()})
 end
 
 return ItemBag

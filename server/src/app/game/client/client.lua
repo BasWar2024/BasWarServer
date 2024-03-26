@@ -1,6 +1,6 @@
 local cclient = reload_class("cclient")
 
---- ,nil,player/linkobj
+--- "",""nil,""player/linkobj
 function cclient:filter(linkobj,cmd,args,response,session,ud)
     local player
     if linkobj.pid then

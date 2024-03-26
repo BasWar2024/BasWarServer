@@ -1,13 +1,10 @@
 local SoliderLevel = class("SoliderLevel")
 
+
 function SoliderLevel.getSoliderCfg(cfgId, level)
-    local soliderCfg = cfg.get("etc.cfg.solider")
-    for k,v in pairs(soliderCfg) do
-        if v.cfgId == cfgId and v.level == level then
-            return v
-        end
-    end
-    return nil
+    local key = string.format("%s_%s", cfgId, level)
+    local soliderCfgs = cfg.get("etc.cfg.soliderConfig")
+    return soliderCfgs[key]
 end
 
 function SoliderLevel.create(param)
@@ -18,9 +15,9 @@ end
 
 function SoliderLevel:ctor(param)
     self.player = param.player
-    self.cfgId = param.cfgId                                             -- id
-    self.level = param.level                                             -- 
-    self.nextTick = 0                                                    -- 
+    self.cfgId = param.cfgId                                             -- ""id
+    self.level = param.level                                             -- ""
+    self.nextTick = 0                                                    -- ""
 end
 
 function SoliderLevel:serialize()
@@ -71,8 +68,10 @@ function SoliderLevel:checkLevelUp(notNotify)
     end
     self.nextTick = 0
     self.level = self.level + 1
+    self.player.taskBag:update(constant.TASK_LVUP_SOLIDERS, {cfgId = self.cfgId, count = 1})
+    self.player.taskBag:update(constant.TASK_SOLDIER_LV, {cfgId = self.cfgId, lv = self.level})
     if not notNotify then
-        gg.client:send(self.player.linkobj,"S2C_Player_SoliderLevelUpdate",{ soliderLevel = self:pack() })
+        gg.client:send(self.player.linkobj, "S2C_Player_SoliderLevelUpdate", { soliderLevel = self:pack() })
     end
 end
 

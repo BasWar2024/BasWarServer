@@ -1,25 +1,25 @@
----
+---""
 --@script app.player.playermgr.kuafu
 --@usage
---CGS1,GS2
---  1. GS1token,GS2
---  2. GS1CGS2(token),C,C
---  3. CGS1,GS2,tokenGS2
---  4. GS2C,C
---  5. CGS2(C,)
+--""C，""GS1"",""GS2""
+--  1. GS1""token,""GS2
+--  2. GS1""C""GS2(token""),""C"",""C""
+--  3. C""GS1"",""GS2,""token""GS2""
+--  4. GS2""C"",""C""
+--  5. C""GS2""(""C"","")
 
 
 
----
---@param[type=int|table] linkobj ID|
---@param[type=string] onlogin gg.pack_function
+---""
+--@param[type=int|table] linkobj ""ID|""
+--@param[type=string] onlogin ""gg.pack_function""
 
 local cplayermgr = reload_class("cplayermgr")
 
---- (,,)
---@param[type=table] linkobj 
---@param[type=string] go_serverid id
---@param[type=string] onlogin (gg.pack_function)
+--- ""("","","")
+--@param[type=table] linkobj ""
+--@param[type=string] go_serverid ""id
+--@param[type=string] onlogin ""(""gg.pack_function"")
 function cplayermgr:go_server(linkobj,go_serverid,onlogin)
     local fromServerId = skynet.config.id
     if fromServerId == go_serverid then

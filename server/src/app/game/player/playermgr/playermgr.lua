@@ -1,26 +1,26 @@
---- 
+--- ""
 --@script app.game.player.playermgr
 --@release 2021 1 27 20:40:00
 
 local cplayermgr = class("cplayermgr")
 
 --/*
--- 
+-- ""
 --*/
 function cplayermgr:ctor()
-    self.onlinenum = 0
     self.onlinelimit = tonumber(skynet.config.onlinelimit) or 10240
     self.players = ggclass.ccontainer.new()
     self.id_player = ggclass.ccontainer.new()
     -- token
     self.tokens = ggclass.cthistemp.new()
-    --,900s
+    --"",""900s""
     self.last_tick = {}
+    self.actualNumDict = {}
 end
 
----
---@param[type=int] pid id
---@return[type=table] |nil
+---""
+--@param[type=int] pid ""id
+--@return[type=table] ""|nil
 function cplayermgr:getplayer(pid)
     return self.players:get(pid)
 end
@@ -43,7 +43,7 @@ function cplayermgr:setplayerlasttick(pid)
 end
 
 function cplayermgr:onMinute()
-    local overTick = 900 * 1000          -- 900
+    local overTick = tonumber(skynet.getenv("overtick") or 1500) * 1000
     local nowTick = skynet.timestamp()
     local overPidList = {}
     for pid, lastTick in pairs(self.last_tick) do
@@ -54,7 +54,7 @@ function cplayermgr:onMinute()
     for _, pid in ipairs(overPidList) do
         local player = self:getonlineplayer(pid)
         if player then
-            --
+            --""
             self.last_tick[pid] = nil
         else
             self:delplayer(pid)
@@ -70,22 +70,23 @@ function cplayermgr:addplayer(player)
         self.id_player:add(player,id)
     end
     if player.linkobj then
-        self.onlinenum = self.onlinenum + 1
+        
     else
-        -- 
+        -- ""
         player.is_offline_player = true
-        player.no_save_to_db = true
+        player.no_save_to_db = false
     end
     player.savename = string.format("player.%s",pid)
     gg.savemgr:autosave(player)
+    player:onPlayerMgrAdd()
 end
 
--- ,self.kick
+-- "",""self.kick""
 function cplayermgr:delplayer(pid)
     local player = self:getplayer(pid)
     if player then
         if not player.is_offline_player then
-            self.onlinenum = self.onlinenum - 1
+            
         end
         gg.savemgr:nowsave(player)
         gg.savemgr:closesave(player)
@@ -94,14 +95,15 @@ function cplayermgr:delplayer(pid)
         if id then
             self.id_player:del(id)
         end
+        player:onPlayerMgrDel()
     end
     self.last_tick[pid] = nil
     return player
 end
 
----
---@param[type=int] pid id
---@return[type=table] |nil
+---""
+--@param[type=int] pid ""id
+--@return[type=table] ""|nil
 function cplayermgr:getonlineplayer(pid)
     local player = self:getplayer(pid)
     if player then
@@ -140,33 +142,33 @@ function cplayermgr:allplayer()
     return table.keys(self.players.objs)
 end
 
----
---@param[type=int] pid id
---@param[type=string] reason 
+---""
+--@param[type=int] pid ""id
+--@param[type=string] reason ""
 function cplayermgr:kick(pid,reason)
-    reason = reason or "force logout"
+    reason = reason or "Network Busying"
     local player = self:getplayer(pid)
     if not player then
         return
     end
     if player.linkobj then
         if i18n then
-            reason = i18n.translateto(player.lang,reason)
+            -- reason = i18n.translateto(player.lang,reason)
         end
         gg.client:send(player.linkobj,"S2C_Kick",{reason=reason})
     end
     player.force_exitgame = true
     if player:isdisconnect() then
-        -- 
-        -- 
+        -- ""
+        -- ""
         player:exitgame(ggclass.cplayer.LOGOUT_TYPE_KICK)
     else
         player:disconnect(ggclass.cplayer.LOGOUT_TYPE_KICK)
     end
 end
 
----
---@param[type=string] reason 
+---""
+--@param[type=string] reason ""
 function cplayermgr:kickall(reason)
     --loginqueue.clear()
     local allplayer = self:allplayer()
@@ -191,6 +193,7 @@ function cplayermgr:createplayer(pid,conf)
     --logger.logf("info","playermgr","op=createplayer,pid=%d,player=%s",pid,conf)
     local player = ggclass.cplayer.new(pid)
     player:create(conf)
+    player:aftercreate()
     player.savename = string.format("player.%s",pid)
     gg.savemgr:oncesave(player)
     gg.savemgr:nowsave(player)
@@ -204,7 +207,7 @@ function cplayermgr:_loadplayer(pid)
     return player
 end
 
--- nil
+-- ""nil
 function cplayermgr:recoverplayer(pid)
     assert(tonumber(pid),"invalid pid:" .. tostring(pid))
     assert(self:getplayer(pid) == nil,"try recover a loaded player:" .. tostring(pid))
@@ -218,7 +221,7 @@ function cplayermgr:recoverplayer(pid)
     end
 end
 
--- ,
+-- "",""
 function cplayermgr:loadplayer2(packPlayer,pack_callback)
     local pid = packPlayer.pid
     local player = self:getplayer(pid)
@@ -245,11 +248,11 @@ function cplayermgr:isloading(pid)
     return false
 end
 
----()
---@param[type=int] pid id
---@param[type=table] |nil=
+---""("")
+--@param[type=int] pid ""id
+--@param[type=table] ""|nil=""
 --@usage
---unloadplayer,gg.playermgr:loadplayer_callback
+--""unloadplayer"",""gg.playermgr:loadplayer_callback
 function cplayermgr:loadplayer(pid)
     local player = self:getplayer(pid)
     if player then
@@ -262,11 +265,12 @@ function cplayermgr:loadplayer(pid)
     if not self:getplayer(pid) then
         self:addplayer(player)
     end
+    player = self:getplayer(pid)
     return player
 end
 
----(loadplayer)
---@param[type=int] pid id
+---""(""loadplayer"")
+--@param[type=int] pid ""id
 function cplayermgr:unloadplayer(pid)
     local player = self:getplayer(pid)
     if not player then
@@ -278,10 +282,10 @@ function cplayermgr:unloadplayer(pid)
     self:delplayer(pid)
 end
 
----,,
---@param[type=int] pid id
---@param[type=func] callback 
---@return 
+---"","",""
+--@param[type=int] pid ""id
+--@param[type=func] callback ""
+--@return ""
 function cplayermgr:loadplayer_callback(pid,callback)
     local player = self:loadplayer(pid)
     if not player then
@@ -293,7 +297,7 @@ function cplayermgr:loadplayer_callback(pid,callback)
 end
 
 --/*
--- 
+-- ""
 --*/
 function cplayermgr:transfer_mark(player,linkobj)
     player.linktype = linkobj.linktype
@@ -308,10 +312,10 @@ function cplayermgr:transfer_mark(player,linkobj)
     if device then
         player.device = device
         if player.device.lang then
-            player.lang = player.device.lang
+            --player.lang = player.device.lang
         end
     end
-    -- 
+    -- ""
     local kuafu_forward = linkobj.kuafu_forward
     linkobj.kuafu_forward = nil
     player.kuafu_forward = kuafu_forward
@@ -327,18 +331,77 @@ function cplayermgr:broadcast(func)
     end
 end
 
--- 
-function cplayermgr:tuoguannum(channelId)
-    channelId = channelId or 0
-    local tuoguannum = 0
+function cplayermgr:resetActualNum()
+    self.actualNumDict = {}
+end
+
+-- ""
+function cplayermgr:getActualNum()
+    --""
+    self.actualNumDict.tuoguannum = 0
+    self.actualNumDict.onlinenum = 0
+
+    --""
+    for _, platform in ipairs(constant.getAllPlatform()) do
+        if not self.actualNumDict[platform] then
+            self.actualNumDict[platform] = {}
+        end
+        self.actualNumDict[platform].tuoguannum = 0
+        self.actualNumDict[platform].onlinenum = 0
+    end
+    
     for pid,player in pairs(self.players.objs) do
+        local platform = player.platform
         if not player.linkobj then
-            if channelId == 0 or player.device.channelId then
-                tuoguannum = tuoguannum + 1
+            self.actualNumDict.tuoguannum = self.actualNumDict.tuoguannum + 1
+            if platform and self.actualNumDict[platform] then
+                self.actualNumDict[platform].tuoguannum = self.actualNumDict[platform].tuoguannum + 1
+            end
+        else
+            self.actualNumDict.onlinenum = self.actualNumDict.onlinenum + 1
+            if platform and self.actualNumDict[platform] then
+                self.actualNumDict[platform].onlinenum = self.actualNumDict[platform].onlinenum + 1
             end
         end
     end
-    return tuoguannum
+
+    --""
+    self.actualNumDict.totalnum = self.actualNumDict.tuoguannum + self.actualNumDict.onlinenum
+    if not self.actualNumDict.max_onlinenum then
+        self.actualNumDict.max_onlinenum = self.actualNumDict.onlinenum
+    else
+        if self.actualNumDict.max_onlinenum < self.actualNumDict.onlinenum then
+            self.actualNumDict.max_onlinenum = self.actualNumDict.onlinenum
+        end
+    end
+    if not self.actualNumDict.min_onlinenum then
+        self.actualNumDict.min_onlinenum = self.actualNumDict.onlinenum
+    else
+        if self.actualNumDict.min_onlinenum > self.actualNumDict.onlinenum then
+            self.actualNumDict.min_onlinenum = self.actualNumDict.onlinenum
+        end
+    end
+
+    --""
+    for _, platform in ipairs(constant.getAllPlatform()) do
+        self.actualNumDict[platform].totalnum = self.actualNumDict[platform].tuoguannum + self.actualNumDict[platform].onlinenum
+        if not self.actualNumDict[platform].max_onlinenum then
+            self.actualNumDict[platform].max_onlinenum = self.actualNumDict[platform].onlinenum
+        else
+            if self.actualNumDict[platform].max_onlinenum < self.actualNumDict[platform].onlinenum then
+                self.actualNumDict[platform].max_onlinenum = self.actualNumDict[platform].onlinenum
+            end
+        end
+        if not self.actualNumDict[platform].min_onlinenum then
+            self.actualNumDict[platform].min_onlinenum = self.actualNumDict[platform].onlinenum
+        else
+            if self.actualNumDict[platform].min_onlinenum > self.actualNumDict[platform].onlinenum then
+                self.actualNumDict[platform].min_onlinenum = self.actualNumDict[platform].onlinenum
+            end
+        end
+    end
+
+    return self.actualNumDict
 end
 
 return cplayermgr

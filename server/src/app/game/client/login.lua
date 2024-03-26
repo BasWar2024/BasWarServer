@@ -10,7 +10,7 @@ function net.C2S_Ping(linkobj,args)
         linkobj = player.linkobj
         player.heartbeatCount = (player.heartbeatCount or 0) + 1
         if player.heartbeatCount % changeCount == 0 then
-            -- token
+            -- token""
             token = string.gen_token()
             linkobj.token = token
             gg.playermgr.tokens:set(token,{account = player.account},skynet.config.tokentick)
@@ -42,11 +42,15 @@ function net.is_low_version(version)
     return false
 end
 
+function net.updateroleid(account, roleid)
+    gg.mongoProxy:send("updateroleid", account, roleid)
+end
+
 function net.checktoken(linkobj,args,what)
     local token = assert(args.token)
     local account = assert(args.account)
     local version = assert(args.version)
-    local device = args.device       -- 
+    local device = args.device       -- ""
     local ip = linkobj.ip
     if gg.starting then
         local response = httpc.answer.response(httpc.answer.code.SERVER_STARTING)
@@ -88,7 +92,7 @@ function net.checktoken(linkobj,args,what)
             return false,response
         end
         if token_data.kuafu then
-            -- 
+            -- ""
             token_data.kuafu = nil
             linkobj.kuafu_forward = token_data
         end
@@ -117,16 +121,30 @@ end
 function net.C2S_CreateRole(linkobj,args)
     local checktoken = assert(args.checktoken)
     local account = assert(args.account)
-    local name = assert(args.name)
-    local heroId = args.heroId or 1001
+    local headIcon = assert(args.head)
+    local race = args.race or 0
+    local roleid = args.roleid
+    local name = "roleName"
+    if roleid then
+        roleid = tonumber(roleid)
+        if roleid < 1000 and roleid > 0 then
+            name = args.name            
+        end
+    end
     local ok,response = net.checktoken(linkobj,checktoken,"CreateRole")
     if not ok then
         gg.client:send(linkobj,"S2C_CreateRoleFail",response)
         return
     end
-    local errcode = gg.isValidName(name)
-    if errcode ~= httpc.answer.code.OK then
-        local response = httpc.answer.response(errcode)
+    -- local errcode = gg.isValidName(name)
+    -- if errcode ~= httpc.answer.code.OK then
+    --     local response = httpc.answer.response(errcode)
+    --     response.status = 200
+    --     gg.client:send(linkobj,"S2C_CreateRoleFail",response)
+    --     return
+    -- end
+    if type(headIcon) ~= "string" then
+        local response = httpc.answer.response(httpc.answer.code.HEAD_FMT_ERR)
         response.status = 200
         gg.client:send(linkobj,"S2C_CreateRoleFail",response)
         return
@@ -134,13 +152,14 @@ function net.C2S_CreateRole(linkobj,args)
     local role = {
         account = account,
         name = name,
-        heroId = heroId,
+        race = race,
+        headIcon = headIcon,
     }
     local appid = skynet.config.appid
     local serverid = skynet.config.id
-    local status,response = gg.loginserver:addrole(account,serverid,role,nil,appid,1000000,2000000000)
+    local status,response = gg.loginserver:addrole(account,serverid,role,roleid,appid,1000000,2000000000)
     if status ~= 200 then
-        gg.client:send(linkobj,"S2C_CreateRoleFail",{status = status,})
+        gg.client:send(linkobj,"S2C_CreateRoleFail",{status = status})
         return
     end
     if response.code ~= httpc.answer.code.OK then
@@ -158,10 +177,15 @@ function net.C2S_CreateRole(linkobj,args)
     role.account = account
     role.currentServerId = serverid
     role.createServerId = serverid
+    role.race = race
+    role.platform = roledata.platform
+    role.sdk = roledata.sdk
     gg.playermgr:createplayer(role.roleid,role)
     gg.client:send(linkobj,"S2C_CreateRoleSuccess",{
         role = role,
     })
+
+    gg.internal:send(".gamelog", "api", "addRegisterAccountLog", account, roledata.roleid, serverid,role.platform)
 end
 
 function net._entergame(linkobj,args)
@@ -183,6 +207,13 @@ function net._entergame(linkobj,args)
 
     local player = gg.playermgr:getplayer(pid)
     if player then
+        if player.account ~= checktoken.account then
+            local response = httpc.answer.response(httpc.answer.code.ACCT_NOMATCH)
+            response.status = 200
+            linkobj = linkobj.linkobj or linkobj
+            gg.client:send(linkobj,"S2C_EnterGameFail",response)
+            return
+        end
         replace = true
         if not player:isdisconnect() then
             -- TODO: give tip to been replace's linkobj?
@@ -191,13 +222,13 @@ function net._entergame(linkobj,args)
             player:disconnect(ggclass.cplayer.LOGOUT_TYPE_REPLACE)
         end
     else
-        -- 
+        -- ""
         local open_kuafu = skynet.getenv("open_kuafu") == "1"
         if open_kuafu then
             local ok,onlineState,currentServerId = gg.route(pid)
             if ok and onlineState ~= ggclass.cplayer.ONLINE_STATE_OFFLINE then
                 if currentServerId ~= skynet.config.id then
-                    -- online
+                    -- ""online""
                     linkobj.roleid = pid
                     gg.playermgr:go_server(linkobj,currentServerId)
                     return
@@ -212,6 +243,13 @@ function net._entergame(linkobj,args)
             gg.client:send(linkobj,"S2C_EnterGameFail",response)
             return
         end
+        if player.account ~= checktoken.account then
+            local response = httpc.answer.response(httpc.answer.code.ACCT_NOMATCH)
+            response.status = 200
+            linkobj = linkobj.linkobj or linkobj
+            gg.client:send(linkobj,"S2C_EnterGameFail",response)
+            return
+        end
     end
     if gg.isBanEnterGame(player) then
         local response = httpc.answer.response(httpc.answer.code.BAN_ROLE)
@@ -220,7 +258,7 @@ function net._entergame(linkobj,args)
     end
     gg.playermgr:bind_linkobj(player,linkobj)
     if not replace then
-        -- gg.playermgr:loadplayerentergame,player
+        -- gg.playermgr:loadplayer""entergame"",player""
         if gg.playermgr:getplayer(pid) then
             gg.playermgr:delplayer(pid)
         end
@@ -230,6 +268,7 @@ function net._entergame(linkobj,args)
         account = player.account,
         linkid = linkobj.linkid,
     }
+    net.updateroleid(player.account, pid)
     gg.client:send(linkobj,"S2C_EnterGameSuccess",response)
     local brief = player:entergame(replace)
     gg.client:send(linkobj,"S2C_EnterGameFinish",{ brief = brief })

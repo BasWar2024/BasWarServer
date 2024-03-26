@@ -1,20 +1,31 @@
---- game
+--- game""
 --@script app.game.gg.gg
 
 gg.invalidNameWords = {' ','\t','\n','\r'}
 
+
 function gg.init()
-    gg.client.queue = true
+    gg.client.queue = false
     gg.cluster.queue = false
     gg.internal.queue = false
     gg.ignoreCfg = false
     gg._init()
 
-    gg.dbmgr = ggclass.cdbmgr.new()
+    --""
+    skynet.newservice("app/mongodb/main", ".mongodb")
+    gg.mongoProxy = ggclass.MongodbProxy.new()
+
+    skynet.newservice("app/redisdb/main", ".redisdb")
+    gg.redisProxy = ggclass.RedisProxy.new()
+
     gg.savemgr = ggclass.csavemgr.new()
     gg.timectrl = ggclass.ctimectrl.new()
-    gg.shareMgr = ggclass.ShareMgr.new()
+
+    gg.shareProxy = ggclass.ShareProxy.new()
+
     gg.playerProxy = ggclass.PlayerProxy.new()
+    gg.chainBridgeProxy = ggclass.ChainBridgeProxy.new()
+
 
     gg.playermgr = ggclass.cplayermgr.new()
     gg.loginserver = ggclass.cloginserver.new({
@@ -23,7 +34,7 @@ function gg.init()
         appkey = skynet.getenv("appkey"),
         loginserver_appkey = skynet.getenv("loginserver_appkey"),
     })
-    -- : 
+    -- "": ""
     gg.initI18n()
     gg.reqresp = ggclass.creqresp.new()
 
@@ -41,30 +52,39 @@ function gg.init()
     gg.onlineServerList = {}
     gg.version = gg.readVersion()
     gg.nameFilter = ggclass.WordFilter.new(cfg.get("etc.cfg.filterWords"),gg.invalidNameWords)
-
-    gg.resMgr = ggclass.ResMgr.new()
-    gg.bigmapMgr = ggclass.BigmapMgr.new()
+    gg.chatFilter = ggclass.WordFilter.new(cfg.get("etc.cfg.filterWords"))
+    gg.dynamicCfg = ggclass.DynamicCfg.new()
+    gg.multicastProxy = ggclass.MulticastProxy.new()
+    gg.starmapProxy = ggclass.StarmapProxy.new()
+    gg.unionProxy = ggclass.UnionProxy.new()
+    gg.chatProxy = ggclass.ChatProxy.new()
+    gg.mailProxy = ggclass.MailProxy.new()
+    gg.opCfgProxy = ggclass.OpCfgProxy.new()
+    gg.rankProxy = ggclass.RankProxy.new()
+    gg.matchProxy = ggclass.MatchProxy.new()
+    gg.activityProxy = ggclass.ActivityProxy.new()
+    gg.battleMgr = ggclass.BattleMgr.new()
+    -- gg.starMapExcel = ggclass.StarMapExcel.new()
     if skynet.config.centerserver == nil then
         gg.uniqueservice("center")
     end
     gg.proxyservice("center")
     if gg.isLocalServer() then
-        -- ,
+        -- "",""
         --gg.uniqueservice("scenemgr")
     end
-    --gg.sceneMgrProxy = ggclass.SceneMgrProxy.new()
-    -- TODO: 
-    skynet.newservice("app/rank/main",".rank")        --
 
-    gg.initItemProductCfg()
-    gg.initItemProductTotal()
+    -- TODO: ""
+    skynet.newservice("app/multicast/main", ".multicast")       --""
+    skynet.newservice("app/gamelog/main",".gamelog")            --""
+
 end
 
 function gg.start()
     gg.actor:start()
     gg.startTcpGate()
     --gg.startKcpGate()
-    gg.startWebsocketGate()
+    -- gg.startWebsocketGate()
     if gg.standalone then
         gg.cluster:open()
         logger.print("cluster:open")
@@ -77,10 +97,14 @@ function gg.start()
     logger.print("timectrl:tick")
     gg.client:open()
     logger.print("client:open")
-    -- TODO: 
+    -- TODO: ""
     gg.briefMgr.event:addListener("onDelBriefAttrs",gg)
     gg.briefMgr.event:addListener("onSetBriefAttrs",gg)
     gg.briefMgr:start()
+
+    gg.unionProxy:start()
+    gg.starmapProxy:start()
+    gg.matchProxy:start()
     if gg.standalone then
         gg.closeEnterGame = true
         gg.closeCreateRole = true
@@ -95,7 +119,6 @@ function gg.exit()
     gg.briefMgr:exit()
     gg.playermgr:kickall()
     gg.savemgr:saveall()
-    gg.dbmgr:shutdown()
     gg._exit()
 end
 
@@ -145,7 +168,7 @@ function gg._status()
         debug_port = skynet.config.debug_port,
         runId = gg.runId,
 
-        -- 
+        -- ""
         tcp_gate = gg.gate.tcp,
         kcp_gate = gg.gate.kcp,
         websocket_gate = gg.gate.websocket,
@@ -155,43 +178,47 @@ function gg._status()
 end
 
 function gg.heartbeatStatus()
-    return {
+    local baseInfo = {
         onlinelimit = gg.playermgr.onlinelimit,
-        onlinenum = gg.playermgr.onlinenum,
-        tuoguannum = gg.playermgr:tuoguannum(),
-        min_onlinenum = gg.min_onlinenum,
-        max_onlinenum = gg.max_onlinenum,
         linknum = gg.client and gg.client.linkobjs.length or 0,
         cpu = skynet.stat("cpu"),
         message = skynet.stat("message"),
         mqlen = skynet.mqlen(),
         task = skynet.task(),
     }
+    local actualNumDict = gg.playermgr:getActualNum()
+    for k,v in pairs(actualNumDict) do
+        baseInfo[k] = v
+    end
+    return baseInfo
 end
 
---- ?
----@param[type=string] account 
+--- ""?
+---@param[type=string] account ""
 ---@param[type=string] ip ip
 function gg.isCloseCreateRole(account,ip)
     return gg.closeCreateRole
 end
 
---- 
----@param[type=string] account 
+--- ""
+---@param[type=string] account ""
 ---@param[type=string] ip ip
 function gg.isCloseEnterGame(account,ip)
     return gg.closeEnterGame
 end
 
---- 
----@param[type=table] player 
+--- ""
+---@param[type=table] player ""
 function gg.isBanEnterGame(player)
+    if player.banGame then
+        return true
+    end
     return false
 end
 
---- ip
---@param[type=string] ip IP
---@return[type=bool] true=,false=
+--- ""ip
+--@param[type=string] ip IP""
+--@return[type=bool] true="",false=""
 function gg.isDebugLoginSafeIp(ip)
     if ip == "127.0.0.1" then
         return true
@@ -199,7 +226,7 @@ function gg.isDebugLoginSafeIp(ip)
     return false
 end
 
---- 
+--- ""
 function gg.isValidName(name)
     local code = gg.nameFilter:isValidText(name,1,20)
     if code ~= ggclass.WordFilter.CODE_OK then
@@ -213,15 +240,14 @@ function gg.isValidName(name)
             return httpc.answer.code.NAME_ERR
         end
     end
-    if gg.isRepeatName(name) then
-        return httpc.answer.code.REPEAT_NAME
-    end
+    -- if gg.isRepeatName(name) then
+    --     return httpc.answer.code.REPEAT_NAME
+    -- end
     return httpc.answer.code.OK
 end
 
 function gg.isRepeatName(name)
-    local db = gg.dbmgr:getdb()
-    local data = db.player:findOne({["attr.name"] = name}, {pid = 1})
+    local data = gg.mongoProxy.player:findOne({["attr.name"] = name}, {pid = 1})
     if data then
         return true
     end
@@ -229,18 +255,9 @@ function gg.isRepeatName(name)
 end
 
 function gg.logStatus()
-    -- 5
+    -- ""5""，""
     if gg.time.time() % 300 == 0 then
-        gg.min_onlinenum = nil
-        gg.max_onlinenum = nil
-    end
-    gg.min_onlinenum = gg.min_onlinenum or gg.playermgr.onlinenum
-    gg.max_onlinenum = gg.max_onlinenum or gg.playermgr.onlinenum
-    if gg.playermgr.onlinenum < gg.min_onlinenum then
-        gg.min_onlinenum = gg.playermgr.onlinenum
-    end
-    if gg.playermgr.onlinenum > gg.max_onlinenum then
-        gg.max_onlinenum = gg.playermgr.onlinenum
+        gg.playermgr:resetActualNum()
     end
     local server = gg.status()
     logger.logf("info","status","serverid=%s,onlinenum=%s,tuoguannum=%s,min_onlinenum=%s,max_onlinenum=%s,linknum=%s,onlinelimit=%s,cpu=%s,message=%s,mqlen=%s,task=%s,busyness=%s",
@@ -251,7 +268,7 @@ function gg.logStatus()
         assert(status==200)
         assert(response.code == httpc.answer.code.OK)
     end
-    local version = "0.0.0"     -- 
+    local version = "0.0.0"     -- ""
     local platform = "local"
     local status,response = gg.loginserver:serverlist(version,platform)
     assert(status==200)
@@ -284,22 +301,25 @@ function gg.logStatus()
         gg.is_new = 0
         gg.is_down = 0
     end
+    if gg.time.time() % 60 == 0 then
+        gg.internal:send(".gamelog", "api", "addServerStatusLog", server)
+    end
 end
 
---- ()
----@param[type=table] linkobj 
----@param[type=string] err 
+--- ""("")
+---@param[type=table] linkobj ""
+---@param[type=string] err ""
 function gg.sayError(linkobj,err)
     gg.client:send(linkobj,"S2C_Msg_Error",{
         err = err,
     })
 end
 
---- ,
----@param[type=int] pid id
----@return[type=bool] true=,false=
----@return[type=int]  0=,1=,2=
----@return[type=string] id
+--- "",""
+---@param[type=int] pid ""id
+---@return[type=bool] true="",false=""
+---@return[type=int] "" 0="",1="",2=""
+---@return[type=string] ""id
 function gg.route(pid)
     local brief = gg.briefMgr:getBrief(pid)
     if not brief then
@@ -308,53 +328,56 @@ function gg.route(pid)
     return true,brief.onlineState,brief.currentServerId
 end
 
---- 
----@param[type=table] order ,game/client/http/api/payback
+--- ""
+---@param[type=table] order "",""game/client/http/api/payback
 function gg.payback(order)
     local account = order.account
     local roleid = order.roleid
 end
 
---- : 
+--- "": ""
 function gg.onSecond()
     local now = gg.time.time()
     if now % 10 == 0 then
         gg.logStatus()
     end
     gg.playermgr:broadcast(ggclass.cplayer.onSecond)
+    if gg.battleMgr then
+        gg.battleMgr:onSecond()
+    end
 end
 
-function gg.on_minute_update()
+function gg.onMinuteUpdate()
     gg.playermgr:onMinute()
     gg.playermgr:broadcast(ggclass.cplayer.onMinuteUpdate)
 end
 
---- : 5
+--- "": 5""
 function gg.onFiveMinuteUpdate()
     gg.playermgr:broadcast(ggclass.cplayer.onFiveMinuteUpdate)
 end
 
---- : 
+--- "": ""
 function gg.onHalfHourUpdate()
     gg.playermgr:broadcast(ggclass.cplayer.onHalfHourUpdate)
 end
 
---- : 
+--- "": ""
 function gg.onHourUpdate()
     gg.playermgr:broadcast(ggclass.cplayer.onHourUpdate)
 end
 
---- : 
+--- "": ""
 function gg.onDayUpdate()
     gg.playermgr:broadcast(ggclass.cplayer.onDayUpdate)
 end
 
---- : 
+--- "": ""
 function gg.onMondayUpdate()
     gg.playermgr:broadcast(ggclass.cplayer.onMondayUpdate)
 end
 
---- : 
+--- "": ""
 function gg.onSundayUpdate()
     gg.playermgr:broadcast(ggclass.cplayer.onSundayUpdate)
 end
@@ -375,72 +398,40 @@ function gg:onSetBriefAttrs(event,brief,attrs)
     end
 end
 
---- 
-function gg.initItemProductCfg()
-    gg.itemProductCfg = {}
-    local itemProductCfg = gg.shareMgr:call("getItemProductCfg")
-    if not itemProductCfg or #itemProductCfg == 0 then
-        itemProductCfg = {}
-        local itemCfg = cfg.get("etc.cfg.item")
-        for k, v in pairs(itemCfg) do
-            if v.product then
-                gg.itemProductCfg[v.cfgId] = { cfgId = v.cfgId, product = v.product }
-                itemProductCfg[#itemProductCfg+1] = gg.itemProductCfg[v.cfgId]
-            end
-        end
-        gg.shareMgr:call("setItemProductCfg", itemProductCfg)
-    else
-        local i=1
-        for k, v in pairs(itemProductCfg) do
-            gg.itemProductCfg[v.cfgId] = v
-        end
+--""
+function gg.initSystemNoticeCfg()
+    local noticeText = gg.shareProxy:call("getSystemNoticeInfo")
+    if noticeText then
+        gg.systemNoticeCfg = cjson.decode(noticeText)
     end
 end
 
---- 
-function gg.updateItemProductCfg()
-    local itemProductCfg = gg.shareMgr:call("getItemProductCfg")
-    if itemProductCfg and #itemProductCfg > 0  then
-        for k, v in pairs(itemProductCfg) do
-            gg.itemProductCfg[v.cfgId] = v
-        end
-    end
+--""
+function gg.updateSystemNoticeCfg()
+    gg.initSystemNoticeCfg()
 end
 
---
-function gg.initItemProductTotal()
-    for quality=2,5 do
-        local defaultValue = 0
-        if quality == 5 then
-            defaultValue = gg.getGlobalCgfIntValue("ProductTotal5",9)
-        elseif quality == 4 then
-            defaultValue = gg.getGlobalCgfIntValue("ProductTotal4",999)
-        elseif quality == 3 then
-            defaultValue = gg.getGlobalCgfIntValue("ProductTotal3",9999)
-        elseif quality == 2 then
-            defaultValue = gg.getGlobalCgfIntValue("ProductTotal2",99999)
-        end
-        local total =  gg.shareMgr:call("getProductTotal", quality)
-        if not total then
-            gg.shareMgr:call("setProductTotal", quality, defaultValue)
-        end
+function gg.isGmRobotPlayer(pid)
+    if pid >= constant.ROBOT_PVE_MIN_PLAYERID and pid <= constant.ROBOT_PVE_MAX_PLAYERID then
+        return true
     end
+    return false
 end
 
---- : 
+--- "": ""
 function gg.onMonthUpdate()
     gg.playermgr:broadcast(ggclass.cplayer.onMonthUpdate)
 end
 
---- 
+--- ""
 function gg.onHotfixCfg(filename)
+
 end
 
---- AI
+--- ""AI""
 function gg.onHotfixAI(aiName)
+
 end
-
-
 
 function __hotfix(module)
 end
