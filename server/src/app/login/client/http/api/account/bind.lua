@@ -1,4 +1,4 @@
----
+---""
 --@module api.account.bind
 --@author sw
 --@release 2020/5/15 14:23:00
@@ -9,19 +9,19 @@
 --params:
 --  type=table encode=json
 --  {
---      sign        [required] type=string help=
+--      sign        [required] type=string help=""
 --      appid       [required] type=string help=appid
---      account     [required] type=string help=
---      passwd      [requried] type=string help=(md5)
---      realName    [required] type=string help=
---      IDCard      [required] type=string help=
---      vistorAccount [required] type=string help=
+--      account     [required] type=string help=""
+--      passwd      [requried] type=string help=""(md5"")
+--      realName    [required] type=string help=""
+--      IDCard      [required] type=string help=""
+--      vistorAccount [required] type=string help=""
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=number help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=number help=""
 --  }
 --example:
 --  curl -v 'http://127.0.0.1:4000/api/account/bind' -d '{"sign":"debug","appid":"gg","account":"lgl","passwd":"1","sdk":"local","platform":"local"}'

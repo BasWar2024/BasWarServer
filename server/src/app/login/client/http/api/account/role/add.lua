@@ -1,6 +1,5 @@
----
+---""
 --@module api.account.role.add
---@author sundream
 --@release 2018/12/25 10:30:00
 --@usage
 --api:      /api/account/role/add
@@ -9,32 +8,32 @@
 --params:
 --  type=table encode=json
 --  {
---      sign        [required] type=string help=
+--      sign        [required] type=string help=""
 --      appid       [required] type=string help=appid
---      account     [required] type=string help=
---      serverid    [required] type=string help=ID
---      roleid      [optional] type=number help=ID,genrolekey,minroleid,maxroleid
---      genrolekey  [optional] type=string help=genroleidkey
---      minroleid   [optional] type=number help=ID
---      maxroleid   [optional] type=number help=ID(),[minroleid,maxroleid)
---      role        [required] type=table encode=json help=
+--      account     [required] type=string help=""
+--      serverid    [required] type=string help=""ID
+--      roleid      [optional] type=number help=""ID,""genrolekey,minroleid,maxroleid
+--      genrolekey  [optional] type=string help=""genroleid""key
+--      minroleid   [optional] type=number help=""ID
+--      maxroleid   [optional] type=number help=""ID(""),""[minroleid,maxroleid)
+--      role        [required] type=table encode=json help=""
 --                  role = {
---                      name =      [required] type=string help=
---                      heroId =    [optional] type=number help=id
---                      level =     [optional] type=number default=0 help=
---                      gold =      [optional] type=number default=0 help=
---                      rmb =       [optional] type=number default=0 help=rmb
+--                      name =      [required] type=string help=""
+--                      heroId =    [optional] type=number help=""id
+--                      level =     [optional] type=number default=0 help=""
+--                      gold =      [optional] type=number default=0 help=""
+--                      rmb =       [optional] type=number default=0 help=""rmb
 --                  }
 --  }
 --
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=number help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=number help=""
 --      data = {
---          role =  [required] type=table help=
---                              role/api/account/role/get
+--          role =  [required] type=table help=""
+--                              role""/api/account/role/get
 --      }
 --  }
 --example:
@@ -72,10 +71,16 @@ function handler.exec(linkobj,header,args)
         httpc.send_json(linkobj,200,httpc.answer.response(httpc.answer.code.SIGN_ERR))
         return
     end
+    local accountobj = accountmgr.getaccount(account)
+    if not accountobj then
+        httpc.send_json(linkobj,200,httpc.answer.response(httpc.answer.code.ACCT_NOEXIST))
+        return
+    end
     local roleid
-    if request.roleid then
+    if request.roleid and request.roleid > 0 then
         roleid = request.roleid
     else
+        --[[
         if not (request.genrolekey and
             request.minroleid and
             request.maxroleid) then
@@ -84,7 +89,12 @@ function handler.exec(linkobj,header,args)
             httpc.send_json(linkobj,200,response)
             return
         end
-        roleid = accountmgr.genroleid(appid,request.genrolekey,request.minroleid,request.maxroleid)
+        local randomCnt = math.random(1, 20)
+        for i = 1, randomCnt do
+            roleid = accountmgr.genroleid(appid,request.genrolekey,request.minroleid,request.maxroleid)
+        end
+        ]]
+        roleid = accountobj.accountid
         if not roleid then
             httpc.send_json(linkobj,200,httpc.answer.response(httpc.answer.code.ROLE_OVERLIMIT))
             return
@@ -92,13 +102,16 @@ function handler.exec(linkobj,header,args)
     end
     role.roleid = roleid
     role.rmb = role.rmb or 0
+    role.platform = accountobj.platform
+    role.sdk = accountobj.sdk
     if role.name == "roleName" then
-        role.name = "user" .. roleid
+        role.name = "GB" .. roleid
     end
     local code,err = accountmgr.addrole(account,appid,serverid,role)
     local response = httpc.answer.response(code)
     if code == httpc.answer.code.OK then
         response.data = {role=role}
+        gg.internal:call(".gamelog", "api", "bindAccountWithInviteCode", account, roleid, accountobj.inviteCode)
     end
     if err then
         response.message = string.format("%s|%s",response.message,err)

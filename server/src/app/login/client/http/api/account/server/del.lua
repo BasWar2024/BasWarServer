@@ -1,6 +1,5 @@
----
+---""
 --@module api.account.server.del
---@author sundream
 --@release 2018/12/25 10:30:00
 --@usage
 --api:      /api/account/server/del
@@ -9,15 +8,15 @@
 --params:
 --  type=table encode=json
 --  {
---      sign        [required] type=string help=
+--      sign        [required] type=string help=""
 --      appid       [required] type=string help=appid
---      serverid    [required] type=string help=ID
+--      serverid    [required] type=string help=""ID
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=string help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=string help=""
 --  }
 --example:
 --  curl -v 'http://127.0.0.1:4000/api/account/server/del' -d '{"sign":"debug","appid":"gg","serverid":"game1"}'

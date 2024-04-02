@@ -1,4 +1,4 @@
----TOKEN
+---TOKEN""
 --@module api.account.checktoken
 --@author sw
 --@release 2018/12/25 10:30:00
@@ -9,16 +9,16 @@
 --params:
 --  type=table encode=json
 --  {
---      sign        [required] type=string help=
+--      sign        [required] type=string help=""
 --      appid       [required] type=string help=appid
---      account     [required] type=string help=
---      token       [required] type=string help=TOKEN
+--      account     [required] type=string help=""
+--      token       [required] type=string help=""TOKEN
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=number help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=number help=""
 --  }
 --example:
 --  curl -v 'http://127.0.0.1:4000/api/account/checktoken' -d '{"appid":"gg","account":"lgl","token":"0de3595c4666e9ce8c5b64534d811460","sign":"debug"}'
@@ -65,8 +65,6 @@ function handler.exec(linkobj,header,args)
 
     local response = httpc.answer.response(httpc.answer.code.OK)
     httpc.send_json(linkobj,200,response)
-
-    return
 end
 
 function handler.POST(linkobj,header,query,body)

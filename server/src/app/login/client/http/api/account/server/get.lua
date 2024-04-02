@@ -1,6 +1,5 @@
----
+---""
 --@module api.account.server.get
---@author sundream
 --@release 2018/12/25 10:30:00
 --@usage
 --api:      /api/account/server/get
@@ -9,17 +8,17 @@
 --params:
 --  type=table encode=json
 --  {
---      sign        [required] type=string help=
+--      sign        [required] type=string help=""
 --      appid       [required] type=string help=appid
---      serverid    [required] type=string help=ID
+--      serverid    [required] type=string help=""ID
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=number help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=number help=""
 --      data = {
---          server =    [optional] type=table help=,api/account/server/add
+--          server =    [optional] type=table help="",""api/account/server/add
 --      }
 --  }
 --example:

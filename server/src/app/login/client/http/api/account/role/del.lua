@@ -1,6 +1,5 @@
----
+---""
 --@module api.account.role.del
---@author sundream
 --@release 2018/12/25 10:30:00
 --@usage
 --api:      /api/account/role/del
@@ -10,15 +9,15 @@
 --  type=table encode=json
 --  {
 --      appid       [required] type=string help=appid
---      sign        [required] type=string help=
---      roleid      [required] type=number help=ID
---      forever     [optional] type=boolean help=()
+--      sign        [required] type=string help=""
+--      roleid      [required] type=number help=""ID
+--      forever     [optional] type=boolean help=""("")
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=number help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=number help=""
 --  }
 --example:
 --  curl -v 'http://127.0.0.1:4000/api/account/role/del' -d '{"sign":"debug","appid":"gg","roleid":1000000}'

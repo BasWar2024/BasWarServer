@@ -1,4 +1,4 @@
----
+---""
 --@module api.account.vistorLogin
 --@author sw
 --@release 2018/12/25 10:30:00
@@ -9,23 +9,23 @@
 --params:
 --  type=table encode=json
 --  {
---      sign        [required] type=string help=
+--      sign        [required] type=string help=""
 --      appid       [required] type=string help=appid
---      account     [required] type=string help=,
---      passwd      [required] type=string help=
---      platform    [required] type=string help=
---      sdk         [required] type=string help=sdk
---      device      [required] type=json help=(login.protoDeviceType)
+--      account     [required] type=string help="",""
+--      passwd      [required] type=string help=""
+--      platform    [required] type=string help=""
+--      sdk         [required] type=string help=""sdk
+--      device      [required] type=json help=""(""login.proto""DeviceType)
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=number help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=number help=""
 --      data = {
---          token =     [required] type=string help=TOKEN
---          account =   [optional] type=string help=
---          passwd =   [optional] type=string help=
+--          token =     [required] type=string help=""TOKEN
+--          account =   [optional] type=string help=""
+--          passwd =   [optional] type=string help=""
 --      }
 --  }
 --example:
@@ -69,7 +69,7 @@ function handler.exec(linkobj,header,args)
             account, passwd = accountmgr.genrandomaccount(appid,appid)
             accountmgr.addaccount({
                 account = account,
-                passwd = passwd,
+                passwd = accountmgr.cryptPassword(passwd),
                 sdk = sdk,
                 openid = account,
                 platform = platform,
@@ -82,8 +82,8 @@ function handler.exec(linkobj,header,args)
                 httpc.send_json(linkobj,200,httpc.answer.response(httpc.answer.code.ACCT_NOEXIST))
                 return
             end
-            if passwd ~= accountobj.passwd then
-                httpc.send_json(linkobj,200,httpc.answer.response(httpc.answer.code.PASSWD_NOMATCH))
+            if accountmgr.cryptPassword(passwd) ~= accountobj.passwd then
+                httpc.send_json(linkobj,200,httpc.answer.response(httpc.answer.code.PASSWD_ERROR))
                 return
             end
             if not accountobj.isVistor then

@@ -1,6 +1,5 @@
----
+---""
 --@module api.account.role.rebindserver
---@author sundream
 --@release 2018/12/25 10:30:00
 --@usage
 --api:      /api/account/role/rebindserver
@@ -9,18 +8,18 @@
 --params:
 --  type=table encode=json
 --  {
---      sign            [required] type=string help=
+--      sign            [required] type=string help=""
 --      appid           [required] type=string help=appid
---      account         [required] type=string help=
---      new_serverid    [required] type=string help=ID
---      old_roleid      [required] type=number help=ID
---      new_roleid      [required] type=number help=ID(IDID)
+--      account         [required] type=string help=""
+--      new_serverid    [required] type=string help=""ID
+--      old_roleid      [required] type=number help=""ID
+--      new_roleid      [required] type=number help=""ID(""ID""ID"")
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=number help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=number help=""
 --  }
 --example:
 --  curl -v 'http://127.0.0.1:4000/api/account/role/rebindserver' -d '{"sign":"debug","appid":"gg","account":"lgl","old_roleid":1000000,"new_roleid":1000000,"new_serverid":"game2"}'

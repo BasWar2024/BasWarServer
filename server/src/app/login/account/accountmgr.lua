@@ -1,12 +1,14 @@
----
+---""
 --@module accountmgr
 --@usage
---mongo
---: role =>  {roleid=xxx,appid=xxx,account=xxx,createServerId=xxx,...}
---: account => {account=xxx,passwd=xxx,sdk=xxx,platform=xxx,...}
---: account_roles => {account=xxx,appid=xxx,roles={ID}}
---: account_deleted_roles => {account=xxx,appid=xxx,roles={ID}}
+--mongo""
+--"": role =>  {roleid=xxx,appid=xxx,account=xxx,createServerId=xxx,...}
+--"": account => {account=xxx,passwd=xxx,sdk=xxx,platform=xxx,...}
+--"": account_roles => {account=xxx,appid=xxx,roles={""ID""}}
+--"": account_deleted_roles => {account=xxx,appid=xxx,roles={""ID""}}
 
+local md5 =	require	"md5"
+local bson = require "bson"
 
 accountmgr = accountmgr or {}
 
@@ -17,13 +19,11 @@ function accountmgr.addaccountalias(alias,account)
         account = account,
         createTime = os.time(),
     }
-    local db = gg.dbmgr:getdb()
-    db.accountalias:update({alias=alias},data,true,false)
+    gg.mongoProxy.accountalias:update({alias=alias},data,true,false)
 end
 
 function accountmgr.getrealaccount(account)
-    local db = gg.dbmgr:getdb()
-    local doc = db.accountalias:findOne({alias=account})
+    local doc = gg.mongoProxy.accountalias:findOne({alias=account})
     if doc == nil then
         return nil
     else
@@ -33,9 +33,30 @@ function accountmgr.getrealaccount(account)
 end
 
 function accountmgr.saveaccount(accountobj)
-    local db = gg.dbmgr:getdb()
     local account = assert(accountobj.account)
-    db.account:update({account=account},accountobj,true,false)
+    local data = {
+        account = accountobj.account,
+        openid = accountobj.openid,
+        sdk = accountobj.sdk,
+        passwd = accountobj.passwd,
+        verifyCode = accountobj.verifyCode,
+        platform = accountobj.platform,
+        createTime = accountobj.createTime,
+        create_time = accountobj.create_time,
+        device = accountobj.device,
+        firstTime = accountobj.firstTime,
+        inviteCode = accountobj.inviteCode,
+        accountid = accountobj.accountid,
+        fatherInviteCode = accountobj.fatherInviteCode,
+        chain_id = accountobj.chain_id,
+        owner_address = accountobj.owner_address,
+        update_time = skynet.timestamp()
+    }
+    gg.mongoProxy.account:update({ account = account },{["$set"] = data },true,false)
+end
+
+function accountmgr.updatepasswd(account, passwd)
+    gg.mongoProxy.account:update({ account = account },{["$set"] = {passwd=passwd}},false,false)
 end
 
 function accountmgr.getaccount(account)
@@ -43,8 +64,7 @@ function accountmgr.getaccount(account)
     if realaccount then
         account = realaccount
     end
-    local db = gg.dbmgr:getdb()
-    local doc = db.account:findOne({account=account})
+    local doc = gg.mongoProxy.account:findOne({account=account})
     if doc == nil then
         return nil
     else
@@ -54,7 +74,7 @@ function accountmgr.getaccount(account)
 end
 
 --/*
--- accountobj: {account=,passwd=,sdk=sdk,platform=,...}
+-- accountobj: {account="",passwd="",sdk=sdk,platform="",...}
 --*/
 function accountmgr.addaccount(accountobj)
     local account = assert(accountobj.account)
@@ -63,6 +83,7 @@ function accountmgr.addaccount(accountobj)
         return httpc.answer.code.ACCT_EXIST
     end
     accountobj.createTime = os.time()
+    accountobj.create_time = skynet.timestamp()
     logger.logf("info","account",string.format("op=addaccount,accountobj=%s",cjson.encode(accountobj)))
     accountmgr.saveaccount(accountobj)
     return httpc.answer.code.OK
@@ -72,21 +93,19 @@ function accountmgr.delaccount(account)
     local accountobj = accountmgr.getaccount(account)
     if accountobj then
         logger.logf("info","account",string.format("op=delaccount,account=%s",account))
-        local db = gg.dbmgr:getdb()
-        db.player:delete({account=account})
+        gg.mongoProxy.player:delete({account=account})
         return httpc.answer.code.OK
     end
     return httpc.answer.code.ACCT_NOEXIST
 end
 
--- ID
+-- ""ID""
 function accountmgr.getroles(account,appid)
     local realaccount = accountmgr.getrealaccount(account)
     if realaccount then
         account = realaccount
     end
-    local db = gg.dbmgr:getdb()
-    local doc = db.account_roles:findOne({account=account,appid=appid})
+    local doc = gg.mongoProxy.account_roles:findOne({account=account,appid=appid})
     if doc == nil then
         return {}
     else
@@ -99,50 +118,43 @@ function accountmgr.getrolelist(account,appid)
     if realaccount then
         account = realaccount
     end
-    local db = gg.dbmgr:getdb()
-    local cursor = db.role:find({account=account,appid=appid})
-    local docs = {}
-    while cursor:hasNext() do
-        local doc = cursor:next()
-        doc._id = nil
-        table.insert(docs,doc)
+    local docs = gg.mongoProxy.role:find({account=account,appid=appid})
+    for k, v in pairs(docs) do
+        v._id = nil
     end
     return docs
 end
 
--- roles: ID
+-- roles: ""ID""
 function accountmgr.saveroles(account,appid,roles)
     assert(roles ~= nil)
     local realaccount = accountmgr.getrealaccount(account)
     if realaccount then
         account = realaccount
     end
-    local db = gg.dbmgr:getdb()
     local doc = {account=account,appid=appid,roles=roles}
-    db.account_roles:update({account=account,appid=appid},doc,true,false)
+    gg.mongoProxy.account_roles:update({account=account,appid=appid},doc,true,false)
 end
 
--- 
--- roles: ID
+-- ""
+-- roles: ""ID""
 function accountmgr.save_deleted_roles(account,appid,roles)
     assert(roles ~= nil)
     local realaccount = accountmgr.getrealaccount(account)
     if realaccount then
         account = realaccount
     end
-    local db = gg.dbmgr:getdb()
     local doc = {account=account,appid=appid,roles=roles}
-    db.account_deleted_roles:update({account=account,appid=appid},doc,true,false)
+    gg.mongoProxy.account_deleted_roles:update({account=account,appid=appid},doc,true,false)
 end
 
--- ID
+-- ""ID""
 function accountmgr.get_deleted_roles(account,appid)
     local realaccount = accountmgr.getrealaccount(account)
     if realaccount then
         account = realaccount
     end
-    local db = gg.dbmgr:getdb()
-    local doc = db.account_deleted_roles:findOne({account=account,appid=appid})
+    local doc = gg.mongoProxy.account_deleted_roles:findOne({account=account,appid=appid})
     if doc == nil then
         return {}
     else
@@ -179,7 +191,8 @@ function accountmgr.addrole(account,appid,serverid,role)
     if not app then
         return httpc.answer.code.APPID_NOEXIST
     end
-    if not accountmgr.getaccount(account) then
+    local accountdoc = accountmgr.getaccount(account)
+    if not accountdoc then
         return httpc.answer.code.ACCT_NOEXIST
     end
     if not servermgr.getserver(appid,serverid) then
@@ -215,17 +228,15 @@ function accountmgr.addrole(account,appid,serverid,role)
     role.currentServerId = serverid
     role.createTime = role.createTime or os.time()
     logger.logf("info","account",string.format("op=addrole,account=%s,appid=%s,role=%s",account,appid,cjson.encode(role)))
-    local db = gg.dbmgr:getdb()
-    --db.role:update({appid=appid,roleid=roleid},role,true,false)
-    db.role:insert(role)
+    --gg.mongoProxy.role:update({appid=appid,roleid=roleid},role,true,false)
+    gg.mongoProxy.role:insert(role)
     table.insert(rolelist,roleid)
     accountmgr.saveroles(account,appid,rolelist)
     return httpc.answer.code.OK
 end
 
 function accountmgr.getrole(appid,roleid)
-    local db = gg.dbmgr:getdb()
-    local doc = db.role:findOne({appid=appid,roleid=roleid})
+    local doc = gg.mongoProxy.role:findOne({appid=appid,roleid=roleid})
     if doc == nil then
         return nil
     else
@@ -250,8 +261,7 @@ function accountmgr.delrole(appid,roleid,forever)
     end
     logger.logf("info","account",string.format("op=delrole,account=%s,appid=%s,role=%s,forever=%s",account,appid,cjson.encode(role),forever))
     if forever then
-        local db = gg.dbmgr:getdb()
-        db.role:delete({appid=appid,roleid=roleid},true)
+        gg.mongoProxy.role:delete({appid=appid,roleid=roleid},true)
     else
         local deleted_rolelist = accountmgr.get_deleted_roles(account,appid)
         table.insert(deleted_rolelist,roleid)
@@ -262,7 +272,7 @@ function accountmgr.delrole(appid,roleid,forever)
     return httpc.answer.code.OK
 end
 
--- 
+-- ""
 function accountmgr.updaterole(appid,syncrole)
     local roleid = assert(syncrole.roleid)
     if not util.get_app(appid) then
@@ -273,15 +283,13 @@ function accountmgr.updaterole(appid,syncrole)
         return httpc.answer.code.ROLE_NOEXIST
     end
     table.update(role,syncrole)
-    local db = gg.dbmgr:getdb()
-    db.role:update({appid=appid,roleid=roleid},role,true,false)
+    gg.mongoProxy.role:update({appid=appid,roleid=roleid},role,true,false)
     return httpc.answer.code.OK,role
 end
 
--- id
+-- ""id
 function accountmgr.genid(table_name,idkey,appid)
-    local db = gg.dbmgr:getdb()
-    local doc = db[table_name]:findAndModify({
+    local doc = gg.mongoProxy[table_name]:findAndModify({
         query = {appid=appid,idkey=idkey},
         update = {["$inc"] = {sequence = 1}},
         new = true,
@@ -290,7 +298,7 @@ function accountmgr.genid(table_name,idkey,appid)
     return doc.value.sequence
 end
 
--- : [minroleid,maxroleid)
+-- "": [minroleid,maxroleid)
 function accountmgr.genroleid(appid,idkey,minroleid,maxroleid)
     minroleid = tonumber(minroleid)
     maxroleid = tonumber(maxroleid)
@@ -314,6 +322,11 @@ function accountmgr.genrandomaccount(appid,idkey)
     return "random_" .. sequence .. "_".. string.randomkey(3), string.randomkey(6)
 end
 
+function accountmgr.cryptPassword(password)
+    local password = password .. "starwar"
+    return string.lower(md5.sumhexa16(password))
+end
+
 function accountmgr.gentoken(input)
     local prefix = string.format("loginserver.%s.",skynet.hpc())
     local token = prefix .. string.randomkey(8)
@@ -325,7 +338,7 @@ function accountmgr.gettoken(token)
 end
 
 function accountmgr.addtoken(token,data,expire)
-    expire = expire or 300
+    expire = expire or 1800
     gg.thistemp:set(token,data,expire)
 end
 
@@ -334,7 +347,7 @@ function accountmgr.deltoken(token)
 end
 
 
--- 
+-- ""
 function accountmgr.rebindserver(account,appid,new_serverid,old_roleid,new_roleid)
     if not util.get_app(appid) then
         return httpc.answer.code.APPID_NOEXIST
@@ -372,7 +385,7 @@ function accountmgr.rebindserver(account,appid,new_serverid,old_roleid,new_rolei
     return httpc.answer.code.OK
 end
 
--- 
+-- ""
 function accountmgr.rebindaccount(new_account,appid,roleid)
     if not util.get_app(appid) then
         return httpc.answer.code.APPID_NOEXIST
@@ -396,7 +409,7 @@ function accountmgr.rebindaccount(new_account,appid,roleid)
     return httpc.answer.code.OK
 end
 
--- 
+-- ""
 function accountmgr.recover_role(appid,roleid)
     if not util.get_app(appid) then
         return httpc.answer.code.APPID_NOEXIST
@@ -420,9 +433,16 @@ function accountmgr.recover_role(appid,roleid)
     return httpc.answer.code.OK
 end
 
-function accountmgr.get_order(table_name,order_id)
-    local db = gg.dbmgr:getdb()
-    local doc = db[table_name]:findOne({order_id=order_id})
+--[[
+--""
+function accountmgr.getOrderReadyCnt(pid, dayno)
+    local cnt = gg.mongoProxy.order_ready:findCount({pid=pid, dayno=dayno})
+    return cnt
+end
+]]
+
+function accountmgr.get_order(table_name,orderId)
+    local doc = gg.mongoProxy[table_name]:findOne({orderId=orderId})
     if doc == nil then
         return nil
     else
@@ -431,111 +451,123 @@ function accountmgr.get_order(table_name,order_id)
     end
 end
 
-function accountmgr.update_order(table_name,order)
-    local db = gg.dbmgr:getdb()
-    db[table_name]:update({order_id=order.order_id},order,false,false)
-end
-
-function accountmgr.insert_order(table_name,order)
-    local db = gg.dbmgr:getdb()
-    db[table_name]:insert(order)
-end
-
-function accountmgr.del_order(table_name,order_id)
-    local db = gg.dbmgr:getdb()
-    db[table_name]:delete({order_id = order_id},true)
-end
-
--- 
-function accountmgr.ready_pay(appid,openid,server_id,roleid,product_id,quantity,rmb,platform,sdk,ext)
+-- ""
+function accountmgr.ready_pay(param)
     local now = os.time()
-    local order_id = accountmgr.genid("orderid","idkey","appid")
-    order_id = string.format("%d%011d",now,order_id)
-    local account = string.format("%s@%s",openid,platform)
-    local order = {
-        create_time = now,
-        appid = appid,
-        openid = openid,
-        account = account,
-        platform = platform,
-        sdk = sdk,
-        server_id = server_id,
-        roleid = roleid,
-        product_id = product_id,
-        quantity = quantity,
-        rmb = rmb,  -- rmb(:)
-        order_id = order_id,
-        state = 1,
-        ext = ext,
-    }
-    local db = gg.dbmgr:getdb()
-    db.ready_order:insert(order)
+    local orderId = accountmgr.genid("orderid","idkey","appid")
+
+    local index = 1
+    if gg.isAlphaServer() then
+        index = 1
+    elseif gg.isBetaServer() then
+        index = 2
+    elseif gg.isReleaseServer() then
+        index = 3
+    elseif gg.isZksyncServer() then
+        index = 4
+    end
+
+    orderId = index .. now .. orderId
+    orderId = tostring(orderId)
+
+    local order = param
+    order.createOrderTime = now
+    order.orderId = orderId
+    order.state = constant.PAY_STATE_0                  --0"",1"",2""
+    order.dayno = gg.time.dayno()
+    order.weekno = gg.time.weekno()
+    order.monthno = gg.time.monthno()
+    order.createTime = bson.date(now)
+    order.createDate = tonumber(os.date("%Y%m%d", now))
+    
+    gg.mongoProxy.order_ready:insert(order)
     return order
 end
 
--- 
-function accountmgr.finish_pay(order_id,platform_order_id,platform_order)
-    local order = accountmgr.get_order("ready_order",order_id)
+-- ""
+function accountmgr.settle_pay(orderId)
+    local ok, ret, ret1 = gg.sync:once_do("order"..orderId, accountmgr.do_settle_pay, orderId)
+    if not ok then
+        return httpc.answer.code.FAIL, "fail"
+    end
+    return ret, ret1
+end
+
+function accountmgr.do_settle_pay(orderId)
+
+    local order = accountmgr.get_order("order_ready",orderId)
     if not order then
-        return false
+        return httpc.answer.code.PAY_ORDER_NO_EXIST, "order error"
     end
-    order.state = 2
-    order.finish_time = os.time()
-    order.try_cnt = 1
-    order.platform_order_id = platform_order_id
-    -- 
-    order.platform_order = platform_order
-    local db = gg.dbmgr:getdb()
-    db.ready_order:delete({order_id = order_id},true)
-    db.finish_order:insert(order)
-    local appid = order.appid
-    local account = order.account
-    local roleid = order.roleid
-    local rmb = order.rmb
-    accountmgr.stat_pay(appid,account,roleid,rmb)
-    accountmgr.settle_pay(order)
-end
 
--- 
-function accountmgr.stat_pay(appid,account,roleid,rmb)
-    local role = accountmgr.getrole(appid,roleid)
-    if not role then
-        return
+    if order.state > constant.PAY_STATE_0 then
+        return httpc.answer.code.OK, "succeed"
     end
-    accountmgr.updaterole(appid,{
-        roleid = roleid,
-        rmb = (role.rmb or 0) + rmb,
-    })
+
+    if order.transaction then
+        local cnt = gg.mongoProxy.order_ready:findCount({ transaction = order.transaction})
+        if cnt > 1 then
+            return httpc.answer.code.PARAM_ERR, "order repeat"
+        end
+    end
+
+    if not order.op or (order.op ~= constant.PAY_OP_GMAPPROVE and order.op ~= constant.PAY_OP_XSOLLACHECK and order.op ~= constant.PAY_OP_INTERNATIONCHECK) then
+        --local""GM"",""
+        if order.payChannel == constant.PAYCHANNEL_APPSTORE then
+            --ios appstore""
+            
+            local receiptData = order.receiptData
+            local account = order.account
+            local orderId = order.orderId
+            local productId = order.productId
+             
+            local ret, message = appstoremgr.verifyReceipt(receiptData, account, orderId, productId)
+            if not ret then
+                return httpc.answer.code.PAY_ORDER_VERIFY_INVALID, message
+            end
+            order.op = constant.PAY_OP_APPSTORECHECK
+        elseif order.payChannel == constant.PAYCHANNEL_GOOGLEPLAY then
+            --android googleplay""
+            local signtureData = order.signtureData
+            local signture = order.signture
+            local account = order.account
+            local orderId = order.orderId
+            local productId = order.productId
+
+            local ret, message = googleplaymgr.verifySignture(signtureData, signture, account, orderId, productId)
+            if not ret then
+                return httpc.answer.code.PAY_ORDER_VERIFY_INVALID, message
+            end
+            order.op = constant.PAY_OP_GOOGLEPLAYCHECK
+        else
+            return httpc.answer.code.PAY_ORDER_VERIFY_INVALID, "verify error"
+        end
+    end
+
+    --""
+    order.state = constant.PAY_STATE_1
+    local now = os.time()
+    order.settleOrderTime = now
+    order.settledayno = gg.time.dayno()
+    order.settleweekno = gg.time.weekno()
+    order.settlemonthno = gg.time.monthno()
+    order.settleDate = tonumber(os.date("%Y%m%d", now))
+
+    gg.mongoProxy.order_ready:update({orderId = orderId}, order, false, false)
+    gg.mongoProxy.order_settle:insert(order)
+
+    return httpc.answer.code.OK, "success"
 end
 
-function accountmgr.pack_order(order)
-    return {
-        account = order.account,
-        openid = order.openid,
-        server_id = order.server_id,
-        roleid= order.roleid,
-        platform = order.platform,
-        sdk = order.sdk,
-        product_id = order.product_id,
-        rmb = order.rmb,
-        order_id = order.order_id,
-        platform_order_id = order.platform_order_id,
-        create_time = order.create_time,
-        finish_time = order.finish_time,
-        quantity = order.quantity,
-        ext = order.ext,
-    }
-end
-
+--[[
 function accountmgr.settle_pay(order)
     if order.settling then
         return false,"settling"
     end
     local order_id = order.order_id
     order.settling = true
-    local db = gg.dbmgr:getdb()
-    db.finish_order:update({order_id=order_id},order,false,false)
-    -- 
+    gg.mongoProxy.finish_order:update({order_id=order_id},order,false,false)
+    -- ""
     order.try_cnt = order.try_cnt + 1
     local gamePaybackHost = skynet.getenv("gamePaybackHost")
     local appkey = skynet.getenv("appkey")
@@ -550,13 +582,14 @@ function accountmgr.settle_pay(order)
     end
     order.state = 3
     order.end_time = os.time()
-    local db = gg.dbmgr:getdb()
-    db.finish_order:delete({order_id = order_id},true)
-    db.end_order:insert(order)
+    gg.mongoProxy.finish_order:delete({order_id = order_id},true)
+    gg.mongoProxy.end_order:insert(order)
     return true
 end
+]]
 
--- 
+--[[
+-- ""
 accountmgr.try_cnt_time = {5,15,30,60,300,600,1800,3600,7200,86400,172800}
 
 function accountmgr.start_timer_settle_pay()
@@ -564,10 +597,8 @@ function accountmgr.start_timer_settle_pay()
         accountmgr.start_timer_settle_pay()
     end)
     local now = os.time()
-    local db = gg.dbmgr:getdb()
-    local cursor = db.finish_order:find():sort({finish_time=-1}):limit(200)
-    while cursor:hasNext() do
-        local order = cursor:next()
+    local docs = gg.mongoProxy.finish_order:findSortLimit({}, {finish_time=-1}, 200)
+    for _, order in pairs(docs) do
         order._id = nil
         local needTime = accountmgr.try_cnt_time[order.try_cnt] or -1
         local passTime = now - order.finish_time
@@ -578,5 +609,6 @@ function accountmgr.start_timer_settle_pay()
         end
     end
 end
+]]
 
 return accountmgr

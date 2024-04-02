@@ -1,6 +1,5 @@
----
+---""
 --@module api.account.role.list
---@author sundream
 --@release 2018/12/25 10:30:00
 --@usage
 --api:      /api/account/role/list
@@ -9,18 +8,18 @@
 --params:
 --  type=table encode=json
 --  {
---      sign        [required] type=string help=
+--      sign        [required] type=string help=""
 --      appid       [required] type=string help=appid
---      account     [required] type=string help=
---      serverid    [optional] type=string help=ID()
+--      account     [required] type=string help=""
+--      serverid    [optional] type=string help=""ID("")
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=string help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=string help=""
 --      data = {
---          rolelsit =  [optional] type=list help=,api/role/get
+--          rolelsit =  [optional] type=list help="",""api/role/get
 --      }
 --  }
 --example:

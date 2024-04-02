@@ -1,6 +1,5 @@
----
+---""
 --@module api.account.server.list
---@author sundream
 --@release 2018/12/25 10:30:00
 --@usage
 --api:      /api/account/server/list
@@ -9,21 +8,21 @@
 --params:
 --  type=table encode=json
 --  {
---      sign        [required] type=string help=
+--      sign        [required] type=string help=""
 --      appid       [required] type=string help=appid
---      version     [required] type=string help=
---      platform    [required] type=string help=
---      account     [optional] type=string help=
+--      version     [required] type=string help=""
+--      platform    [required] type=string help=""
+--      account     [optional] type=string help=""
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=number help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=number help=""
 --      data = {
---          serverlist =    [required] type=list help=,api/account/server/add
---          zonelist =      [required] type=list help=
---          time =          [required] type=int help=()
+--          serverlist =    [required] type=list help="",""api/account/server/add
+--          zonelist =      [required] type=list help=""
+--          time =          [required] type=int help=""("")
 --      }
 --  }
 --example:
@@ -36,8 +35,8 @@ function handler.exec(linkobj,header,args)
     local request,err = table.check(args,{
         sign = {type="string"},
         appid = {type="string"},
-        version = {type="string"},              -- 
-        platform = {type="string"},             -- 
+        version = {type="string"},              -- ""
+        platform = {type="string"},             -- ""
         account = {type="string",optional=true},
     })
     if err then

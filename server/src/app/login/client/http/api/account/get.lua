@@ -1,4 +1,4 @@
----
+---""
 --@module api.account.get
 --@author sw
 --@release 2018/12/25 10:30:00
@@ -9,23 +9,23 @@
 --params:
 --  type=table encode=json
 --  {
---      sign        [required] type=string help=
+--      sign        [required] type=string help=""
 --      appid       [required] type=string help=appid
---      account     [required] type=string help=
+--      account     [required] type=string help=""
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=number help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=number help=""
 --      data = {
---           account = [required] type=string help=
---           passwd =  [required] type=string help=
---           sdk =     [required] type=string help=sdk
---           platform = [required] type=string help=
---           createTime = [required] type=int help=()
---           device =   [optional] type=json help=
---           openid =   [optional] type=string help=openid
+--           account = [required] type=string help=""
+--           passwd =  [required] type=string help=""
+--           sdk =     [required] type=string help=""sdk
+--           platform = [required] type=string help=""
+--           createTime = [required] type=int help=""("")
+--           device =   [optional] type=json help=""
+--           openid =   [optional] type=string help=""openid
 --      }
 --  }
 --example:

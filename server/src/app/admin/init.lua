@@ -1,0 +1,11 @@
+require "gg.init"
+require "common.init"
+
+require "app.admin.client.init"
+require "app.admin.gm.init"
+require "app.admin.gg.init"
+require "app.admin.account.init"
+require "app.admin.analyzer.init"
+require "app.admin.mail.init"
+require "app.admin.operation.init"
+require "app.admin.game.init"

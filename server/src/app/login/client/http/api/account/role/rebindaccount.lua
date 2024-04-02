@@ -1,6 +1,5 @@
----
+---""
 --@module api.account.role.rebindaccount
---@author sundream
 --@release 2018/12/25 10:30:00
 --@usage
 --api:      /api/account/role/rebindaccount
@@ -9,16 +8,16 @@
 --params:
 --  type=table encode=json
 --  {
---      sign        [required] type=string help=
+--      sign        [required] type=string help=""
 --      appid       [required] type=string help=appid
---      new_account [required] type=string help=
---      roleid      [required] type=number help=ID
+--      new_account [required] type=string help=""
+--      roleid      [required] type=number help=""ID
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=number help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=number help=""
 --  }
 --example:
 --  curl -v 'http://127.0.0.1:4000/api/account/role/rebindaccount' -d '{"sign":"debug","appid":"gg","new_account":"lgl2","roleid":1000000}'

@@ -1,8 +1,7 @@
 util = util or {}
 
 function util.get_app(appid)
-    local db = gg.dbmgr:getdb()
-    local doc = db.app:findOne({appid=appid})
+    local doc = gg.mongoProxy.app:findOne({appid=appid})
     if doc == nil then
         return nil
     else
@@ -12,7 +11,7 @@ function util.get_app(appid)
 end
 
 function util.zonelist_by_version(appid,version)
-    -- mongo3.4.6key"."
+    -- mongo3.4.6""key"""."
     version = string.gsub(version,"%.","_")
     local app = util.get_app(appid)
     return app.version_whitelist[version]
@@ -71,6 +70,39 @@ function util.filter_serverlist(appid,version,ip,account,platform)
         return serverlist,zonelist
     end
     return {},{}
+end
+
+function util.getProductCfg(productId)
+    local product = cfg.get("etc.cfg.product")
+    for k,v in pairs(product) do
+        if v.productId == productId then
+            return v
+        end
+    end
+    return nil
+end
+
+function util.dapp_check_signature(params)
+    if not params.sign then
+        return false
+    end
+    local temp = {}
+    for k, v in pairs(params) do
+        if k ~= "sign" then
+            temp[k] = v
+        end
+    end
+    local content = gg.makeSignContent(temp, "STARWAR2021HAPPYLOGININTERFACE")
+    local sign = md5.sumhexa(content)
+    if params.sign ~= sign then
+        return false
+    end
+    return true
+end
+
+function util.sha1(text)
+	local c = crypt.sha1(text)
+	return crypt.hexencode(c)
 end
 
 return util

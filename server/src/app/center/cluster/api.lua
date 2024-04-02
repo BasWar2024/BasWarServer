@@ -1,4 +1,4 @@
--- api
+-- ""api
 gg.api = gg.api or {}
 
 local api = gg.api
@@ -11,7 +11,7 @@ function api.exit()
     gg.exit()
 end
 
--- #START
+-- ""#START
 function api.lock(node,address,recoverPointId,lockId)
     return gg.clusterQueue:_lock(node,address,recoverPointId,lockId)
 end
@@ -19,16 +19,16 @@ end
 function api.unlock(lockId)
     gg.clusterQueue:_unlock(lockId)
 end
--- #END
+-- ""#END
 
--- #START
+-- ""#START
 
----
+---""
 function api.getBrief(pid)
     return gg.briefMgr:getBrief(pid)
 end
 
----
+---""
 function api.createBrief(packBrief)
     local pid = assert(packBrief.pid)
     local brief = ggclass.Brief.new(pid)
@@ -37,14 +37,14 @@ function api.createBrief(packBrief)
     brief:save_to_db()
 end
 
----
+---""
 function api.deleteBrief(pid)
     gg.briefMgr:delBrief(pid)
     ggclass.Brief.delete_from_db(pid)
 end
 
 --[gameserver -> centerserver]
----
+---""
 function api.setBriefAttrs(pid,attrs)
     local brief = gg.briefMgr.briefs[pid]
     if not brief then
@@ -61,7 +61,7 @@ function api.setBriefAttrs(pid,attrs)
 end
 
 --[gameserver -> centerserver]
----
+---""
 function api.delBriefAttrs(pid,keys)
     local brief = gg.briefMgr.briefs[pid]
     if not brief then
@@ -76,7 +76,7 @@ function api.delBriefAttrs(pid,keys)
     end
 end
 
----(pid)
+---""(pid"")
 function api.subscribeBrief(address,pid)
     local brief = gg.briefMgr:getBriefObj(pid)
     if brief then
@@ -90,7 +90,7 @@ function api.subscribeBriefs(address,pids)
     end
 end
 
----
+---""
 function api.unsubscribeBrief(address,pid)
     local brief = gg.briefMgr.briefs[pid]
     if not brief then
@@ -99,31 +99,59 @@ function api.unsubscribeBrief(address,pid)
     brief:unsubscribe(address)
 end
 
----
+---""
 function api.unsubscribeBriefs(address,pids)
     for _,pid in pairs(pids) do
         api.unsubscribeBrief(address,pid)
     end
 end
 
--- #END
+-- ""#END
 
-
-function api.loginRPC(param1, param2, param3)
-    -- print("loginRpc param1=", param1, "param2=", param2, "param3=", param3)
-    for nodeId,node in pairs(gg.nodeMgr.nodes) do
-        -- print("loginRPC nodeId=", nodeId, "node=", table.dump(node))
-        if node.type == "game" then
-            gg.cluster:send(node.id,".game","api","loginRPC",param1,param2,param3)
+---""
+---@param nodeType string
+---@param service string
+---@param cmd string
+---@param ... any
+function api.broadCast2Server(nodeType, service, cmd, ...)
+    for nodeId, node in pairs(gg.nodeMgr.nodes) do
+        if node.type == nodeType then
+            skynet.fork(function(node, service, ...)
+                gg.cluster:send(node, service, "api", ...)
+            end, node.id, service, cmd, ...)
         end
     end
 end
 
-function api.updateItemProductCfg()
-    for nodeId,node in pairs(gg.nodeMgr.nodes) do
-        if node.type == "game" then
-            gg.cluster:send(node.id,".game","api","updateItemProductCfg")
-        end
+---""
+---@param cmd string
+---@param ... any
+function api.broadCast2Game(cmd, ...)
+    api.broadCast2Server("game", ".game", cmd, ...)
+end
+
+---""game""api
+---@param pid integer
+---@param cmd string
+---@param ... any
+function api.sendCmd2Player(pid, cmd, ...)
+    local brief = gg.briefMgr.briefs[pid]
+    if not brief then
+        return
+    end
+    local node = brief.data.node
+    gg.cluster:send(node, ".game", "playerexec", pid, cmd, ...)
+end
+
+
+--- ""
+---@param chan any
+function api.onMulticastPublish(chan, ...)
+    gg.internal:send(".multicast", "api", "onPublish", chan, ...)
+    for nodeId, node in pairs(gg.nodeMgr.nodes) do
+        skynet.fork(function(node, ...)
+            gg.cluster:send(node, ".multicast", "api", "onPublish", ...)
+        end, node.id, chan, ...)
     end
 end
 

@@ -4,15 +4,37 @@ function gg.init()
     gg.internal.queue = false
     gg.ignoreCfg = false
     gg._init()
-    gg.dbmgr = ggclass.cdbmgr.new()
+    gg.initI18n()
+    --""
+    skynet.newservice("app/mongodb/main", ".mongodb")
+    gg.mongoProxy = ggclass.MongodbProxy.new()
+    
+    skynet.newservice("app/redisdb/main", ".redisdb")
+    gg.redisProxy = ggclass.RedisProxy.new()
+
     gg.savemgr = ggclass.csavemgr.new()
-    gg.shareMgr = ggclass.ShareMgr.new()
+
+    gg.shareProxy = ggclass.ShareProxy.new()
+    
     gg.briefMgr = ggclass.BriefMgr.new()
     gg.nodeMgr = ggclass.NodeMgr.new()
+    gg.itemCfgMgr = ggclass.ItemCfgMgr.new()
+    -- gg.starMapExcel = ggclass.StarMapExcel.new()
 
-    -- skynet.newservice("app/rescenter/main",".rescenter")  --
-    skynet.newservice("app/bigmap/main",".bigmap")        --
-end
+    gg.createMongoIndex()
+
+    skynet.newservice("app/multicast/main", ".multicast")  --""
+    skynet.newservice("app/starmap/main",".starmap")        --""
+    skynet.newservice("app/union/main",".union")          --""
+    skynet.newservice("app/chat/main", ".chat")           --""
+    skynet.newservice("app/mail/main",".mail")            --""
+    skynet.newservice("app/operationcfg/main",".operationcfg")   --""
+    skynet.newservice("app/match/main", ".match")          --""
+    skynet.newservice("app/rank/main",".rank")   --""
+    skynet.newservice("app/activity/main",".activity")      --""
+
+    skynet.newservice("app/chainbridge/main",".chainbridge")   --chain bridge
+end 
 
 function gg.start()
     gg.actor:start()
@@ -29,7 +51,6 @@ end
 
 function gg.exit()
     gg.savemgr:saveall()
-    gg.dbmgr:shutdown()
     gg._exit()
 end
 

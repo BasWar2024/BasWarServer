@@ -4,19 +4,30 @@ function gg.init()
     gg.client.queue = true
     gg.cluster.queue = false
     gg.internal.queue = false
-    gg.ignoreCfg = true
+    gg.ignoreCfg = false
     gg._init()
+    --""
+    skynet.newservice("app/mongodb/main", ".mongodb")
+    gg.mongoProxy = ggclass.MongodbProxy.new()
+
+    skynet.newservice("app/redisdb/main", ".redisdb")
+    gg.redisProxy = ggclass.RedisProxy.new()
+    
     gg.savemgr = ggclass.csavemgr.new()
-    gg.dbmgr = ggclass.cdbmgr.new()
     gg.thistemp = ggclass.cthistemp.new()
-    gg.proxyservice("center")
+
+    gg.shareProxy = ggclass.ShareProxy.new()
+    gg.playerProxy = ggclass.PlayerProxy.new()
+    gg.dynamicCfg = ggclass.DynamicCfg.new()
+
+    skynet.newservice("app/gamelog/main",".gamelog") --""
 end
 
 function gg.start()
     local address = skynet.self()
     local node = skynet.getenv("id")
     local slave_num = tonumber(skynet.getenv("gate_slave_num"))
-    -- (1/100)
+    -- ""(1/100"")
     local gate_conf = {
         watchdog_node = node,
         watchdog_address = address,
@@ -42,16 +53,14 @@ function gg.start()
 
     gg.client:open()
     logger.print("client:open")
-    accountmgr.start_timer_settle_pay()
 end
 
--- : gg.init -> gg.start -> gg.exit
+-- "": gg.init -> gg.start -> gg.exit
 function gg.exit()
     gg.savemgr:saveall()
-    gg.dbmgr:shutdown()
 end
 
--- http
+-- ""http""
 function gg.gameserver(host,appkey)
     if not gg.gameservers then
         gg.gameservers = {}

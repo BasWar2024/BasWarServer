@@ -1,6 +1,5 @@
----AB
+---""AB""
 --@module api.account.server.switchserverlist
---@author sundream
 --@release 2018/12/25 10:30:00
 --@usage
 --api:      /api/account/server/switchserverlist
@@ -9,15 +8,15 @@
 --params:
 --  type=table encode=json
 --  {
---      sign                [required] type=string help=
+--      sign                [required] type=string help=""
 --      appid               [required] type=string help=appid
---      serverlist_name     [required] type=string help=
+--      serverlist_name     [required] type=string help=""
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [requied] type=number help=
---      message =   [required] type=string help=
+--      code =      [requied] type=number help=""
+--      message =   [required] type=string help=""
 --  }
 --example:
 -- curl -v 'http://127.0.0.1:4000/api/account/server/switchserverlist' -d '{"appid": "appid","sign": "debug","serverlist_name": "server"}'

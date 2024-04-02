@@ -1,4 +1,4 @@
----app
+---""app
 --@module api.app.add
 --@author sundream
 --@release 2019/6/18 10:30:00
@@ -11,21 +11,21 @@
 --  {
 --      app = [required] type=json help=app
 --  }
---  app
+--  app""
 --  {
---      appid           [required] type=string help=,_G
---      appkey          [required] type=string help=
---      platform_whitelist  [required] type=table help=
---      ip_whitelist    [optional] type=table help=ip
---      account_whitelist [optional] type=table help=
---      max_role_num_per_account [requird] type=int help=
---      max_role_num_per_server [required] type=int help=
+--      appid           [required] type=string help="",""_G""
+--      appkey          [required] type=string help=""
+--      platform_whitelist  [required] type=table help=""
+--      ip_whitelist    [optional] type=table help=ip""
+--      account_whitelist [optional] type=table help=""
+--      max_role_num_per_account [requird] type=int help=""
+--      max_role_num_per_server [required] type=int help=""
 --  }
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=number help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=number help=""
 --  }
 
 local handler = {}
@@ -49,8 +49,7 @@ function handler.exec(linkobj,header,args)
         httpc.send_json(linkobj,200,httpc.answer.response(httpc.answer.code.SIGN_ERR))
         return
     end
-    local db = gg.dbmgr:getdb()
-    db.app:update({appid=appid},app,true,false)
+    gg.mongoProxy.app:update({appid=appid},app,true,false)
     local response = httpc.answer.response(httpc.answer.code.OK)
     httpc.send_json(linkobj,200,response)
 end

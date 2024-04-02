@@ -5,8 +5,8 @@ function NodeMgr:ctor()
     self.event = ggclass.Event.new(self)
 end
 
---- 
---@param[type=table] node {id=id,type=,busyness=}
+--- ""
+--@param[type=table] node {id=""id,type="",busyness=""}
 function NodeMgr:login(node)
     local nodeId = node.id
     self.nodes[nodeId] = node
@@ -44,10 +44,10 @@ function NodeMgr:getNodesOfType(nodeType)
     return list
 end
 
---- 
---@param[type=string] nodeType 
---@param[type=string] strategy (random=,busyness=)
---@return[type=string] id
+--- ""
+--@param[type=string] nodeType ""
+--@param[type=string] strategy ""(random="",busyness="")
+--@return[type=string] ""id
 function NodeMgr:alloc(nodeType,strategy)
     local nodes = self:getNodesOfType(nodeType)
     if not next(nodes) then
@@ -81,7 +81,7 @@ end
 
 function NodeMgr:isDown(node)
     if gg.actor.heartbeatInterval * (gg.actor.heartbeatCount - node.heartbeatCount) > 20000 then
-        -- 20s
+        -- 20s""
         return true
     end
     return false

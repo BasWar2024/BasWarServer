@@ -846,6 +846,85 @@ function cgm:donateNft(args)
     self.master.unionBag:gmDonateNft(nftType,id)
 end
 
+--- ""
+---@usage
+---"": genLanguageJson
+---"": genLanguageJson ""errors""etc\i18n""3"",""
+function cgm:genLanguageJson(args)
+    local infoList = {}
+    for k, v in pairs(errors) do
+        table.insert(infoList, v)
+    end
+    table.sort(infoList,function (a,b)
+        if a.id == b.id then
+            return false
+        end
+        return a.id < b.id
+    end)
+
+    os.execute("mkdir -p language")
+
+    local en_US_text = "{"
+    local zh_TW_text = "{"
+    local zh_CN_text = "{"
+    local curLanguage = gg.genI18nTexts()
+    for k, v in pairs(infoList) do
+        if curLanguage[v.msg] and curLanguage[v.msg].en_US then
+            if en_US_text ~= "{" then
+                en_US_text = en_US_text .. ","
+            end
+            en_US_text = en_US_text .. "\n" .. '\t' .. '"' .. v.msg .. '"' .. " : " .. '"' .. curLanguage[v.msg].en_US .. '"'
+        else
+            if en_US_text ~= "{" then
+                en_US_text = en_US_text .. ","
+            end
+            en_US_text = en_US_text .. "\n" .. '\t' .. '"' .. v.msg .. '"' .. " : " .. '"' .. v.msg .. '"'
+        end
+
+        if curLanguage[v.msg] and curLanguage[v.msg].zh_TW then
+            if zh_TW_text ~= "{" then
+                zh_TW_text = zh_TW_text .. ","
+            end
+            zh_TW_text = zh_TW_text .. "\n" .. '\t' .. '"' .. v.msg .. '"' .. " : " .. '"' .. curLanguage[v.msg].zh_TW .. '"'
+        else
+            if zh_TW_text ~= "{" then
+                zh_TW_text = zh_TW_text .. ","
+            end
+            zh_TW_text = zh_TW_text .. "\n" .. '\t' .. '"' .. v.msg .. '"' .. " : " .. '"' .. v.msg .. '"'
+        end
+
+        if curLanguage[v.msg] and curLanguage[v.msg].zh_CN then
+            if zh_CN_text ~= "{" then
+                zh_CN_text = zh_CN_text .. ","
+            end
+            zh_CN_text = zh_CN_text .. "\n" .. '\t' .. '"' .. v.msg .. '"' .. " : " .. '"' .. curLanguage[v.msg].zh_CN .. '"'
+        else
+            if zh_CN_text ~= "{" then
+                zh_CN_text = zh_CN_text .. ","
+            end
+            zh_CN_text = zh_CN_text .. "\n" .. '\t' .. '"' .. v.msg .. '"' .. " : " .. '"' .. v.msg .. '"'
+        end
+    end
+    en_US_text = en_US_text .. "\n}"
+    zh_TW_text = zh_TW_text .. "\n}"
+    zh_CN_text = zh_CN_text .. "\n}"
+
+    local docfilename = "language/en_US.json"
+    local fdout = io.open(docfilename,"wb")
+    fdout:write(en_US_text)
+    fdout:close()
+
+    local docfilename = "language/zh_TW.json"
+    local fdout = io.open(docfilename,"wb")
+    fdout:write(zh_TW_text)
+    fdout:close()
+
+    local docfilename = "language/zh_CN.json"
+    local fdout = io.open(docfilename,"wb")
+    fdout:write(zh_CN_text)
+    fdout:close()
+end
+
 function __hotfix(module)
     gg.gm:hotfix_gm()
 end

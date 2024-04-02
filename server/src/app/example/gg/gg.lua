@@ -22,9 +22,9 @@ function gg.exit()
     gg._exit()
 end
 
---- ()
----@param[type=table] linkobj 
----@param[type=string] err 
+--- ""("")
+---@param[type=table] linkobj ""
+---@param[type=string] err ""
 function gg.sayError(linkobj,err)
 end
 

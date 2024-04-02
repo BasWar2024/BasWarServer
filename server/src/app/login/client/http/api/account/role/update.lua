@@ -1,5 +1,4 @@
----
---@author sundream
+---""
 --@module api.account.role.update
 --@release 2018/12/25 10:30:00
 --@usage
@@ -9,25 +8,25 @@
 --params:
 --  type=table encode=json
 --  {
---      sign        [required] type=string help=
+--      sign        [required] type=string help=""
 --      appid       [required] type=string help=appid
---      roleid      [required] type=number help=ID
---      role        [required] type=table encode=json help=
+--      roleid      [required] type=number help=""ID
+--      role        [required] type=table encode=json help=""
 --                  role = {
---                      name =      [required] type=string help=
---                      heroId =    [optional] type=number help=id
---                      level =     [optional] type=number default=0 help=
---                      gold =      [optional] type=number default=0 help=
---                      currentServerId = [required] type=string help=
---                      onlineState = [required] type=int help=(0=,1=,2=)
+--                      name =      [required] type=string help=""
+--                      heroId =    [optional] type=number help=""id
+--                      level =     [optional] type=number default=0 help=""
+--                      gold =      [optional] type=number default=0 help=""
+--                      currentServerId = [required] type=string help=""
+--                      onlineState = [required] type=int help=""(0="",1="",2="")
 --                  }
 --  }
 --
 --return:
 --  type=table encode=json
 --  {
---      code =      [required] type=number help=
---      message =   [required] type=number help=
+--      code =      [required] type=number help=""
+--      message =   [required] type=number help=""
 --  }
 --example:
 --  curl -v 'http://127.0.0.1:4000/api/account/role/update' -d '{"appid":"gg","roleid":1000000,"role":"{\"name\":\"name\"}","sign":"debug"}'

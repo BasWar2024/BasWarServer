@@ -1,392 +1,400 @@
-buildgmdoc,!!!
+""buildgmdoc"",""!!!
 
 [gm]
 
 [init]
 
 [player]
-: 
+"": ""
 @usage
-: addRes id 
-: addRes 101 100 <=> id101(MIT)100
-: addRes 102 200 <=> id102()200
+"": addRes ""id ""
+"": addRes 101 100 <=> ""id""101(MIT)""100
+"": addRes 102 200 <=> ""id""102("")""200
 
-: 
+"": ""
 @usage
-: costRes id 
-: costRes 101 100 <=> id101(MIT)100
-: costRes 102 200 <=> id102()200
+"": costRes ""id ""
+"": costRes 101 100 <=> ""id""101(MIT)""100
+"": costRes 102 200 <=> ""id""102("")""200
 
-: 
+"": ""
 @usage
-: addItem id  (id   1 2 3 4)
-: addItem 6101001 30 <=> 30
-: addItem 6204001 30 <=> 30
-: addItem 6301001 1 2101001 1 1 <=> 1 1
+"": addItem ""id "" 
+"": addItem 3800001 1 <=> ""
 
-: 1
+"": ""
 @usage
-: addBuildItem ID  
-: addBuildItem 1301001 1 1
+"": costItem ""id ""
+"": costItem 3800001 1 <=> ""
 
-: 1
+"": ""
 @usage
-: addHeroItem ID   1 2 3
-: addHeroItem 2201001 1 1
+"": fullItem
+"": fullItem
 
-: 1
+"": ""1"" nft
 @usage
-: addWarShipItem ID   1 2 3 4
-: addWarShipItem 3401001 1
+"": addBuild ""cfgId "" "" chain
+"": addBuild 3201001 2 1 97
 
-: 
+"": "" nft
 @usage
-: delItem id 
-: delItem 6101001 30 <=> 30
-: delItem 6204001 200 <=> 200
+"": delBuild ""id
+"": delBuild 6993085740053696514  <=> ""id""6993085740053696514"" nft
 
-: 
+"": ""1""
 @usage
-: expandItemBagSpace
-: expandItemBagSpace
+"": addHero ""cfgId "" "" chain
+"": addHero 2101001 1 1 97
 
-: 
+"": ""
 @usage
-: move2ItemBag ID 
-: move2ItemBag 25010013555552 9 <=> ID25010013555552
-: move2ItemBag 25010013555552 10 <=> ID25010013555552
-: move2ItemBag 25010013555552 11 <=> ID25010013555552
+"": delHero ""id
+"": delHero 2225669887222  <=> ""id""2225669887222""
 
-: 
+"": ""1""
 @usage
-: moveOutItemBag ID posX posZ
-: moveOutItemBag 25010013555552 9 9<=> ID25010013555552
-: moveOutItemBag 25010013555552 10 11<=> ID25010013555552
-: moveOutItemBag 25010013555552 11 122<=> ID25010013555552
+"": addWarShip ""cfgId "" "" chain
+"": addWarShip 1001001 2 2 97
 
-: 
+"": ""
 @usage
-: generateHero id 
-: generateHero 2501001 1 <=> id2501001,1
-: generateHero 2501001 2 <=> id2501001,2
+"": delWarShip ""id
+"": delWarShip 2225669887222  <=> ""id""2225669887222""
 
-: 
+"": ""nft""
 @usage
-: delHero id
-: delHero 2225669887222  <=> id2225669887222
+"": changeAllLife "","",""
+"": changeAllLife -20
+"": changeAllLife 10
 
-: 
+"": ""
 @usage
-: generateWarShip id 
-: generateWarShip 3501001 1 <=> id3501001,1
-: generateWarShip 3501001 2 <=> id3501001,2
+"": finishGuides guidId 
+"": finishGuides 1
 
-: 
+"": ""
 @usage
-: delWarShip id
-: delWarShip 2225669887222  <=> id2225669887222
+"": bridgeBindWallet chain_id(""97) ownerMail("") ownerAddress("")
+"": bridgeBindWallet
+"": bridgeBindWallet 97
+"": bridgeBindWallet 97 test100@gmail.com
+"": bridgeBindWallet 97 test100@gmail.com 0x61eb0adc3b7bc556ad4a228a77ca917b23514f7a
 
-: 
+"": ""Token""
 @usage
-: composeItem ID 
-: composeItem 2225669887222 37 <=> 372225669887222
+"": bridgeRechargeToken chain_id block_no transaction_hash sequence from_address to_address token value state message
+"": bridgeRechargeToken 97 18158725 0xafa0a245d3f982933b8b88465a46cf2882f7b2cd43b3abddf3d77ada5370920f 1 0x61eb0adc3b7bc556ad4a228a77ca917b23514f7a 0x45c9c28f01f975d92606886FCb178757c73204c1 HYT 100000 1 confirm
 
-: 
+"": ""Token""
 @usage
-: cancelComposeItem ID
-: cancelComposeItem 2225669887222 <=> 2225669887222
+"": bridgeWithdrawToken chain_id token amount
+"": bridgeWithdrawToken 56 MIT 100
 
-: 
+"": ""Token""
 @usage
-: speedComposeItem ID
-: speedComposeItem 2225669887222 <=> ID2225669887222
+"": bridgeChangeTokenWithdraw order_num state message
+"": bridgeChangeTokenWithdraw 1 1 approval
 
-: 
+"": ""nft""mongo""
 @usage
-: repairItems IDs
-: repairItems 2225669887222
+"": bridgeAddNFT chain_id owner_address kind quality race style level 
+"": bridgeAddNFT 97 0x61eb0adc3b7bc556ad4a228a77ca917b23514f7a 1 2 2 1 1
 
-: 
+"": ""NFT""
 @usage
-: repairSpeed ID
-: repairSpeed 2225669887222
+"": bridgeRechargeNFT chain_id block_no transaction_hash sequence from_address to_address state message token_id1 token_id2
+"": bridgeRechargeNFT 97 18158445 0xafa0a245d3f982933b8b88465a46cf2882f7b2cd43b3abddf3d77ada5370920f 1 0x61eb0adc3b7bc556ad4a228a77ca917b23514f7a 0x45c9c28f01f975d92606886FCb178757c73204c1 1 confirm 1002
 
-: 
+"": ""nft""mongo""，""nft""
 @usage
-: getRepairItems
-: getRepairItems
+"": bridgeAddAndRechargeNFT kind quality race style level chain_id(""chain_id) owner_address("")
+"": bridgeAddAndRechargeNFT 1 2 2 1 1
+"": bridgeAddAndRechargeNFT 1 2 2 1 1 97 0x61eb0adc3b7bc556ad4a228a77ca917b23514f7a
+"": bridgeAddAndRechargeNFT 14 0 0 0 3800001   --dao"", level""cfgId
+"": bridgeAddAndRechargeNFT 13 0 0 0 8340001   --""NFT, level""cfgId
 
-: 
+"": ""NFT""
 @usage
-: addItemLife ID 
-: addItemLife 2225669887222 -20
+"": bridgeWithdrawNFT chain_id token_id1 token_id2
+"": bridgeWithdrawNFT 56 2002 3002
 
-: 
+""：""
 @usage
-: queryAllResPlanetBrief
-: queryAllResPlanetBrief
+"": buyBattleNum battleNum
+"": buyBattleNum 3
 
-: 
+"": ""
 @usage
-: lookResPlanet 
-: lookResPlanet 1
+"": queryOwnerAddress 
+"": queryOwnerAddress
 
-: 
+"": ""nft, ""quality"", ""quality""quality
 @usage
-: resPlanetBuild2ItemBag  ID
-: resPlanetBuild2ItemBag 1 2225669887222
+"": oneKeyGenerateNfts chain quality
+"": oneKeyGenerateNfts chain quality
 
-: 
+"": ""
 @usage
-: itemBagBuild2ResPlanet  ID x z
-: itemBagBuild2ResPlanet 1 2225669887222 22 22
+"": generateBuildLayout
+"": generateBuildLayout
 
-: 
+""：""mit
 @usage
-: queryBoatRes
-: queryBoatRes
+"": pledgeMit value
+"": pledgeMit 60000
 
-: 
+""：""
 @usage
-: pickBoatRes
-: pickBoatRes
+"": reapGuideRes id resId
+"": reapGuideRes 
 
-: 
+"": ""
 @usage
-: addBoatRes Id 
-: addBoatRes 101 100
+"": generatePlayerData
+"": generatePlayerData
 
-: 
+""：""
 @usage
-: addBuild2ResBoat ID  
-: addBuild2ResBoat 1301001 1
+"": sendGuide guideId skipOthers
+"": sendGuide 1006 1 
 
-: 
+""：""
 @usage
-: beginAttackResPlanet 
-: beginAttackResPlanet 1
+"": genUnionSolider 
+"": genUnionSolider 
 
-: 
+""：""NFT""
 @usage
-: endAttackResPlanet
-: endAttackResPlanet 1 1
+"": clearUnionNFTRef 
+"": clearUnionNFTRef 
+
+""：""
+@usage
+"": drawCard cfgId drawCount
+"": drawCard 1 100
+
+""
+@usage
+"": genLanguageJson
+"": genLanguageJson ""errors""etc\i18n""3"",""
 
 
 [test]
-: 
+"": ""
 @usage
-: echo 
-: echo hello
+"": echo ""
+"": echo hello
 
 
 [admin]
-: 
+"": ""
 @usage
-: rebindserver ID ID
+"": rebindserver ""ID ""ID
 
-: 
+"": ""
 @usage
-: rebindaccount ID 
+"": rebindaccount ""ID ""
 
-: 
+"": ""
 @usage
-: delrole ID []
+"": delrole ""ID [""]
 
-: 
+"": ""
 @usage
-: recover_role ID
+"": recover_role ""ID
 
-: 
+"": ""
 @usage
-: clone ID []
+"": clone ""ID [""]
 
-: /tmp/ID.json
+"": ""/tmp/""ID.json
 @usage
-: serialize ID
+"": serialize ""ID
 
-: 
+"": ""
 @usage
-: deserialize  []
+"": deserialize "" [""]
 
-: /
-: openserver id 1|0
+"": ""/""
+"": openserver ""id 1|0
 @usage
-openserver game1 1        <=> game1
-openserver game1 0        <=> game1
+openserver game1 1        <=> game1""
+openserver game1 0        <=> game1""
 
 
 [gm]
 
 [helper]
-: GM.txt
+"": ""GM"".txt
 @usage buildgmdoc
 
-: 
-@usage help []
+"": ""
+@usage help [""]
 
 
 [init]
 
 [sys]
-: 
+"": ""
 @usage
-: stop
+"": stop
 
-: 
+"": ""
 @usage
-: restart
+"": restart
 
-: 
+"": ""
 @usage
-: disconnect [id]
+"": disconnect [""id]
 
-: 
+"": ""
 @usage
-: kick [ID [ID]...]
+"": kick [""ID [""ID]...]
 
-: 
+"": ""
 @usage
-: kickall
+"": kickall
 
-: lua
+"": ""lua""
 @usage
-: exec lua
+"": exec lua""
 
-: 
+"": ""
 @usage
-: dofile lua ...
-: dofile tmp.lua
+"": dofile lua"" ...
+"": dofile tmp.lua
 
-: 
+"": ""
 @usage
-: hotfix  ...
+"": hotfix "" ...
 
-: 
+"": ""
 @usage
-: hotfixAll
+"": hotfixAll
 
-: /
+"": ""/""
 @usage
-: loglevel []
-:
-loglevel     <=> 
-loglevel debug/trace/info/warn/error/fatal  <=> 
+"": loglevel [""]
+"":
+loglevel     <=> ""
+loglevel debug/trace/info/warn/error/fatal  <=> ""
 
-: /
+"": ""/""
 @usage
-: date []
-: date        <=> 
-: date 2019/11/28 10:10:10        <=> 2019/11/28 10:10:10
+"": date [""]
+"": date        <=> ""
+"": date 2019/11/28 10:10:10        <=> ""2019/11/28 10:10:10
 
-: 
+"": ""
 @usage
-: ntpdate
-: ntpdate <=> 
+"": ntpdate
+"": ntpdate <=> ""，""
 
-: 
+"": ""
 @usage
-: info []
+"": info [""]
 
-: 
+"": ""
 @usage
-: bugreport ()  
+"": bugreport ""("") "" ""
 
-: 
+"": ""
 @usage
-: check_cluster
+"": check_cluster
 
-: id
+"": ""id""
 @usage
-: close_link id
-: close_link 0       <=> 
-: close_link 1802    <=> 1802
+"": close_link ""id
+"": close_link 0       <=> ""
+"": close_link 1802    <=> ""1802""
 
 @usage
-: close_login 1(+)|0(+)
-: close_login 1        <=> +
-: close_login 0        <=> +
+"": close_login 1(""+"")|0(""+"")
+"": close_login 1        <=> ""+""
+"": close_login 0        <=> ""+""
 
-: 
+"": ""
 @usage
-: recvclient cmd args(lua table)
-: recvclient C2S_Ping {str="hello"}
-: sh gm.sh 1000001 recvclient C2S_Ping '{str=\"hello\"}'
+"": recvclient cmd args(lua table)
+"": recvclient C2S_Ping {str="hello"}
+"": sh gm.sh 1000001 recvclient C2S_Ping '{str=\"hello\"}'
 
-: 
+"": ""
 @usage
-: sendclient cmd args(lua table)
-: sendclient S2C_Pong {str="hello",time=1604913284000,token="test"}
-: sh gm.sh 1000001 sendclient S2C_Pong '{str=\"hello\",time=1604913284000,token=\"test\"}'
+"": sendclient cmd args(lua table)
+"": sendclient S2C_Pong {str="hello",time=1604913284000,token="test"}
+"": sh gm.sh 1000001 sendclient S2C_Pong '{str=\"hello\",time=1604913284000,token=\"test\"}'
 
-: rpc#call
+"": rpc#call
 @usage
-: call    [1(lua) 2...]
-: call center .main ping
-: call center :00000008 ping
-: call center .main exec#logger.print "one" 1 {"table"}
-: sh gm.sh 0 call center .main exec#SERVICE_NAME
-: sh gm.sh 0 call center .main exec#gg.serviceName
-: sh gm.sh 0 call center .main exec#logger.print '\"one\" 1 {\"table\"}'
+"": call "" "" "" [""1(lua"") ""2...]
+"": call center .main ping
+"": call center :00000008 ping
+"": call center .main exec#logger.print "one" 1 {"table"}
+"": sh gm.sh 0 call center .main exec#SERVICE_NAME
+"": sh gm.sh 0 call center .main exec#gg.serviceName
+"": sh gm.sh 0 call center .main exec#logger.print '\"one\" 1 {\"table\"}'
 
-: rpc#send
+"": rpc#send
 @usage
-: send    [1(lua) 2...]
-: send center .main ping
-: send center :00000008 ping
-: send game1 :00000008 gm#kick 1000001 1000002
-: send center .main exec#logger.print "one" 1 {"table"}
-: sh gm.sh 0 send center .main exec#logger.print '\"one\" 1 {\"table\"}'
+"": send "" "" "" [""1(lua"") ""2...]
+"": send center .main ping
+"": send center :00000008 ping
+"": send game1 :00000008 gm#kick 1000001 1000002
+"": send center .main exec#logger.print "one" 1 {"table"}
+"": sh gm.sh 0 send center .main exec#logger.print '\"one\" 1 {\"table\"}'
 
-: proxy.call/send
+"": proxy.call/send
 @usage
-: proxy call/send   [1(lua) 2...]
-: proxy call center ping
-: proxy send center ping
-: proxy call center exec#SERVICE_NAME
-: proxy send center exec#logger.print "one" 1 {"table"}
-: proxy send :00000008 gm#help "help"
-: proxy send :00000008 gm#kick 1000001 1000002
-: sh gm.sh 0 proxy call center exec#gg.serviceName
-: sh gm.sh 0 proxy send center exec#logger.print '\"one\" 1 {\"table\"}'
+"": proxy call/send "" "" [""1(lua"") ""2...]
+"": proxy call center ping
+"": proxy send center ping
+"": proxy call center exec#SERVICE_NAME
+"": proxy send center exec#logger.print "one" 1 {"table"}
+"": proxy send :00000008 gm#help "help"
+"": proxy send :00000008 gm#kick 1000001 1000002
+"": sh gm.sh 0 proxy call center exec#gg.serviceName
+"": sh gm.sh 0 proxy send center exec#logger.print '\"one\" 1 {\"table\"}'
 
-: profile
+"": ""profile
 @usage
-: 0=,1=,2=cpu(),3=(+),4=,5=cpu,6=
- startProfile topN  ()
- startProfile 20 2 20000  <=> 20s20cpu
- proxy send :0000002b gm#startProfile 20 2 20000  <=> :0000002b20s20cpu
+"": 0="",1="",2=cpu""(""),3=""(""+""),4="",5=""cpu"",6=""
+""： startProfile topN "" ""("")
+""： startProfile 20 2 20000  <=> ""20s""20""cpu""
+""： proxy send :0000002b gm#startProfile 20 2 20000  <=> :0000002b""20s""20""cpu""
 
-: profile
+"": ""profile
 @usage
-stopProfile
-: stopProfile  <=> profile
-: proxy send :0000002b gm#stopProfile  <=> :0000002bprofile
+""：stopProfile
+"": stopProfile  <=> ""profile
+"": proxy send :0000002b gm#stopProfile  <=> :0000002b""profile
 
-: 
+"": ""
 @usage
-snapshot (diff/refcount/tablecount/find) [value]
-: snapshot diff    <=> ,diff
-: snapshot refcount 100    <=> 100
-: snapshot tablecount 100  <=> 100table
-: snapshot find 0x7fa830f63580  <=> 
-: snapshot clear           <=> 
- proxy send :0000002b gm#snapshot diff  <=> :0000002b,diff
+snapshot ""(diff/refcount/tablecount/find) [value]
+"": snapshot diff    <=> "",""diff
+"": snapshot refcount 100    <=> ""100""
+"": snapshot tablecount 100  <=> ""100""table
+"": snapshot find 0x7fa830f63580  <=> ""
+"": snapshot clear           <=> ""
+""： proxy send :0000002b gm#snapshot diff  <=> :0000002b"",""diff
 
-: ldoc,../doc/server
+"": ""ldoc"",""../doc/server
 
-: ip
+"": ""ip""
 @usage:
-: set_net_delay 0/(0) [ip]
-: set_net_delay 100 192.168.30.150  <=> 192.168.30.150ip100ms
-: set_net_delay 0 192.168.30.150  <=> 192.168.30.150ip
-: set_net_delay 100  <=> 100ms
-: set_net_delay 0  <=> 
+"": set_net_delay 0/""(0"") [ip]
+"": set_net_delay 100 192.168.30.150  <=> ""192.168.30.150ip""100ms
+"": set_net_delay 0 192.168.30.150  <=> ""192.168.30.150ip""
+"": set_net_delay 100  <=> ""100ms
+"": set_net_delay 0  <=> ""
 
-: 
+"": ""
 @usage:
-: show_net_delay [ip]
-: show_net_delay 100 192.168.30.150  <=> ,IP
-: show_net_delay <=> ,
+"": show_net_delay [ip]
+"": show_net_delay 100 192.168.30.150  <=> "",""IP""
+"": show_net_delay <=> "",""
 
-: pingpong
+"": ping""pong
 

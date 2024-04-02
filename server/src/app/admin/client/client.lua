@@ -1,0 +1,136 @@
+local cclient = reload_class("cclient")
+
+function cclient:open()
+    self:register_http("/api/rpc",require "app.admin.client.http.api.rpc")
+    self:register_http("/api/account/adminAccountLogin",require "app.admin.client.http.api.account.adminAccountLogin")
+    self:register_http("/api/account/adminResetPassword",require "app.admin.client.http.api.account.adminResetPassword")
+    self:register_http("/api/account/adminAccountAdd",require "app.admin.client.http.api.account.adminAccountAdd")
+    self:register_http("/api/account/adminRefreshToken",require "app.admin.client.http.api.account.adminRefreshToken")
+    self:register_http("/api/account/businessAccountLogin", require "app.admin.client.http.api.account.businessAccountLogin")
+    self:register_http("/api/account/businessRefreshToken", require "app.admin.client.http.api.account.businessRefreshToken")
+    self:register_http("/api/account/adminChangeInfo", require "app.admin.client.http.api.account.adminChangeInfo")
+
+    --""
+    self:register_http("/api/analyzer/getGameResStatisticHistory", require "app.admin.client.http.api.analyzer.getGameResStatisticHistory")
+    self:register_http("/api/analyzer/getPlayerInfo", require "app.admin.client.http.api.analyzer.getPlayerInfo")
+    self:register_http("/api/analyzer/getPlayerList", require "app.admin.client.http.api.analyzer.getPlayerList")
+    self:register_http("/api/analyzer/getActiveUserStatistic", require "app.admin.client.http.api.analyzer.getActiveUserStatistic")
+    self:register_http("/api/analyzer/getIndexStatistic", require "app.admin.client.http.api.analyzer.getIndexStatistic")
+    self:register_http("/api/analyzer/getLostUserStatistic", require "app.admin.client.http.api.analyzer.getLostUserStatistic")
+    self:register_http("/api/analyzer/getNewAddUserStatistic", require "app.admin.client.http.api.analyzer.getNewAddUserStatistic")
+    self:register_http("/api/analyzer/getOnlineUserStatistic", require "app.admin.client.http.api.analyzer.getOnlineUserStatistic")
+    self:register_http("/api/analyzer/getStayUserStatistic", require "app.admin.client.http.api.analyzer.getStayUserStatistic")
+    self:register_http("/api/analyzer/getUserStatisticByDay", require "app.admin.client.http.api.analyzer.getUserStatisticByDay")
+    self:register_http("/api/analyzer/getPaymentStatisticByDay", require "app.admin.client.http.api.analyzer.getPaymentStatisticByDay")
+    self:register_http("/api/analyzer/getValidNewAddUserStatistic", require "app.admin.client.http.api.analyzer.getValidNewAddUserStatistic")
+    self:register_http("/api/analyzer/getPlayerPVEStatistic", require "app.admin.client.http.api.analyzer.getPlayerPVEStatistic")
+    self:register_http("/api/analyzer/getInviteInfoStatistic", require "app.admin.client.http.api.analyzer.getInviteInfoStatistic")
+    self:register_http("/api/analyzer/getInviteSonAccountList", require "app.admin.client.http.api.analyzer.getInviteSonAccountList")
+    self:register_http("/api/analyzer/getGameResLog", require "app.admin.client.http.api.analyzer.getGameResLog")
+    self:register_http("/api/analyzer/getGameItemLog", require "app.admin.client.http.api.analyzer.getGameItemLog")
+    self:register_http("/api/analyzer/getGameEntityLog", require "app.admin.client.http.api.analyzer.getGameEntityLog")
+    self:register_http("/api/analyzer/getPayOrderList", require "app.admin.client.http.api.analyzer.getPayOrderList")
+    self:register_http("/api/analyzer/getChainRechargeTokenList", require "app.admin.client.http.api.analyzer.getChainRechargeTokenList")
+    self:register_http("/api/analyzer/getChainRechargeNftList", require "app.admin.client.http.api.analyzer.getChainRechargeNftList")
+    self:register_http("/api/analyzer/getChainWithdrawTokenList", require "app.admin.client.http.api.analyzer.getChainWithdrawTokenList")
+    self:register_http("/api/analyzer/getChainWithdrawNftList", require "app.admin.client.http.api.analyzer.getChainWithdrawNftList")
+    self:register_http("/api/analyzer/getGameResUseRatio", require "app.admin.client.http.api.analyzer.getGameResUseRatio")
+    self:register_http("/api/analyzer/getInviteInfoFromAdmin", require "app.admin.client.http.api.analyzer.getInviteInfoFromAdmin")
+    self:register_http("/api/analyzer/gmGetSendMailLogs", require "app.admin.client.http.api.analyzer.getSendMailLogs")
+    self:register_http("/api/analyzer/getInvitePaymentFromAdmin", require "app.admin.client.http.api.analyzer.getInvitePaymentFromAdmin")
+    self:register_http("/api/analyzer/getPlayerLvDistribution", require "app.admin.client.http.api.analyzer.getPlayerLvDistribution")
+    self:register_http("/api/analyzer/getPurchaseStatistics", require "app.admin.client.http.api.analyzer.getPurchaseStatistics")
+    self:register_http("/api/analyzer/getLeagueMatchRankList", require "app.admin.client.http.api.analyzer.getLeagueMatchRankList")
+    self:register_http("/api/analyzer/getPVPRankRealTimeData", require "app.admin.client.http.api.analyzer.getPVPRankRealTimeData")
+    self:register_http("/api/analyzer/getPlayerResRankList", require "app.admin.client.http.api.analyzer.getPlayerResRankList")
+    self:register_http("/api/analyzer/getUnionRankRealTimeData", require "app.admin.client.http.api.analyzer.getUnionRankRealTimeData")
+    self:register_http("/api/analyzer/getRechargeWithdrawInfo", require "app.admin.client.http.api.analyzer.getRechargeWithdrawInfo")
+    self:register_http("/api/analyzer/getAllNftsStatistic", require "app.admin.client.http.api.analyzer.getAllNftsStatistic")
+
+    --""
+    self:register_http("/api/game/freezePlayer", require "app.admin.client.http.api.game.freezePlayer")
+    self:register_http("/api/game/unfreezePlayer", require "app.admin.client.http.api.game.unfreezePlayer")
+    self:register_http("/api/game/banChat", require "app.admin.client.http.api.game.banChat")
+    self:register_http("/api/game/unbanChat", require "app.admin.client.http.api.game.unbanChat")
+    self:register_http("/api/game/createRobot", require "app.admin.client.http.api.game.createRobot")
+    self:register_http("/api/game/createBatchRobot", require "app.admin.client.http.api.game.createBatchRobot")
+    self:register_http("/api/game/batchCreateRobot", require "app.admin.client.http.api.game.batchCreateRobot")
+    self:register_http("/api/game/refreshRobot", require "app.admin.client.http.api.game.refreshRobot")
+    --self:register_http("/api/game/changePlayerGm", require "app.admin.client.http.api.game.changePlayerGm")
+    --self:register_http("/api/game/getGmPlayerList", require "app.admin.client.http.api.game.getGmPlayerList")
+    self:register_http("/api/game/whiteListGetStatus", require "app.admin.client.http.api.game.whiteListGetStatus")
+    self:register_http("/api/game/whiteListSetStatus", require "app.admin.client.http.api.game.whiteListSetStatus")
+    self:register_http("/api/game/whiteListGetAccount", require "app.admin.client.http.api.game.whiteListGetAccount")
+    self:register_http("/api/game/whiteListSetAccount", require "app.admin.client.http.api.game.whiteListSetAccount")
+    self:register_http("/api/game/setAllGlobalSetStatus", require "app.admin.client.http.api.game.setAllGlobalSetStatus")
+    self:register_http("/api/game/getAllGlobalSetStatus", require "app.admin.client.http.api.game.getAllGlobalSetStatus")
+    self:register_http("/api/game/businessSetAccount", require "app.admin.client.http.api.game.businessSetAccount")
+    self:register_http("/api/game/businessGetAccount", require "app.admin.client.http.api.game.businessGetAccount")
+    self:register_http("/api/game/kickPlayer", require "app.admin.client.http.api.game.kickPlayer")
+    self:register_http("/api/game/correctPlayerData", require "app.admin.client.http.api.game.correctPlayerData")
+
+    --dapp
+    self:register_http("/api/dapp/getPlayerStoreBag", require "app.admin.client.http.api.dapp.getPlayerStoreBag")
+    self:register_http("/api/dapp/getPlayerInformation", require "app.admin.client.http.api.dapp.getPlayerInformation")
+    self:register_http("/api/dapp/thirdVerifyOne", require "app.admin.client.http.api.dapp.thirdVerifyOne")
+    self:register_http("/api/dapp/thirdVerifyTwo", require "app.admin.client.http.api.dapp.thirdVerifyTwo")
+    
+    --pvp""
+    self:register_http("/api/operation/getPvpCtrlData", require "app.admin.client.http.api.operation.getPvpCtrlData")
+    self:register_http("/api/operation/setPvpJackpotPlayerRatio", require "app.admin.client.http.api.operation.setPvpJackpotPlayerRatio")
+    self:register_http("/api/operation/setPvpJackpotShareRatio", require "app.admin.client.http.api.operation.setPvpJackpotShareRatio")
+    self:register_http("/api/operation/setPvpJackpotSysVal", require "app.admin.client.http.api.operation.setPvpJackpotSysVal")
+    self:register_http("/api/operation/setPvpRankMitReward", require "app.admin.client.http.api.operation.setPvpRankMitReward")
+    self:register_http("/api/operation/setPvpStageRatio", require "app.admin.client.http.api.operation.setPvpStageRatio")
+    self:register_http("/api/operation/setPvpSysCarboxyl", require "app.admin.client.http.api.operation.setPvpSysCarboxyl")
+
+    self:register_http("/api/operation/getTesseractToResRate", require "app.admin.client.http.api.operation.getTesseractToResRate")
+    self:register_http("/api/operation/setTesseractToResRate", require "app.admin.client.http.api.operation.setTesseractToResRate")
+    self:register_http("/api/operation/getHyToTesseractRate", require "app.admin.client.http.api.operation.getHyToTesseractRate")
+    self:register_http("/api/operation/setHyToTesseractRate", require "app.admin.client.http.api.operation.setHyToTesseractRate")
+
+    self:register_http("/api/operation/getPayCurrencyInfo", require "app.admin.client.http.api.operation.getPayCurrencyInfo")
+    self:register_http("/api/operation/setPayCurrencyInfo", require "app.admin.client.http.api.operation.setPayCurrencyInfo")
+    self:register_http("/api/operation/getPayChannelInfo", require "app.admin.client.http.api.operation.getPayChannelInfo")
+    self:register_http("/api/operation/setPayChannelInfo", require "app.admin.client.http.api.operation.setPayChannelInfo")
+
+    self:register_http("/api/operation/getGiftCodeCfg", require "app.admin.client.http.api.operation.getGiftCodeCfg")
+    self:register_http("/api/operation/generateGiftCodes", require "app.admin.client.http.api.operation.generateGiftCodes")
+    self:register_http("/api/operation/getGiftCodes", require "app.admin.client.http.api.operation.getGiftCodes")
+
+    --""
+    self:register_http("/api/config/getDynamicCfg", require "app.admin.client.http.api.config.getDynamicCfg")
+    self:register_http("/api/config/setDynamicCfg", require "app.admin.client.http.api.config.setDynamicCfg")
+    self:register_http("/api/config/getMatchCfg", require "app.admin.client.http.api.config.getMatchCfg")
+    self:register_http("/api/config/setMatchCfg", require "app.admin.client.http.api.config.setMatchCfg")
+    self:register_http("/api/config/setHoldTrueMitWalletAddress", require "app.admin.client.http.api.config.setHoldTrueMitWalletAddress")
+    self:register_http("/api/config/getHoldTrueMitWalletAddress", require "app.admin.client.http.api.config.getHoldTrueMitWalletAddress")
+
+    --""
+    self:register_http("/api/mail/gmSendMail",require "app.admin.client.http.api.mail.sendMail")
+    self:register_http("/api/mail/gmGetMails",require "app.admin.client.http.api.mail.getMails")
+    self:register_http("/api/mail/gmDelMail",require "app.admin.client.http.api.mail.delMail")
+
+    --""
+    self:register_http("/api/business/getInviteInfoFromBusiness", require "app.admin.client.http.api.business.getInviteInfoFromBusiness")
+    self:register_http("/api/business/getBusinessBaseInfo", require "app.admin.client.http.api.business.getBusinessBaseInfo")
+    self:register_http("/api/business/setBusinessBaseInfo", require "app.admin.client.http.api.business.setBusinessBaseInfo")
+    self:register_http("/api/business/getInvitePaymentFromBusiness", require "app.admin.client.http.api.business.getInvitePaymentFromBusiness")
+
+    --""("",""redis"")
+    self:register_http("/api/private/batchSetWhiteList", require "app.admin.client.http.api.private.batchSetWhiteList")
+    self:register_http("/api/private/batchSendReward", require "app.admin.client.http.api.private.batchSendReward")
+    self:register_http("/api/private/opStarmapMatchUnionData", require "app.admin.client.http.api.private.opStarmapMatchUnionData")
+    self:register_http("/api/private/opMatchData", require "app.admin.client.http.api.private.opMatchData")
+    self:register_http("/api/private/correct", require "app.admin.client.http.api.private.correct")
+    self:register_http("/api/private/refresh", require "app.admin.client.http.api.private.refresh")
+
+    --""
+    self:register_http("/api/pay/repairOrder", require "app.admin.client.http.api.pay.repairOrder")
+end
+
+function __hotfix(module)
+    gg.client:open()
+end
+
+return cclient

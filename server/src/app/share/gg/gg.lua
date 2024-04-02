@@ -4,8 +4,8 @@ function gg.init()
     gg.internal.queue = false
     gg.ignoreCfg = false
     gg._init()
-    gg.redismgr = ggclass.cdbmgr.new("redis")
-    gg.dbmgr = ggclass.cdbmgr.new()
+    gg.mongoProxy = ggclass.MongodbProxy.new()
+    gg.redisProxy = ggclass.RedisProxy.new()
     gg.savemgr = ggclass.csavemgr.new()
 end
 
@@ -19,17 +19,23 @@ function gg.start()
     logger.print("internal:open")
     gg.gm:open()
     logger.print("gm:open")
+
+    gg.api.initialWhiteListStatus()
+    gg.api.initialChainBridgeStatus()
+    gg.api.initialTransportBanList()
+    gg.api.initialPrivateApi()
+    gg.api.initialChainExclusive()
+    gg.api.initialUrlConfig()
 end
 
 function gg.exit()
     gg.savemgr:saveall()
-    gg.redismgr:shutdown()
     gg._exit()
 end
 
---- ()
----@param[type=table] linkobj 
----@param[type=string] err 
+--- ""("")
+---@param[type=table] linkobj ""
+---@param[type=string] err ""
 function gg.sayError(linkobj,err)
 end
 
