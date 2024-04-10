@@ -26,7 +26,7 @@ function cgm:register(cmd,handler,tag,desc)
     }
 end
 
--- 
+-- ""
 function cgm:register_np(cmd,handler,tag,desc)
     self:register(cmd,handler,tag | self.TAG_NOT_PLAYER_METHOD,desc)
 end
@@ -40,7 +40,7 @@ function cgm:dispatch(session,source,cmdline)
 end
 
 function cgm:unlock(serverid)
-    -- skynet.call("unknow_address",...)
+    -- skynet.call("unknow_address",...)""
     logger.logf("info","gm","op=unlock,serverid=%s",serverid)
     if serverid == skynet.config.id then
         self.lock = queue()
@@ -104,9 +104,9 @@ function cgm:_docmd(split)
     self:say(string.format("%s %s",cmd,table.concat(args," ")))
     local ret = table.pack(xpcall(handler,gg.onerror,self,args))
     if ret[1] then
-        self:say("")
+        self:say("execute no error")
     else
-        self:say("")
+        self:say("execute error")
     end
     self.master_pid = nil
     self.master = nil

@@ -7,7 +7,7 @@ function cinternal:ctor()
     self.id = 0
     self.lock = queue()
 
-    -- 
+    -- ""
     self.node = skynet.config.id
     self.address = skynet.self()
     -- builtin router
@@ -31,7 +31,7 @@ function cinternal:ctor()
     self:register("sendx_error",function (sendx_session)
         self:sendx_error(sendx_session)
     end)
-    self:register("api",function (method,...)
+    self:register("api",function(method,...)
         if not gg.api then
             return
         end
@@ -46,7 +46,7 @@ function cinternal:ctor()
     end)
 end
 
--- 
+-- ""
 function cinternal:open()
 end
 
@@ -96,11 +96,11 @@ function cinternal:_dispatch(session,source_address,cmd,...)
     end
 end
 
---- internal:call,
---@param[type=string|int] address actor
---@param[type=string] cmd 
---@param ... 
---@return 
+--- internal:call"",""
+--@param[type=string|int] address ""actor""
+--@param[type=string] cmd ""
+--@param ... ""
+--@return ""
 function cinternal:call(address,cmd,...)
     if gg.profile.open then
         local name = ...
@@ -119,10 +119,10 @@ function cinternal:call(address,cmd,...)
     end
 end
 
---- internal:send,,
---@param[type=string|int] address actor
---@param[type=string] cmd 
---@param ... 
+--- internal:send"","",""
+--@param[type=string|int] address ""actor""
+--@param[type=string] cmd ""
+--@param ... ""
 function cinternal:send(address,cmd,...)
     if gg.profile.open then
         local name
@@ -145,11 +145,11 @@ function cinternal:send(address,cmd,...)
     end
 end
 
---- internal:sendx,,,callback
---@param[type=function,opt] callback ,nil,send
---@param[type=string|int] address actor
---@param[type=string] cmd 
---@param ... 
+--- internal:sendx"","","",""callback""
+--@param[type=function,opt] callback "",""nil,""send""
+--@param[type=string|int] address ""actor""
+--@param[type=string] cmd ""
+--@param ... ""
 function cinternal:sendx(callback,address,cmd,...)
     if not callback then
         self:send(address,cmd,...)
@@ -210,11 +210,11 @@ function cinternal:sendx_error(session)
     end
 end
 
---- internal:timeout_call,()false,true,
---@param[type=int] ti ()
---@param[type=string|int] address actor
---@param[type=string] cmd 
---@param ... 
+--- internal:timeout_call"",""("")""false,""true,""
+--@param[type=int] ti ""("")
+--@param[type=string|int] address ""actor""
+--@param[type=string] cmd ""
+--@param ... ""
 function cinternal:timeout_call(ti,...)
     ti = math.floor(ti/10)
     local co = coroutine.running()

@@ -14,6 +14,7 @@ function gg._init()
             cfg.loadAll()
         end
         cfg.init()
+        gg.checkExcelCfg()
     end
     local index = tonumber(skynet.config.index)
     local nodes = skynet.config.nodes
@@ -35,7 +36,7 @@ end
 function gg._exit()
     gg.actor:exit()
     if gg.standalone then
-        -- game.exit()#skynet.abort
+        -- ""game.exit()#skynet.abort
         gg.serviceMgr:exit()
     else
         skynet.fork(skynet.exit)
@@ -50,7 +51,7 @@ function gg.getGateConfig()
     local key = proto_type .. "_config"
     local proto_config = assert(skynet.getenv(key))
     local msg_max_len = assert(tonumber(skynet.getenv("msg_max_len")))
-    -- (1/100)
+    -- ""(1/100"")
     local timeout = assert(tonumber(skynet.getenv("socket_timeout")))
     local maxclient = assert(tonumber(skynet.getenv("socket_max_num")))
     local encrypt_algorithm = skynet.getenv("encrypt_algorithm")
@@ -85,7 +86,7 @@ function gg.startKcpGate()
         -- test
         local gate_conf = gg.getGateConfig()
         gate_conf.port = skynet.getenv("kcp_port")
-        gate_conf.encrypt_algorithm = nil   -- 
+        gate_conf.encrypt_algorithm = nil   -- ""
         gg.gate.tcp = skynet.newservice("gg/service/gate/tcp")
         skynet.call(gg.gate.tcp,"lua","open",gate_conf)
         return
@@ -153,7 +154,7 @@ function gg.isSelfService(serviceName)
     return realServiceName == serviceName
 end
 
--- /
+-- ""/""
 function gg.uniqueservice(serviceName)
     local servicePath = string.format("app/%s/main",serviceName)
     local name = "." .. serviceName
@@ -162,7 +163,7 @@ function gg.uniqueservice(serviceName)
     return serviceAddress
 end
 
--- 
+-- ""
 function gg.proxyservice(serviceName, serviceNodeName)
     serviceNodeName = serviceNodeName or serviceName
     local node = skynet.config[serviceNodeName .. "server"] or skynet.config.id
@@ -185,9 +186,9 @@ function gg.loadStartConfig()
 end
 
 function gg.busyness()
-    --help=([0,0.5),:[0.5,1),:[1,max))
+    --help=""(""：[0,0.5),"":[0.5,1),"":[1,max))
     local mqlen = skynet.mqlen()
-    local loadlv = mqlen / 100 -- >=1--
+    local loadlv = mqlen / 100 -- >=1--""
     local busyness
     if gg._busyness then
         busyness = 0.3 * loadlv + 0.8 * gg._busyness()
@@ -201,7 +202,7 @@ end
 
 function gg.status()
     local data = {
-        -- 
+        -- ""
         id = skynet.config.id,
         index = skynet.config.index,
         type = skynet.config.type,
@@ -274,45 +275,45 @@ function gg.initI18n()
     gg.useI18n = true
     skynet.register_serialize_type(i18n.I18N_TEXT_TYPE,i18n.serialize_text,i18n.deserialize_text)
     i18n.init({
-        original_lang = "zh_CN",
+        original_lang = "en_US",
         languages = gg.genI18nTexts()
     })
 end
 
-function gg.getGlobalCgfIntValue(key, defaultValue)
-    local globalCgf = assert(cfg.get("etc.cfg.global"), "etc.cfg.global is not exist")
-    if not globalCgf[key] then
-        assert(defaultValue, "globalCgf["..key.."] not exist and defaultValue is nil")
+function gg.getGlobalCfgIntValue(key, defaultValue)
+    local globalCfg = assert(cfg.get("etc.cfg.global"), "etc.cfg.global is not exist")
+    if not globalCfg[key] then
+        assert(defaultValue, "globalCfg["..key.."] not exist and defaultValue is nil")
         return defaultValue or 0
     end
-    return globalCgf[key].intValue
+    return globalCfg[key].intValue or defaultValue
 end
 
-function gg.getGlobalCgfFloatValue(key, defaultValue)
-    local globalCgf = assert(cfg.get("etc.cfg.global"), "etc.cfg.global is not exist")
-    if not globalCgf[key] then
-        assert(defaultValue, "globalCgf["..key.."] not exist and defaultValue is nil")
+function gg.getGlobalCfgFloatValue(key, defaultValue)
+    local globalCfg = assert(cfg.get("etc.cfg.global"), "etc.cfg.global is not exist")
+    if not globalCfg[key] then
+        assert(defaultValue, "globalCfg["..key.."] not exist and defaultValue is nil")
         return defaultValue
     end
-    return globalCgf[key].floatValue
+    return globalCfg[key].floatValue or defaultValue
 end
 
-function gg.getGlobalCgfTableValue(key, defaultValue)
-    local globalCgf = assert(cfg.get("etc.cfg.global"), "etc.cfg.global is not exist")
-    if not globalCgf[key] then
-        assert(defaultValue, "globalCgf["..key.."] not exist and defaultValue is nil")
+function gg.getGlobalCfgTableValue(key, defaultValue)
+    local globalCfg = assert(cfg.get("etc.cfg.global"), "etc.cfg.global is not exist")
+    if not globalCfg[key] then
+        assert(defaultValue, "globalCfg["..key.."] not exist and defaultValue is nil")
         return defaultValue
     end
-    return globalCgf[key].tableValue
+    return globalCfg[key].tableValue or defaultValue
 end
 
-function gg.getGlobalCgfStringValue(key, defaultValue)
-    local globalCgf = assert(cfg.get("etc.cfg.global"), "etc.cfg.global is not exist")
-    if not globalCgf[key] then
-        assert(defaultValue, "globalCgf["..key.."] not exist and defaultValue is nil")
+function gg.getGlobalCfgStringValue(key, defaultValue)
+    local globalCfg = assert(cfg.get("etc.cfg.global"), "etc.cfg.global is not exist")
+    if not globalCfg[key] then
+        assert(defaultValue, "globalCfg["..key.."] not exist and defaultValue is nil")
         return defaultValue
     end
-    return globalCgf[key].stringValue
+    return globalCfg[key].stringValue or defaultValue
 end
 
 function gg.getProxy(node,address)
@@ -340,49 +341,132 @@ function gg.isInnerServer()
     return gg.isDevelopServer() or gg.isAlphaServer()
 end
 
--- 
+-- ""
 function gg.isDevelopServer()
     return skynet.config.clusterid == "master" or skynet.config.clusterid == "main"
 end
 
--- 
+-- ""
 function gg.isAlphaServer()
     return skynet.config.clusterid == "alpha"
 end
 
--- 
-function gg.isAlphaServer()
+-- ""
+function gg.isBetaServer()
     return skynet.config.clusterid == "beta"
 end
 
--- 
+-- ""
 function gg.isReleaseServer()
     return skynet.config.clusterid == "release"
 end
 
---- 
+-- ""
+function gg.isZksyncServer()
+    return skynet.config.clusterid == "zksync"
+end
+
+--- ""
 function gg.loadAllCfg()
     assert(cfg.load("etc.cfg.test"))
     assert(cfg.load("etc.cfg.filterWords"))
     assert(cfg.load("etc.cfg.build"))
+    assert(cfg.load("etc.cfg.buildBattle"))
     assert(cfg.load("etc.cfg.solider"))
+    assert(cfg.load("etc.cfg.soliderBattle"))
     assert(cfg.load("etc.cfg.skill"))
+    assert(cfg.load("etc.cfg.skillBattle"))
     assert(cfg.load("etc.cfg.hero"))
+    assert(cfg.load("etc.cfg.heroBattle"))
     assert(cfg.load("etc.cfg.warShip"))
+    assert(cfg.load("etc.cfg.warShipBattle"))
     assert(cfg.load("etc.cfg.life"))
     assert(cfg.load("etc.cfg.natural"))
     assert(cfg.load("etc.cfg.global"))
     assert(cfg.load("etc.cfg.item"))
-    assert(cfg.load("etc.cfg.resPlanet"))
+    -- assert(cfg.load("etc.cfg.resPlanet"))
     assert(cfg.load("etc.cfg.buff"))
     assert(cfg.load("etc.cfg.bullet"))
-    assert(cfg.load("etc.cfg.pledge"))
-    assert(cfg.get("etc.cfg.pledge"))
-    -- for k, v in pairs(pledgeCfg) do
-    --     print("v.expression=", v.expression)
-    --     v.expression = assert(load(v.expression,"t"), "load expression error cfgId="..k)
-    --     print("v.expression=", v.expression, "expression(10)=", v.expression(10))
-    -- end
+    -- assert(cfg.load("etc.cfg.pledge"))
+    -- assert(cfg.load("etc.cfg.tonnage"))
+    assert(cfg.load("etc.cfg.achievement"))
+    assert(cfg.load("etc.cfg.pvpCost"))
+    assert(cfg.load("etc.cfg.buildCount"))
+    assert(cfg.load("etc.cfg.vip"))
+    -- assert(cfg.load("etc.cfg.galaxy"))
+    -- assert(cfg.load("etc.cfg.task"))
+    -- assert(cfg.load("etc.cfg.stellarSystem"))
+    assert(cfg.load("etc.cfg.soliderForge"))
+    -- assert(cfg.load("etc.cfg.storehouseExt"))
+    assert(cfg.load("etc.cfg.PlayerHead"))
+    assert(cfg.load("etc.cfg.treasure"))
+    assert(cfg.load("etc.cfg.guide"))
+    assert(cfg.load("etc.cfg.skillEffect"))
+    assert(cfg.load("etc.cfg.buildBattle"))
+    assert(cfg.load("etc.cfg.heroBattle"))
+    assert(cfg.load("etc.cfg.skillBattle"))
+    assert(cfg.load("etc.cfg.soliderBattle"))
+    assert(cfg.load("etc.cfg.warShipBattle"))
+    assert(cfg.load("etc.cfg.presetBuild"))
+    assert(cfg.load("etc.cfg.presetBuildLayout"))
+    if skynet.config.id == "center" then
+        -- assert(cfg.load("etc.cfg.starmap"))
+        -- assert(cfg.load("etc.cfg.starmap1"))
+        -- assert(cfg.load("etc.cfg.starmap2"))
+        -- assert(cfg.load("etc.cfg.starmap3"))
+        assert(cfg.load("etc.cfg.starmapConfig"))
+        assert(cfg.load("etc.cfg.starmapBegin"))
+        assert(cfg.load("etc.cfg.StarMapMark"))
+    end
+    assert(cfg.load("etc.cfg.gmRobot"))
+    assert(cfg.load("etc.cfg.pvpBuyCost"))
+    assert(cfg.load("etc.cfg.nftBattleAdd"))
+    assert(cfg.load("etc.cfg.match"))
+    assert(cfg.load("etc.cfg.matchReward"))
+    assert(cfg.load("etc.cfg.buildConfig"))
+    assert(cfg.load("etc.cfg.heroConfig"))
+    assert(cfg.load("etc.cfg.warShipConfig"))
+    assert(cfg.load("etc.cfg.buildNftConfig"))
+    assert(cfg.load("etc.cfg.heroNftConfig"))
+    assert(cfg.load("etc.cfg.warShipNftConfig"))
+    assert(cfg.load("etc.cfg.skillConfig"))
+    assert(cfg.load("etc.cfg.soliderConfig"))
+    assert(cfg.load("etc.cfg.presetRobot"))
+    assert(cfg.load("etc.cfg.chapterTask"))
+    assert(cfg.load("etc.cfg.subTask"))
+    assert(cfg.load("etc.cfg.subTaskCond"))
+    assert(cfg.load("etc.cfg.taskActivation"))
+    assert(cfg.load("etc.cfg.baseBuild"))
+    assert(cfg.load("etc.cfg.unionTech"))
+    assert(cfg.load("etc.cfg.unionTechConfig"))
+    assert(cfg.load("etc.cfg.unionTechEffect"))
+    assert(cfg.load("etc.cfg.pve"))
+    assert(cfg.load("etc.cfg.daoPosition"))
+    assert(cfg.load("etc.cfg.mintCost"))
+    assert(cfg.load("etc.cfg.cardPool"))
+    assert(cfg.load("etc.cfg.product"))
+    assert(cfg.load("etc.cfg.battleMap"))
+    assert(cfg.load("etc.cfg.soliderComparison"))
+    assert(cfg.load("etc.cfg.activities"))
+    assert(cfg.load("etc.cfg.activitiesReward"))
+    assert(cfg.load("etc.cfg.mailTemplate"))
+    assert(cfg.load("etc.cfg.giftReward"))
+    assert(cfg.load("etc.cfg.cumulativeFunds"))
+    assert(cfg.load("etc.cfg.giftActivities"))
+    assert(cfg.load("etc.cfg.daoLevel"))
+    assert(cfg.load("etc.cfg.itemEffect"))
+    assert(cfg.load("etc.cfg.dailyGiftBag"))
+    assert(cfg.load("etc.cfg.dailyCheck"))
+    assert(cfg.load("etc.cfg.compensation"))
+    assert(cfg.load("etc.cfg.shoppingMall"))
+    assert(cfg.load("etc.cfg.giftCode"))
+    assert(cfg.load("etc.cfg.repairCost"))
+    assert(cfg.load("etc.cfg.chain"))
+    assert(cfg.load("etc.cfg.loginActivity"))
+    assert(cfg.load("etc.cfg.baseLevel"))
+    assert(cfg.load("etc.cfg.moreBuilderQue"))
+    assert(cfg.load("etc.cfg.supplyPack"))
+    assert(cfg.load("etc.cfg.starPack"))
 end
 
 

@@ -128,7 +128,7 @@ end
 function gg.hotfixI18n()
     if gg.useI18n then
         i18n.init({
-            original_lang = "zh_CN",
+            original_lang = "en_US",
             languages = gg.genI18nTexts()
         })
         return true

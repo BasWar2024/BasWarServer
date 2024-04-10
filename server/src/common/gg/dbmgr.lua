@@ -12,8 +12,8 @@ function cdbmgr:ctor(db_type)
     else
         self.db_is_cluster = false
     end
-    -- db_type_nodesdb,,
-    -- db_type_nodes,
+    -- db_type_nodes""db"","",
+    -- ""db_type_nodes,""
     self.nodes = skynet.config[self.db_type .. "_nodes"] or {}
     local db_config = skynet.config[self.db_type .. "_config"]
     if db_config then
@@ -21,7 +21,7 @@ function cdbmgr:ctor(db_type)
             self.nodes[skynet.config.id] = db_config
         end
     end
-    self.dbs = {}       -- db_id-> {conf=,db=db}
+    self.dbs = {}       -- db_id-> {conf="",db=db""}
     self.cursors = {}
     self.cursor_id = 0
 end
@@ -48,7 +48,7 @@ function cdbmgr:getdb(db_id)
     assert(ok,obj)
     local db = obj.db
     local conf = obj.conf
-    -- ?
+    -- ""?
     if conf.db then
         db = db[conf.db]
     end
@@ -69,6 +69,7 @@ function cdbmgr:_getdb(db_id)
 end
 
 function cdbmgr:get_db_conf(db_id)
+    db_id = db_id or skynet.config.id
     return self.nodes[db_id]
 end
 

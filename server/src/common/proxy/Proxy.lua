@@ -50,7 +50,7 @@ function Proxy:sendx(callback,cmd,...)
     end
 end
 
--- send
+-- ""send
 function Proxy:rawSend(cmd,...)
     if self.myNode ~= self.node then
         return cluster.send(self.node,self.address,"cluster",self.node,self.address,cmd,...)

@@ -17,7 +17,7 @@ function cactor:ctor()
     gg.sync = ggclass.csync.new()
     if gg.standalone then
         gg.serviceMgr = ggclass.ServiceMgr.new()
-        gg.serviceMgr:register(skynet.self())
+        gg.serviceMgr:register(skynet.self(),gg.serviceName)
     end
     self.time = 0
     self.deltaTime = 0
@@ -36,7 +36,7 @@ function cactor:start()
             gg.proxy.center:send("exec","gg.nodeMgr:login",gg.status())
         end
     else
-        gg.internal:send(".main","exec","gg.serviceMgr:register",skynet.self())
+        gg.internal:send(".main","exec","gg.serviceMgr:register",skynet.self(),gg.serviceName)
     end
 end
 
@@ -61,7 +61,7 @@ function cactor:dispatch(session,source,typename,...)
         ok,err = xpcall(self._dispatch,gg.onerror,self,session,source,typename,...)
     end
     if not ok then
-        if typename == "client" and skynet.config.clusterid ~= "release" then
+        if typename == "client" and (not gg.isReleaseServer()) and (not gg.isBetaServer()) and (not gg.isAlphaServer()) and (not gg.isZksyncServer()) then
             local subcmd,linkid = ...
             if subcmd == "onmessage" then
                 if gg.sayError then
@@ -69,7 +69,7 @@ function cactor:dispatch(session,source,typename,...)
                 end
             end
         end
-        -- ,skynet.call
+        -- "",""skynet.call""
         error(err)
     end
 end
@@ -77,16 +77,16 @@ end
 function cactor:_dispatch(session,source,typ,...)
     --skynet.trace()
     if typ == "client" then
-        -- 
+        -- ""
         gg.client:dispatch(session,source,...)
     elseif typ == "cluster" then
-        -- (
+        -- ""(""）""
         gg.cluster:dispatch(session,source,...)
     elseif typ == "internal" then
-        -- actor
+        -- ""actor""
         gg.internal:dispatch(session,source,...)
     elseif typ == "gm" then
-        -- debug_consolegm
+        -- debug_console""gm""
         gg.gm:dispatch(session,source,...)
     end
 end
@@ -103,9 +103,9 @@ function cactor:extract_cmd(typ,...)
         else
             return cmd
         end
-        -- 
+        -- ""
     elseif typ == "cluster" then
-        -- (
+        -- ""(""）""
         local protoname,cmd,cmd2 = select(3,...)
         if protoname == "sendx_callback" then
             return nil
@@ -126,7 +126,7 @@ function cactor:extract_cmd(typ,...)
         end
         return self._cache[protoname][cmd]
     elseif typ == "internal" then
-        -- 
+        -- ""
         local protoname,cmd,cmd2 = ...
         if protoname == "sendx_callback" then
             return nil
@@ -147,7 +147,7 @@ function cactor:extract_cmd(typ,...)
         end
         return self._cache[protoname][cmd]
     elseif typ == "gm" then
-        -- debug_consolegm
+        -- debug_console""gm""
         local cmdline = ...
         -- pid cmd arg1 arg2 ...
         local cmds = string.split(cmdline,"%s")
@@ -155,10 +155,10 @@ function cactor:extract_cmd(typ,...)
     end
 end
 
----
----@param[type=int] topN topN
----@param[type=int] sortType : 0=,1=,2=cpu(),3=(+),4=,5=cpu,6=
----@param[type=int] interval ()
+---""
+---@param[type=int] topN ""topN""
+---@param[type=int] sortType "": 0="",1="",2=cpu""(""),3=""(""+""),4="",5=""cpu"",6=""
+---@param[type=int] interval ""("")
 function cactor:startProfile(topN,sortType,interval)
     logger.print(string.format("op=startProfile,address=%s,serviceName=%s",skynet.address(skynet.self()),gg.serviceName))
     local profile = require "profile"
@@ -172,7 +172,7 @@ function cactor:startProfile(topN,sortType,interval)
     end)
 end
 
----
+---""
 function cactor:stopProfile()
     local profile = require "profile"
     local profileTimer = self.profileTimer
@@ -185,11 +185,11 @@ function cactor:stopProfile()
     gg.timer:deltimer(profileTimer)
 end
 
---- 
----@param[type=int] topN topN
----@param[type=int] sortType : 0=,1=,2=cpu(),3=(+),4=,5=cpu,6=
----@param[type=function] func 
----@param ... 
+--- ""
+---@param[type=int] topN ""topN""
+---@param[type=int] sortType "": 0="",1="",2=cpu""(""),3=""(""+""),4="",5=""cpu"",6=""
+---@param[type=function] func ""
+---@param ... ""
 function cactor:watchProfile(topN,sortType,func,...)
     local profile = require "profile"
     profile.clear()
@@ -243,15 +243,15 @@ function cactor:snapshot(mode,value)
     return header .. "\n" .. snapshot_utils.dump(diff)
 end
 
---- 
+--- ""
 function cactor:setTracebackCollectVarNames(varnames)
     for i,key in ipairs(varnames) do
         self.collectVarNames[key] = true
     end
 end
 
----
----@param[type=int] interval ()
+---""
+---@param[type=int] interval ""("")
 function cactor:startHeartbeat()
     if self.heartbeatInterval <= 0 then
         return

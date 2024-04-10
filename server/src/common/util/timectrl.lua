@@ -58,10 +58,12 @@ end
 function ctimectrl:day_update(now)
     self:on_day_update()
     local weekday = gg.time.weekday(now)
-    if weekday == 0 then
+    if weekday == 0 then --""
         self:sunday_update(now)
-    elseif weekday == 1 then
+    elseif weekday == 1 then --""
         self:monday_update(now)
+    elseif weekday == 6 then --""
+        self:saturday_update(now)
     end
     local day = gg.time.day(now)
     if day == 1 then
@@ -77,11 +79,16 @@ function ctimectrl:sunday_update(now)
     self:on_sunday_update()
 end
 
+--""
+function ctimectrl:saturday_update(now)
+    self:on_saturday_update()
+end
+
 function ctimectrl:month_update(now)
     self:on_month_update()
 end
 
--- 
+-- ""
 function ctimectrl:on_second()
     --logger.logf("debug","time","on_second")
     if gg.onSecond then
@@ -91,8 +98,8 @@ end
 
 function ctimectrl:on_minute_update()
     --logger.logf("debug","time","on_minute_update")
-    if gg.on_minute_update then
-        gg.on_minute_update()
+    if gg.onMinuteUpdate then
+        gg.onMinuteUpdate()
     end
 end
 
@@ -143,6 +150,12 @@ function ctimectrl:on_sunday_update()
     --logger.logf("debug","time","on_sunday_update")
     if gg.onSundayUpdate then
         gg.onSundayUpdate()
+    end
+end
+
+function ctimectrl:on_saturday_update()
+    if gg.onSaturdayUpdate then
+        gg.onSaturdayUpdate()
     end
 end
 

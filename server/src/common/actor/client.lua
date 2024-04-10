@@ -1,4 +1,4 @@
---- cclient
+--- ""cclient
 --@script gg.base.class
 local cclient = reload_class("cclient")
 
@@ -30,12 +30,12 @@ function cclient:register_unauth_module(module)
     end
 end
 
---- http
---@param[type=int] linkobj http
---@param[type=string] uri uri
---@param[type=table] header 
---@param[type=string] query (urllib.parse_querytable)
---@param[type=string] body (cjson.decode)
+--- ""http""
+--@param[type=int] linkobj http""
+--@param[type=string] uri ""uri
+--@param[type=table] header ""
+--@param[type=string] query ""(""urllib.parse_query""table)
+--@param[type=string] body ""(""cjson.decode"")
 function cclient:http_onmessage(linkobj,uri,header,query,body)
     logger.logf("debug","http","op=recv,linkid=%s,ip=%s,port=%s,method=%s,uri=%s,header=%s,query=%s,body=%s",
         linkobj.linkid,linkobj.ip,linkobj.port,linkobj.method,uri,header,query,body)
@@ -56,22 +56,22 @@ function cclient:http_onmessage(linkobj,uri,header,query,body)
     skynet.ret(nil)
 end
 
---- 
---@param[type=string] linktype ,tcp/kcp/websocket
---@param[type=int] linkid ID
---@param[type=string] addr 
---@param[type=string] gate_node 
---@param[type=int] gate_address 
+--- ""
+--@param[type=string] linktype "",""tcp/kcp/websocket
+--@param[type=int] linkid ""ID
+--@param[type=string] addr ""
+--@param[type=string] gate_node ""
+--@param[type=int] gate_address ""
 function cclient:onconnect(linktype,linkid,addr,gate_node,gate_address)
     local linkobj = self:new_linkobj(linktype,linkid,addr,gate_node,gate_address)
     self:addlinkobj(linkobj)
 end
 
---- 
---@param[type=string] linktype ,tcp/kcp/websocket
---@param[type=int] linkid ID
---@param[type=string] addr 
---@param[type=string] result ,OK--,FAIL--
+--- ""
+--@param[type=string] linktype "",""tcp/kcp/websocket
+--@param[type=int] linkid ""ID
+--@param[type=string] addr ""
+--@param[type=string] result "",OK--"",FAIL--""
 function cclient:onhandshake(linktype,linkid,addr,result)
     if result ~= "OK" then
         return
@@ -85,10 +85,9 @@ function cclient:onhandshake(linktype,linkid,addr,result)
     end
 end
 
---- ,
---@param[type=int] linkid ID
+--- "",""
+--@param[type=int] linkid ""ID
 function cclient:onclose(linkid)
-    print("onclose===============================================")
     local linkobj = self:getlinkobj(linkid)
     if not linkobj then
         return
@@ -99,13 +98,13 @@ function cclient:onclose(linkid)
     self:dellinkobj(linkid,true)
 end
 
---- 
---@param[type=int] linkid ID
---@param[type=string] cmd 
---@param[type=table] args 
---@param[type=bool] response true=,false=
---@param[type=int] session ID
---@param[type=table] ud 
+--- ""
+--@param[type=int] linkid ""ID
+--@param[type=string] cmd ""
+--@param[type=table] args ""
+--@param[type=bool] response true="",false=""
+--@param[type=int] session ""ID
+--@param[type=table] ud ""
 function cclient:onmessage(linkid,cmd,args,response,session,ud)
     local linkobj = self:getlinkobj(linkid)
     if not linkobj then
@@ -124,7 +123,8 @@ function cclient:onmessage(linkid,cmd,args,response,session,ud)
     end
     local lock = linkobj.lock
     if lock then
-        lock(self._onmessage,self,player,cmd,args,response,session,ud)
+        local ret1, ret2 = lock(self._onmessage,self,player,cmd,args,response,session,ud)
+        -- print(ret1, ret2)
     else
         self:_onmessage(player,cmd,args,response,session,ud)
     end
@@ -140,12 +140,14 @@ function cclient:_onmessage(linkobj,cmd,args,response,session,ud)
     else
         local handler = self.cmd[cmd] or self.unauth_cmd[cmd]
         if handler then
+
             handler(linkobj,args,session,ud)
+
         end
     end
 end
 
---- ,
+--- "",""、""、""
 function cclient:dispatch(session,source,cmd,...)
     if cmd == "onconnect" then
         self:onconnect(...)
@@ -162,11 +164,11 @@ function cclient:dispatch(session,source,cmd,...)
     end
 end
 
---- 
---@param[type=table|int] linkobj 
---@param[type=string] cmd 
---@param[type=table] args 
---@param[type=function,opt] callback 
+--- ""
+--@param[type=table|int] linkobj ""
+--@param[type=string] cmd ""
+--@param[type=table] args ""
+--@param[type=function,opt] callback ""
 function cclient:send(linkobj,cmd,args,callback)
     if not linkobj then
         return
@@ -178,11 +180,11 @@ end
 
 cclient.send_request = cclient.send
 
---- 
---@param[type=table|int] linkobj 
---@param[type=string] cmd 
---@param[type=table] args 
---@param[type=int] session ID(ID)
+--- ""“""”""
+--@param[type=table|int] linkobj ""
+--@param[type=string] cmd ""
+--@param[type=table] args ""
+--@param[type=int] session ""ID(""ID)
 function cclient:send_response(linkobj,cmd,args,session)
     if not linkobj then
         return

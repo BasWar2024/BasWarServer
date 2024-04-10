@@ -9,10 +9,10 @@ WordFilter.CODE_FMT_ERR = 3
 WordFilter.CODE_INVALID = 4
 
 
---- 
---@param[type=table] filterWords ,:{{word=},...}
---@param[type=table] extraInvalidWords ,,
---@param[type=int,opt] replaceChar utf32,0x23'#','*'
+--- ""
+--@param[type=table] filterWords "","":{{word=""},...}
+--@param[type=table] extraInvalidWords "","",""
+--@param[type=int,opt] replaceChar ""utf32"",""0x23""'#'"",""'*'""
 function WordFilter:ctor(filterWords,extraInvalidWords,replaceChar)
     local filterTexts = {}
     for i,v in ipairs(filterWords) do
@@ -22,10 +22,12 @@ function WordFilter:ctor(filterWords,extraInvalidWords,replaceChar)
             table.insert(filterTexts,texts)
         end
     end
-    for i,word in ipairs(extraInvalidWords) do
-        local texts = {}
-        assert(utf8.toutf32(word,texts),"non uft8 word detected: " .. word)
-        table.insert(filterTexts,texts)
+    if extraInvalidWords then
+        for i,word in ipairs(extraInvalidWords) do
+            local texts = {}
+            assert(utf8.toutf32(word,texts),"non uft8 word detected: " .. word)
+            table.insert(filterTexts,texts)
+        end
     end
     self.crabFilter = crab.new(filterTexts)
     if replaceChar and replaceChar ~= 0 then
@@ -33,11 +35,11 @@ function WordFilter:ctor(filterWords,extraInvalidWords,replaceChar)
     end
 end
 
---- ,
---@param[type=string] text 
---@param[type=int] minLen 
---@param[type=int] maxLen 
---@return[type=int] (0=OK,1=,2=,3=,4=)
+--- "",""
+--@param[type=string] text ""
+--@param[type=int] minLen ""
+--@param[type=int] maxLen ""
+--@return[type=int] ""(0=OK,1="",2="",3="",4="")
 function WordFilter:isValidText(text,minLen,maxLen)
     local chars = {}
     if not utf8.toutf32(text,chars) then
@@ -56,15 +58,15 @@ function WordFilter:isValidText(text,minLen,maxLen)
     return self.CODE_OK
 end
 
---- 
---@param[type=string] text 
---@return[type=bool] false=utf8
---@return[type=bool] true=
---@return[type=string] 
+--- ""
+--@param[type=string] text ""
+--@return[type=bool] false=""utf8
+--@return[type=bool] true=""
+--@return[type=string] ""
 function WordFilter:filter(text)
     local chars = {}
     if not utf8.toutf32(text,chars) then
-        return false,false,"UTF8"
+        return false,false,errors.INVALID_UTF8
     end
     local change = self.crabFilter:filter(chars)
     text = utf8.toutf8(chars)

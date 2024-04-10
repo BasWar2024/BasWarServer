@@ -1,4 +1,4 @@
---- ,skynet.queue,
+--- "",""skynet.queue,""
 --@author sundream
 --@script common.gg.ClusterQueue
 --@release 2021/1/25 16:15:00
@@ -89,11 +89,11 @@ function ClusterQueue:xpcallReturn(lockId,ok, ...)
     return ...
 end
 
---- skynet.queue,
---@param[type=string|int] lockId id,id
---@param[type=func] func 
---@param ... 
---@return 
+--- ""skynet.queue,""
+--@param[type=string|int] lockId ""id,""id""
+--@param[type=func] func ""
+--@param ... ""
+--@return ""
 function ClusterQueue:queue(lockId,func,...)
     self:lock(lockId)
     return self:xpcallReturn(lockId,xpcall(func,debug.traceback,...))

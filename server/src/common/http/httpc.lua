@@ -1,5 +1,5 @@
 ---@script common.http.httpc
--- httpc
+-- ""httpc
 httpc.answer = require "common.http.answer"
 
 function httpc.signature(str,secret)
@@ -10,11 +10,8 @@ function httpc.signature(str,secret)
 end
 
 function httpc.check_signature(sign,str,secret)
-    -- nocheck,(https)
+    -- ""nocheck,""(https"")
     if secret == "nocheck" then
-        return true
-    end
-    if skynet.config.clusterid ~= "release" and sign == "debug" then
         return true
     end
     if httpc.signature(str,secret) ~= sign then
@@ -34,7 +31,7 @@ function httpc.unpack_response(response)
     return response
 end
 
--- http
+-- ""http""
 function httpc.response(linkid,status,body,header)
     logger.logf("debug","http","op=send,linkid=%s,status=%s,body=%s,header=%s",
         linkid,status,body,header)
@@ -44,7 +41,7 @@ function httpc.response(linkid,status,body,header)
     end
 end
 
--- jsonhttp
+-- ""json""http""
 function httpc.response_json(linkid,status,body,header)
     if header and not header["content-type"] then
         header["content-type"] = "application/json;charset=utf-8"
@@ -55,10 +52,10 @@ function httpc.response_json(linkid,status,body,header)
     httpc.response(linkid,status,body,header)
 end
 
---- http
---@param[type=int] status 
---@param[type=string|table] args ,tableheadercontent-type
---@param[type=table,opt] header ,application/json
+--- ""http""
+--@param[type=int] status ""
+--@param[type=string|table] args "",""table""header""content-type""
+--@param[type=table,opt] header "",""application/json""
 function httpc.send(linkobj,status,args,header)
     if not httpc.node then
         httpc.node = skynet.config.id
@@ -68,6 +65,7 @@ function httpc.send(linkobj,status,args,header)
             ["content-type"] = "application/json;charset=utf-8"
         }
     end
+    header["Access-Control-Allow-Origin"] = "*"
     local body
     local content_type = header["content-type"]
     if string.find(content_type,"application/json",1,true) then
@@ -96,7 +94,7 @@ function httpc.send(linkobj,status,args,header)
     end
 end
 
--- jsonhttp
+-- ""json""http""
 function httpc.send_json(linkobj,status,body,header)
     if header and not header["content-type"] then
         header["content-type"] = "application/json;charset=utf-8"
@@ -107,14 +105,14 @@ function httpc.send_json(linkobj,status,body,header)
     httpc.send(linkobj,status,body,header)
 end
 
---- httpc.post,header,headercontent-typeargs
---@param[type=string] host ,:127.0.0.1:4000
+--- ""httpc.post,""header,""header""content-type""args""
+--@param[type=string] host "","":127.0.0.1:4000
 --@param[type=string] url url
---@param[type=string|table] args ,tableheadercontent-type
---@param[type=table,opt] header ,application/json
---@param[type=table,opt] recvheader header
---@return[type=int] status 
---@return[type=string] response 
+--@param[type=string|table] args "",""table""header""content-type""
+--@param[type=table,opt] header "",""application/json""
+--@param[type=table,opt] recvheader ""header""
+--@return[type=int] status ""
+--@return[type=string] response ""
 function httpc.postx(host,url,args,header,recvheader)
     header = header or {}
     if not header['content-type'] then
@@ -142,14 +140,14 @@ function httpc.postx(host,url,args,header,recvheader)
     return httpc.request("POST", host, url, recvheader, header, body)
 end
 
----http/https
+---""http/https""
 --@param[type=string] url url
---@param[type=table] get get
---@param[type=table|string] post post,POST,GET
---@param[type=bool,opt] no_replay ,true--,false--,
---@param[type=table,opt] header http
---@return[type=number] status http,0,(/etc/hosts)
---@return[type=string] response 
+--@param[type=table] get get""
+--@param[type=table|string] post post"",""POST"",""GET""
+--@param[type=bool,opt] no_replay "",true--"",false--"",""
+--@param[type=table,opt] header http""
+--@return[type=number] status http"",""0"",""(""/etc/hosts"")
+--@return[type=string] response ""
 function httpc.req(url,get,post,no_reply,header)
     if not httpc.webclient_address then
         httpc.webclient_address = skynet.uniqueservice("webclient")

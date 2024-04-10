@@ -1,10 +1,10 @@
 local cgm = reload_class("cgm")
 
----: GM.txt
+---"": ""GM"".txt
 ---@usage buildgmdoc
 function cgm:buildgmdoc()
     if skynet.config.clusterid ~= "master" and skynet.config.clusterid ~= "main" then
-        -- ,
+        -- ""，"",""
         local docfilename = "src/app/game/gm/gmdoc.txt"
         local fd = io.open(docfilename,"rb")
         local doc = {}
@@ -15,7 +15,7 @@ function cgm:buildgmdoc()
         self.__doc = doc
         return
     end
-    local doc = {"buildgmdoc,!!!\n"}
+    local doc = {"""buildgmdoc"",""!!!\n"}
     local tmpfilename = ".gmdoc.tmp"
     local gmcode_paths = {"src/app/game/gm/","src/common/gm/",}
     for i,gmcode_path in ipairs(gmcode_paths) do
@@ -83,22 +83,22 @@ function cgm:buildgmdoc()
     --[[
     if skynet.config.repo_type == "svn" then
         os.execute(string.format("svn add --force %s",gm_path))
-        os.execute(string.format("svn commit %s -m 'GM'",gm_path))
+        os.execute(string.format("svn commit %s -m '""GM""'",gm_path))
     else
         os.execute(string.format("git add %s",docfilename))
-        os.execute(string.format("git commit -m 'GM'"))
+        os.execute(string.format("git commit -m '""GM""'"))
         os.execute(string.format("git push"))
     end
     ]]
     return
 end
 
----: 
----@usage help []
+---"": ""
+---@usage help [""]
 function cgm:help(args)
     local isok,args = gg.checkargs(args,"*")
     if not isok then
-        local usage = ": help []"
+        local usage = """: help [""]"
         return self:say(usage)
     end
     local patten = args[1]
@@ -150,7 +150,7 @@ function cgm:help(args)
         end
         return table.concat(findlines,"\n")
     else
-        return self:say("")
+        return self:say("sorry no this command")
     end
 end
 

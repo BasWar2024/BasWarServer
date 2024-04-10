@@ -2,7 +2,7 @@ local sharedata = require("skynet.sharedata")
 local corelib = require("skynet.sharedata.corelib")
 
 cfg = cfg or {cache={}}
--- ,
+-- "",""
 function cfg.load(name)
     local oldcobj = cfg.getcobj(name)
     local env = _ENV or _G
@@ -14,7 +14,7 @@ function cfg.load(name)
         local chunk,err = load(module,filename,"bt",env)
         if chunk then
             chunk = chunk()
-            -- 
+            -- ""
             local newcobj = skynet.tostring(skynet.pack(corelib.host.new(chunk)))
             cfg.cfgcobjs[name] = newcobj
             if oldcobj then
@@ -25,7 +25,7 @@ function cfg.load(name)
     end
 end
 
--- 
+-- ""
 function cfg.getcobj(name)
     return skynet.unpack(cfg.cfgcobjs[name])
 end
@@ -41,7 +41,7 @@ function cfg.update(name)
 end
 
 gg.next = gg.next or next
--- 
+-- ""
 local corelib_next = corelib.next
 local gg_next = gg.next
 local rawget = rawget

@@ -7,7 +7,7 @@ function ccluster:ctor()
     self.id = 0
     self.lock = queue()
 
-    -- 
+    -- ""
     self.node = skynet.config.id
     self.address = skynet.self()
 
@@ -49,10 +49,10 @@ end
 
 function ccluster:open()
     self:reload()
-    -- 
+    -- ""
     local serverid = skynet.config.id
     local cluster_port
-    if skynet.config.clusterid == "master" or skynet.config.clusterid == "main" then
+    if skynet.config.clusterid == "master" or skynet.config.clusterid == "main" or serverid == "login" then
         cluster_port = tonumber(skynet.getenv("cluster_port")) or serverid
     else
         cluster_port = serverid
@@ -61,7 +61,7 @@ function ccluster:open()
 end
 
 function ccluster:reload()
-    -- nodes
+    -- ""nodes""
     local nodes = skynet.config.nodes or {}
     local node_address = {}
     for node_name,conf in pairs(nodes) do
@@ -120,12 +120,12 @@ function ccluster:_dispatch(session,source,source_node,source_address,cmd,...)
     end
 end
 
---- cluster:call,
---@param[type=string] node 
---@param[type=string|int] address actor
---@param[type=string] cmd 
---@param ... 
---@return 
+--- cluster:call"",""
+--@param[type=string] node ""
+--@param[type=string|int] address ""actor""
+--@param[type=string] cmd ""
+--@param ... ""
+--@return ""
 function ccluster:call(node,address,cmd,...)
     if gg.profile.open then
         local name = ...
@@ -144,11 +144,11 @@ function ccluster:call(node,address,cmd,...)
     end
 end
 
---- cluster:send,,
---@param[type=string] node 
---@param[type=string|int] address actor
---@param[type=string] cmd 
---@param ... 
+--- cluster:send"","",""
+--@param[type=string] node ""
+--@param[type=string|int] address ""actor""
+--@param[type=string] cmd ""
+--@param ... ""
 function ccluster:send(node,address,cmd,...)
     if gg.profile.open then
         local name
@@ -171,12 +171,12 @@ function ccluster:send(node,address,cmd,...)
     end
 end
 
---- cluster:sendx,,,callback
---@param[type=function,opt] callback ,nil,send
---@param[type=string] node 
---@param[type=string|int] address actor
---@param[type=string] cmd 
---@param ... 
+--- cluster:sendx"","","",""callback""
+--@param[type=function,opt] callback "",""nil,""send""
+--@param[type=string] node ""
+--@param[type=string|int] address ""actor""
+--@param[type=string] cmd ""
+--@param ... ""
 function ccluster:sendx(callback,node,address,cmd,...)
     if not callback then
         self:send(node,address,cmd,...)
@@ -187,12 +187,12 @@ function ccluster:sendx(callback,node,address,cmd,...)
     end
 end
 
---- cluster:callx,cluster:call,send
---@param[type=string] node 
---@param[type=string|int] address actor
---@param[type=string] cmd 
---@param ... 
---@return 
+--- cluster:callx"",""cluster:call,""send""
+--@param[type=string] node ""
+--@param[type=string|int] address ""actor""
+--@param[type=string] cmd ""
+--@param ... ""
+--@return ""
 function ccluster:callx(node,address,cmd,...)
     local co = coroutine.running()
     local id = self:genid()
@@ -265,12 +265,12 @@ function ccluster:sendx_error(session)
 end
 
 
---- internal:timeout_call,()false,true,
---@param[type=int] ti ()
---@param[type=string] node 
---@param[type=string|int] address actor
---@param[type=string] cmd 
---@param ... 
+--- internal:timeout_call"",""("")""false,""true,""
+--@param[type=int] ti ""("")
+--@param[type=string] node ""
+--@param[type=string|int] address ""actor""
+--@param[type=string] cmd ""
+--@param ... ""
 function ccluster:timeout_call(ti,...)
     ti = math.floor(ti/10)
     local co = coroutine.running()

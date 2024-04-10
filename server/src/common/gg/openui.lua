@@ -12,15 +12,15 @@ end
 
 openui.messageBox(player,{
                 type = constant.UI_MB_LACK_CONDITION,
-                title = i18n.format(""),
-                content = i18n.format("100:"),
+                title = i18n.format(""""),
+                content = i18n.format("""100"":"),
                 buttons = {
-                    openui.button(i18n.format("")),
-                    openui.button(i18n.format(""),10),
+                    openui.button(i18n.format("""")),
+                    openui.button(i18n.format(""""),10),
                 },
-                timeout_button = 2,  -- 2
-                close_button = 2,    -- 2
-                auto_close = true,   -- 
+                timeout_button = 2,  -- ""2
+                close_button = 2,    -- ""2
+                auto_close = true,   -- ""
                 ,onBuySomething)
 --]]
 function openui.messageBox(player,window,onResponse)
@@ -89,10 +89,10 @@ function openui.getMessageBox(boxId)
     return gg.reqresp:get_session(boxId)
 end
 
--- onPlayerResponse
--- onAllResponse
--- callback1 window
--- callback2 answers -- {{pid=xxx,answer=xxx},...}
+-- ""onPlayerResponse
+-- ""onAllResponse
+-- callback""：1： window
+-- callback""：2： answers -- {{pid=xxx,answer=xxx},...}
 function openui.messageBoxToPlayers(players,window,onPlayerResponse,onAllResponse)
     local answers = {}
     for _,player in pairs(players) do

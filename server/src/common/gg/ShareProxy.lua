@@ -1,15 +1,25 @@
 local ShareProxy = class("ShareProxy")
 
-function ShareProxy:ctor()
+function ShareProxy:ctor(cnt)
     self.shareList = {}
     self.index = 1
+
+    if gg.standalone then
+        cnt = cnt or 10
+        self:createShare(cnt)
+    end
+end
+
+function ShareProxy:createShare(cnt)
+    for i = 1, cnt do
+        local name = ".share" .. i
+        local address = skynet.newservice("app/share/main", name)
+        table.insert(self.shareList, address)
+    end
 end
 
 function ShareProxy:getShare()
-    if gg.shareMgr then
-        return gg.shareMgr:getShare()
-    end
-    if self.shareList and next(self.shareList) then
+    if next(self.shareList) then
         local share = self.shareList[self.index]
         self.index = self.index + 1
         if self.index > #self.shareList then
@@ -17,7 +27,7 @@ function ShareProxy:getShare()
         end
         return share
     end
-    local shareList = gg.internal:call(".main","exec","gg.shareMgr:getShareList")
+    local shareList = gg.internal:call(".main","exec","gg.shareProxy:getShareList")
     assert(shareList and #shareList > 0, "shareList is empty")
     self.shareList = shareList
     self.index = 2
@@ -25,11 +35,17 @@ function ShareProxy:getShare()
 end
 
 function ShareProxy:call(cmd, ...)
-    return gg.internal:call(self:getShare(),"api",cmd,...)
+    local share = self:getShare()
+    return gg.internal:call(share,"api",cmd,...)
 end
 
 function ShareProxy:send(cmd, ...)
-    return gg.internal:send(self:getShare(),"api",cmd,...)
+    local share = self:getShare()
+    return gg.internal:send(share,"api",cmd,...)
+end
+
+function ShareProxy:getShareList()
+    return self.shareList
 end
 
 return ShareProxy
