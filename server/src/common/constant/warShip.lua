@@ -1,0 +1,4 @@
+
+constant.WARSHIP_INIT_QUALITY = 0
+constant.WARSHIP_INIT_RACE = 0
+constant.WARSHIP_INIT_STYLE = 0

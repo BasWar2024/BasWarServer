@@ -1,0 +1,7 @@
+
+constant.ROBOT_GM_TYPE_NORMAL = 1
+constant.ROBOT_GM_TYPE_PVE = 2
+constant.ROBOT_GM_TYPE_SELF = 58
+
+constant.ROBOT_PVE_MIN_PLAYERID = 1
+constant.ROBOT_PVE_MAX_PLAYERID = 20

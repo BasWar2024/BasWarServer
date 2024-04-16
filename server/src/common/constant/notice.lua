@@ -1,0 +1,1 @@
+constant.NOTICE_SHOW_NUM = 8
