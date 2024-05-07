@@ -1,15 +1,15 @@
---- ,
+--- "",""，""
 --@script gg.base.container
 --@author sundream
 --@release 2018/12/25 10:30:00
 local ccontainer = class("ccontainer")
 
---- ccontainer.new
+--- ccontainer.new""
 --@param[type=table] param
 --@return a ccontainer's instance
 --@usage
 --local container = ccontainer.new({
---  -- 
+--  -- ""
 --  onclear = xxx,
 --  onadd = xxx,
 --  ondel = xxx,
@@ -25,7 +25,7 @@ function ccontainer:ctor(param)
     self.objs = {}
 end
 
---- 
+--- ""
 function ccontainer:clear()
     local objs = self.objs
     self.objs = {}
@@ -35,19 +35,19 @@ function ccontainer:clear()
     end
 end
 
--- 
+-- ""
 function ccontainer:id2key(id)
     return tostring(id)
 end
 
--- 
+-- ""
 function ccontainer:key2id(id)
     return tonumber(id)
 end
 
---- 
---@param[type=table] data 
---@param[type=func,opt] loadfunc 
+--- ""
+--@param[type=table] data ""
+--@param[type=func,opt] loadfunc ""
 function ccontainer:deserialize(data,loadfunc)
     if not data or not next(data) then
         return
@@ -71,9 +71,9 @@ function ccontainer:deserialize(data,loadfunc)
     self.length = length
 end
 
---- 
---@param[type=func,opt] savefunc 
---@return[type=table] 
+--- ""
+--@param[type=func,opt] savefunc ""
+--@return[type=table] ""
 function ccontainer:serialize(savefunc)
     local data = {}
     data.objid = self.objid
@@ -90,8 +90,8 @@ function ccontainer:serialize(savefunc)
     return data
 end
 
---- 
---@param[type=table] callback 
+--- ""
+--@param[type=table] callback ""
 --@usage
 --container:register({
 --  onclear = xxx,
@@ -131,10 +131,10 @@ function ccontainer:genid()
     return self.objid
 end
 
---- 
---@param[type=table] obj 
---@param[type=int|string,opt] id ID,
---@return[type=int|string] ID
+--- ""
+--@param[type=table] obj ""
+--@param[type=int|string,opt] id ""ID,""
+--@return[type=int|string] ""ID
 function ccontainer:add(obj,id)
     id = id or self:genid()
     assert(self.objs[id]==nil,"Exist Object:" .. tostring(id))
@@ -146,9 +146,9 @@ function ccontainer:add(obj,id)
     return id
 end
 
---- 
---@param[type=int|string] id ID
---@return[type=table] ID,nil
+--- ""
+--@param[type=int|string] id ""ID
+--@return[type=table] ""ID"",""nil
 function ccontainer:del(id)
     local obj = self:get(id)
     if obj then
@@ -161,9 +161,9 @@ function ccontainer:del(id)
     end
 end
 
---- 
---@param[type=int|string] id ID
---@param[type=table] attrs 
+--- ""
+--@param[type=int|string] id ""ID
+--@param[type=table] attrs ""
 function ccontainer:update(id,attrs)
     local obj = self:get(id)
     if obj then
@@ -176,14 +176,14 @@ function ccontainer:update(id,attrs)
     end
 end
 
---- 
---@param[type=int|string] id ID
---@return[type=table] ID,nil
+--- ""
+--@param[type=int|string] id ""ID
+--@return[type=table] ""ID"",""nil
 function ccontainer:get(id)
     return self.objs[id]
 end
 
--- 
+-- ""
 function ccontainer:toArray()
     local t = {}
     for k,v in pairs(self.objs) do

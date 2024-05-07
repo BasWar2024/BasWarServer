@@ -1,235 +1,183 @@
 -- id                               int                              ID
--- type                             string                           
--- targetCfgId                      int                              cfgid
--- level                            int                              
+-- type                             string                           ""
+-- targetCfgId                      int                              ""cfgid
+-- level                            int                              ""
+-- quality                          int                              ""
 
 return {
-	[1] = {
-		id = 1,
-		type = "solider",
-		targetCfgId = 4101001,
-		level = 1,
-	},
-	[2] = {
-		id = 2,
+	[6010001] = {
+		id = 6010001,
 		type = "build",
-		targetCfgId = 1101001,
+		targetCfgId = 6010001,
 		level = 1,
+		quality = nil,
 	},
-	[3] = {
-		id = 3,
+	[6010002] = {
+		id = 6010002,
 		type = "build",
-		targetCfgId = 1102001,
+		targetCfgId = 6010002,
 		level = 1,
+		quality = nil,
 	},
-	[4] = {
-		id = 4,
+	[6010003] = {
+		id = 6010003,
 		type = "build",
-		targetCfgId = 1210001,
+		targetCfgId = 6010003,
 		level = 1,
+		quality = nil,
 	},
-	[5] = {
-		id = 5,
+	[6010004] = {
+		id = 6010004,
 		type = "build",
-		targetCfgId = 1109001,
+		targetCfgId = 6010004,
 		level = 1,
+		quality = nil,
 	},
-	[6] = {
-		id = 6,
+	[6010005] = {
+		id = 6010005,
 		type = "build",
-		targetCfgId = 1110001,
+		targetCfgId = 6010005,
 		level = 1,
+		quality = nil,
 	},
-	[7] = {
-		id = 7,
+	[6010006] = {
+		id = 6010006,
 		type = "build",
-		targetCfgId = 1111001,
+		targetCfgId = 6010006,
 		level = 1,
+		quality = nil,
 	},
-	[8] = {
-		id = 8,
-		type = "solider",
-		targetCfgId = 4103001,
-		level = 1,
-	},
-	[9] = {
-		id = 9,
+	[6010007] = {
+		id = 6010007,
 		type = "build",
-		targetCfgId = 1103001,
+		targetCfgId = 6010007,
 		level = 1,
+		quality = nil,
 	},
-	[10] = {
-		id = 10,
+	[6010008] = {
+		id = 6010008,
 		type = "build",
-		targetCfgId = 1202001,
+		targetCfgId = 6010008,
 		level = 1,
+		quality = nil,
 	},
-	[11] = {
-		id = 11,
+	[6010009] = {
+		id = 6010009,
 		type = "build",
-		targetCfgId = 1401001,
+		targetCfgId = 6010009,
 		level = 1,
+		quality = nil,
 	},
-	[12] = {
-		id = 12,
+	[6010010] = {
+		id = 6010010,
 		type = "build",
-		targetCfgId = 1104001,
+		targetCfgId = 6010010,
 		level = 1,
+		quality = nil,
 	},
-	[13] = {
-		id = 13,
+	[6020001] = {
+		id = 6020001,
 		type = "build",
-		targetCfgId = 1205001,
+		targetCfgId = 6020001,
 		level = 1,
+		quality = nil,
 	},
-	[14] = {
-		id = 14,
+	[6020002] = {
+		id = 6020002,
 		type = "build",
-		targetCfgId = 1303001,
+		targetCfgId = 6020002,
 		level = 1,
+		quality = nil,
 	},
-	[15] = {
-		id = 15,
+	[6020003] = {
+		id = 6020003,
 		type = "build",
-		targetCfgId = 1204001,
+		targetCfgId = 6020003,
 		level = 1,
+		quality = nil,
 	},
-	[16] = {
-		id = 16,
+	[6020004] = {
+		id = 6020004,
 		type = "build",
-		targetCfgId = 1206001,
+		targetCfgId = 6020004,
 		level = 1,
+		quality = nil,
 	},
-	[17] = {
-		id = 17,
-		type = "solider",
-		targetCfgId = 4104001,
-		level = 1,
-	},
-	[18] = {
-		id = 18,
+	[6020006] = {
+		id = 6020006,
 		type = "build",
-		targetCfgId = 1302001,
+		targetCfgId = 6020006,
 		level = 1,
+		quality = nil,
 	},
-	[19] = {
-		id = 19,
+	[6020005] = {
+		id = 6020005,
 		type = "build",
-		targetCfgId = 1105001,
+		targetCfgId = 6020005,
 		level = 1,
+		quality = nil,
 	},
-	[20] = {
-		id = 20,
+	[6030001] = {
+		id = 6030001,
 		type = "build",
-		targetCfgId = 1403001,
+		targetCfgId = 6030001,
 		level = 1,
+		quality = nil,
 	},
-	[21] = {
-		id = 21,
+	[6030002] = {
+		id = 6030002,
 		type = "build",
-		targetCfgId = 1208001,
+		targetCfgId = 6030002,
 		level = 1,
+		quality = nil,
 	},
-	[22] = {
-		id = 22,
+	[6030003] = {
+		id = 6030003,
 		type = "build",
-		targetCfgId = 1106001,
+		targetCfgId = 6030003,
 		level = 1,
+		quality = nil,
 	},
-	[23] = {
-		id = 23,
-		type = "solider",
-		targetCfgId = 4201001,
-		level = 1,
-	},
-	[24] = {
-		id = 24,
+	[6030004] = {
+		id = 6030004,
 		type = "build",
-		targetCfgId = 1107001,
+		targetCfgId = 6030004,
 		level = 1,
+		quality = nil,
 	},
-	[25] = {
-		id = 25,
+	[6030005] = {
+		id = 6030005,
 		type = "build",
-		targetCfgId = 1305001,
+		targetCfgId = 6030005,
 		level = 1,
+		quality = nil,
 	},
-	[26] = {
-		id = 26,
-		type = "solider",
-		targetCfgId = 4105001,
-		level = 1,
-	},
-	[27] = {
-		id = 27,
+	[6030006] = {
+		id = 6030006,
 		type = "build",
-		targetCfgId = 1108001,
+		targetCfgId = 6030006,
 		level = 1,
+		quality = nil,
 	},
-	[28] = {
-		id = 28,
+	[6030007] = {
+		id = 6030007,
 		type = "build",
-		targetCfgId = 1307001,
+		targetCfgId = 6030007,
 		level = 1,
+		quality = nil,
 	},
-	[29] = {
-		id = 29,
+	[6030008] = {
+		id = 6030008,
 		type = "build",
-		targetCfgId = 1402001,
+		targetCfgId = 6030008,
 		level = 1,
+		quality = nil,
 	},
-	[30] = {
-		id = 30,
+	[6030009] = {
+		id = 6030009,
 		type = "build",
-		targetCfgId = 1203001,
+		targetCfgId = 6030009,
 		level = 1,
-	},
-	[31] = {
-		id = 31,
-		type = "build",
-		targetCfgId = 1209001,
-		level = 1,
-	},
-	[32] = {
-		id = 32,
-		type = "build",
-		targetCfgId = 1308001,
-		level = 1,
-	},
-	[33] = {
-		id = 33,
-		type = "solider",
-		targetCfgId = 4302001,
-		level = 1,
-	},
-	[34] = {
-		id = 34,
-		type = "build",
-		targetCfgId = 1304001,
-		level = 1,
-	},
-	[35] = {
-		id = 35,
-		type = "build",
-		targetCfgId = 1306001,
-		level = 1,
-	},
-	[36] = {
-		id = 36,
-		type = "solider",
-		targetCfgId = 4202001,
-		level = 1,
-	},
-	[37] = {
-		id = 37,
-		type = "solider",
-		targetCfgId = 4301002,
-		level = 1,
-	},
-	[38] = {
-		id = 38,
-		type = "solider",
-		targetCfgId = 4203002,
-		level = 1,
+		quality = nil,
 	},
 }

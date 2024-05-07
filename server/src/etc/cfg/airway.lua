@@ -1,5 +1,5 @@
--- cfgId                            int                              
--- name                             string                           
+-- cfgId                            int                              ""
+-- name                             string                           ""
 
 return {
 	[1] = {
