@@ -36,8 +36,8 @@ local function collect_all_uv(module,uv,mark)
     end
 end
 
--- uv2upvalueuv1
--- upvalue(local)
+-- ""uv2""upvalue""uv1""
+-- ""upvalue""(""local"")
 local function merge_uv(uv1,uv2,name)
     for k,upvalue_info2 in pairs(uv2) do
         local upvalue_info1 = uv1[k]
@@ -65,10 +65,10 @@ local function merge_uv(uv1,uv2,name)
     return true
 end
 
--- tbl2tbl1(),
--- tbl2tbl1
+-- ""tbl2""tbl1""(""),""
+-- ""tbl2""tbl1""
 local function merge_func(tbl1,tbl2,name,cache)
-    -- /
+    -- ""/""
     if tbl1 == tbl2 then
         return true
     end
@@ -99,18 +99,18 @@ local function merge_func(tbl1,tbl2,name,cache)
     return true
 end
 
----
---@param[type=string] modname 
---@return true,false
+---""
+--@param[type=string] modname ""
+--@return ""true,""false""
 --@usage gg.reload("gg.base.reload")
---,: ,
---,upvalue,
---,,(table)
---,
---local,upvalue,upvalue
---///,upvalue
---,__hotfix,
---(),
+--"","": "",""
+--"",""upvalue"",""
+--"","",""(table)
+--"",""
+--""local"",""upvalue"",""upvalue
+--""/""/""/"",upvalue""
+--"",""__hotfix,
+--""(""),""
 function gg.reload(module_name)
     local chunk,err
     local env = _ENV or _G
@@ -131,7 +131,7 @@ function gg.reload(module_name)
     if not ok then
         return false,new_module
     end
-    -- ,luapackage.loadedtrue
+    -- "",lua""package.loaded""true
     if new_module == nil then
         new_module = true
     end
@@ -147,14 +147,14 @@ function gg.reload(module_name)
     if type(old_module) ~= type(new_module) then
         return false,"[reload_module] mismatch module type"
     end
-    -- table,
+    -- ""table,""
     if type(old_module) ~= "table" then
         if type(env.__hotfix) == "function" then
             env.__hotfix(old_module)
         end
         return true
     end
-    -- upvalueupvalue
+    -- ""upvalue""upvalue""
     local uv1 = {}
     local uv2 = {}
     collect_all_uv(old_module,uv1)
@@ -164,13 +164,13 @@ function gg.reload(module_name)
         return false,errmsg
     end
     if gg and gg.safe_reloads and gg.safe_reloads[module_name] then
-        -- ,(luatable)
+        -- "",""(""lua""table"")
         ok = true
         for k,v in pairs(new_module) do
             old_module[k] = v
         end
     else
-        -- ,,()
+        -- "","",""("")""
         ok,errmsg = merge_func(old_module,new_module,module_name)
     end
     if not ok then

@@ -1,10 +1,10 @@
----,,
+---"","",""
 --@script gg.base.databaseable
 --@author sundream
 --@release 2018/12/25 10:30:00
 local cdatabaseable = class("cdatabaseable")
 
---- cdatabaseable.new
+--- cdatabaseable.new""
 --@usage local data = cdatabaseable.new()
 function cdatabaseable:ctor()
     self.loadstate = "unload"
@@ -12,14 +12,14 @@ function cdatabaseable:ctor()
     self.data = {}
 end
 
---- 
---@return 
+--- ""
+--@return ""
 function cdatabaseable:serialize()
     return self.data
 end
 
---- 
---@param[type=table] data 
+--- ""
+--@param[type=table] data ""
 function cdatabaseable:deserialize(data)
     if not data or not next(data) then
         return
@@ -27,14 +27,14 @@ function cdatabaseable:deserialize(data)
     self.data = data
 end
 
---- 
+--- ""
 function cdatabaseable:clear()
     self.dirty = false
     self.data = {}
 end
 
---- 
---@return[type=bool] 
+--- ""
+--@return[type=bool] ""
 function cdatabaseable:isdirty()
     return self.dirty
 end
@@ -47,10 +47,10 @@ function cdatabaseable:__split(key)
     return string.split(key,".")
 end
 
---- 
---@param[type=string] key 
---@param[type=any] default 
---@return[type=any] 
+--- ""
+--@param[type=string] key ""
+--@param[type=any] default ""
+--@return[type=any] ""
 --@usage local val = data:get("key",0)
 --@usage local val = data:get("k1.k2.k3")
 function cdatabaseable:get(key,default)
@@ -63,7 +63,7 @@ function cdatabaseable:get(key,default)
     end
 end
 
---- [deprecated] get
+--- [deprecated] get""
 cdatabaseable.query = cdatabaseable.get
 
 function cdatabaseable:__setattr(data,attrs,val)
@@ -72,9 +72,9 @@ function cdatabaseable:__setattr(data,attrs,val)
     return oldval
 end
 
---- 
---@param[type=string] key 
---@param[type=any] val 
+--- ""
+--@param[type=string] key ""
+--@param[type=any] val ""
 --@usage data:set("key",1)
 --@usage data:set("k1.k2.k3","hi")
 function cdatabaseable:set(key,val)
@@ -82,10 +82,10 @@ function cdatabaseable:set(key,val)
     return self:__setattr(self.data,attrs,val)
 end
 
---- 
---@param[type=string] key ()
---@param[type=number] val 
---@return[type=any] 
+--- ""
+--@param[type=string] key ""("")
+--@param[type=number] val ""
+--@return[type=any] ""
 --@usage data:add("key",1)
 function cdatabaseable:add(key,val)
     local oldval = self:get(key)
@@ -110,9 +110,9 @@ function cdatabaseable:__delattr(data,attrs)
     return oldval
 end
 
---- 
---@param[type=string] key 
---@return[type=any] 
+--- ""
+--@param[type=string] key ""
+--@return[type=any] ""
 --@usage data:del("key")
 --@usage data:del("k1.k2.k3")
 function cdatabaseable:del(key)
@@ -120,7 +120,7 @@ function cdatabaseable:del(key)
     return self:__delattr(self.data,attrs)
 end
 
---- [deprecated] del
+--- [deprecated] del""
 cdatabaseable.delete = cdatabaseable.del
 
 return cdatabaseable

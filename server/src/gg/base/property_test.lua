@@ -1,8 +1,8 @@
 local cproperty = require "property"
 
---- dump(,)
---@param[type=table] t 
---@return[type=string] dump
+--- ""dump""("","")
+--@param[type=table] t ""
+--@return[type=string] dump""
 function table.dump(t,space,name)
     if type(t) ~= "table" then
         return tostring(t)

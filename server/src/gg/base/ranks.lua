@@ -1,8 +1,8 @@
 local cranks = class("cranks")
 
---- ,,,10000
+--- "","",""、"",10000""
 --@usage
---pid,score,lv
+--""pid"",score"",lv""
 --local rank = ggclass.cranks.new(0,{"pid"},{
 -- {key="score",desc=true,}
 -- {key="lv",desc=true,},
@@ -23,7 +23,7 @@ function cranks:ctor(type,ids,sortids,param)
     assert(#tempids >= 1 and tempids[1].key)
     self.sortids = tempids
     if param then
-        -- limit
+        -- ""limit""
         if param.limit then
             self.limit = param.limit
             self.maxlimit = param.maxlimit or self.limit * 2
@@ -67,7 +67,7 @@ function cranks:id(rank)
     return self:__id(tbl)
 end
 
--- "."
+-- """."""
 function cranks:getattr(rank,attrs)
     local mod = rank
     for attr in string.gmatch(attrs,"([^.]+)%.?") do
@@ -82,7 +82,7 @@ function cranks:getattr(rank,attrs)
     return mod
 end
 
--- <0--rank1rank20--rank1rank2,>0--rank1rank2
+-- <0--rank1""rank2""，0--rank1""rank2"",>0--rank1""rank2""
 function cranks:cmp(rank1,rank2)
     local cmpvals1 = {}
     for i,sortinfo in ipairs(self.sortids) do
@@ -145,7 +145,7 @@ function cranks:len()
     return self.length
 end
 
--- 
+-- ""
 function cranks:addorupdate(rank)
     local id = self:id(rank)
     if self:__get(id) then
@@ -155,8 +155,8 @@ function cranks:addorupdate(rank)
     end
 end
 
--- id
--- :1. ranks:get(id1,id2,...) 2. ranks:get({id1,id2,...})
+-- ""id""
+-- "":1. ranks:get(id1,id2,...) 2. ranks:get({id1,id2,...})
 function cranks:get(...)
     local id1 = ...
     local ids = table.pack(...)
@@ -254,10 +254,10 @@ function cranks:update(newrank)
             rank[k] = v
         end
     end
-    -- 
-    if self.ranks[oldpos-1] and self:cmp(self.ranks[oldpos-1],rank) > 0 then -- 
+    -- ""
+    if self.ranks[oldpos-1] and self:cmp(self.ranks[oldpos-1],rank) > 0 then -- ""
         self:__sort(oldpos,1)
-    elseif self.ranks[oldpos+1] and self:cmp(self.ranks[oldpos+1],rank) < 0 then -- 
+    elseif self.ranks[oldpos+1] and self:cmp(self.ranks[oldpos+1],rank) < 0 then -- ""
         self:__sort(oldpos,self:len())
     end
     if self.onupdate then
@@ -333,7 +333,7 @@ function cranks:clear()
     end
 end
 
--- 
+-- ""
 function cranks:deserialize(data)
     if not data or not next(data) then
         return

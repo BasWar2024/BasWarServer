@@ -1,5 +1,5 @@
----: cproperty,,,cdatabaseable,ctoday,cthisweek,cthistemp
----,rpg,
+---"": cproperty,"","",""cdatabaseable,ctoday,cthisweek,cthistemp""
+---"",""rpg"",""
 --@script gg.base.property
 --@author sundream
 --@release 2020/03/11 14:00:00
@@ -26,11 +26,11 @@ local cproperty_meta = {
 --[[
 local constraits = {
     key1 = {
-        pack = true,         -- 
-        serialize = true,    -- 
-        default = 0,         -- 
-        id = 1,              -- id()
-        ttl = nil            -- (,)
+        pack = true,         -- ""
+        serialize = true,    -- ""
+        default = 0,         -- ""
+        id = 1,              -- ""id("")
+        ttl = nil            -- ""("","")
     }
 }
 ]]

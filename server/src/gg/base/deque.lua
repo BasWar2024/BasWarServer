@@ -1,4 +1,4 @@
--- 
+-- ""
 local cdeque = class("cdeque")
 
 function cdeque:ctor(conf)
@@ -167,7 +167,7 @@ function cdeque:reverse()
     end
 end
 
--- stepstep0
+-- ""step""，""step""0""
 function cdeque:rotate(step)
     step = step or 1
     local count = self:count()

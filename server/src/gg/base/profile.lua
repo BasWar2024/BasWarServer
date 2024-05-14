@@ -3,7 +3,7 @@ local cprofile = class("cprofile")
 
 function cprofile:ctor()
     self.threshold = tonumber(skynet.config.profile_threshold) or 0.03   -- 30ms
-    self.open = skynet.config.profile_open == "1"
+    self.open = false --skynet.config.profile_open == "1"
     self.client = {}
     self.cluster = {}
     self.internal = {}

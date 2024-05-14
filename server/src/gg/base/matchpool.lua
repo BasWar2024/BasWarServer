@@ -1,21 +1,21 @@
---- 
+--- ""
 --@script gg.base.matchpool
 --@author sundream
 --@release 2019/06/17 10:30:00
 --@usage
---id,score,level,match_time
+--""id"",score"",level"",match_time""
 --local matchpool = ggclass.cmatchpool.new(
--- tick = 1,                -- 
--- : 1.  2. 
--- yong_pool_timeout = 1,   -- ,,0=,>0=[yong_pool_timeout,yong_pool_time+2]
--- timeout = 30,            -- (timeout+expire_pool_timeout)
--- expire_pool_timeout = 5, -- ,
--- group_num = 2,           -- xx
--- group_mutiple = 1,       -- group_num*group_multiple,group_mutiple
--- on_timeout = function (members) end,    -- 
--- on_success = function (members) end,    -- 
--- on_match = function (member) end,       -- 
--- on_unmatch = function (member,unmatch_type) end,     -- (//)
+-- tick = 1,                -- ""
+-- "": 1. "" 2. ""
+-- yong_pool_timeout = 1,   -- "","",0="",>0=""[yong_pool_timeout,yong_pool_time+2]""
+-- timeout = 30,            -- ""(timeout+expire_pool_timeout"")
+-- expire_pool_timeout = 5, -- "",""
+-- group_num = 2,           -- xx""
+-- group_mutiple = 1,       -- ""group_num*group_multiple"",""group_mutiple""
+-- on_timeout = function (members) end,    -- ""
+-- on_success = function (members) end,    -- ""
+-- on_match = function (member) end,       -- ""
+-- on_unmatch = function (member,unmatch_type) end,     -- ""(""/""/"")
 -- ids = {"id"},
 -- sortids = {
 --  {key="score",desc=true,}
@@ -30,10 +30,10 @@ cmatchpool.EXPIRE_POOL = 3
 
 function cmatchpool:ctor(conf)
     self:config(conf)
-    self.on_timeout = conf.on_timeout   -- 
-    self.on_success = conf.on_success   -- 
-    self.on_match = conf.on_match       -- 
-    self.on_unmatch = conf.on_unmatch   -- 
+    self.on_timeout = conf.on_timeout   -- ""
+    self.on_success = conf.on_success   -- ""
+    self.on_match = conf.on_match       -- ""
+    self.on_unmatch = conf.on_unmatch   -- ""
 
     self.ids = assert(conf.ids)
     self.sortids = assert(conf.sortids)
@@ -49,9 +49,9 @@ function cmatchpool:config(conf)
     self.timeout = assert(conf.timeout)
     assert(self.timeout > self.yong_pool_timeout)
     self.expire_pool_timeout = conf.expire_pool_timeout or 0
-    self.group_num = assert(conf.group_num)          -- 
+    self.group_num = assert(conf.group_num)          -- ""
     assert(self.group_num > 0)
-    self.group_multiple = conf.group_multiple or 1   -- group_num*group_multiple,group_multiple
+    self.group_multiple = conf.group_multiple or 1   -- ""group_num*group_multiple"",""group_multiple""
 end
 
 function cmatchpool:__pairs()
@@ -61,7 +61,7 @@ function cmatchpool:__pairs()
     return next,self.expire_pool.ranks,nil
 end
 
---- 
+--- ""
 function cmatchpool:is_matching(uuid)
     local member,location = self:get_member(uuid)
     if member then
@@ -104,8 +104,8 @@ function cmatchpool:is_timeout(member,now)
     return false
 end
 
---- 
---@param[type=table] member ,idssortids
+--- ""
+--@param[type=table] member "",""ids""sortids""
 function cmatchpool:match(member)
     local uuid = self.old_pool:get_first_id(member)
     if self:is_matching(uuid) then
@@ -125,7 +125,7 @@ function cmatchpool:match(member)
     end
 end
 
---- 
+--- ""
 function cmatchpool:unmatch(uuid)
     local member,location = self:get_member(uuid)
     if location == cmatchpool.YONG_POOL then
@@ -153,7 +153,7 @@ function cmatchpool:shuffle(list)
     end
 end
 
---- 
+--- ""
 function cmatchpool:start_timer()
     skynet.timeout(self.tick,function ()
         if self.cancel_timer then
@@ -247,7 +247,7 @@ function cmatchpool:start_timer()
     end
 end
 
---- 
+--- ""
 function cmatchpool:stop_timer()
     self.cancel_timer = true
 end
