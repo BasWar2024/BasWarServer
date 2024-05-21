@@ -1,4 +1,4 @@
---- 
+--- ""
 --@script gg.base.util.functions
 --@author sundream
 --@release 2018/12/25 10:30:00
@@ -26,7 +26,7 @@ callmeta.__call = function (func,...)
     end
 end
 
---- 
+--- ""
 --@usage
 -- local func = gg.functor(print,1,2,nil,nil)
 -- func(4,5)    -- 1,2,nil,nil,4,5
@@ -94,7 +94,7 @@ function gg.dumptable(tbl)
     end
 end
 
--- 
+-- ""
 function gg.startCollectLocalVarsOnError()
     local traceback = require "traceback"
     traceback.register_collecter(function (value,varname,isarg)
@@ -130,9 +130,9 @@ function gg.onwarn(errmsg)
     return errmsg
 end
 
---- ()
---@param[type=any] o 
---@return[type=any] 
+--- ""("")
+--@param[type=any] o ""
+--@return[type=any] ""
 function gg.copy(o)
     local typ = type(o)
     if typ ~= "table" then return o end
@@ -148,14 +148,14 @@ function gg.copy(o)
 end
 
 
---- ()
---@param[type=any] o 
---@return[type=any] 
+--- ""("")
+--@param[type=any] o ""
+--@return[type=any] ""
 --@usage
--- deepcopy3:
--- 1. table
--- 2. metatable(metatable)
--- 3. keystable
+-- deepcopy""3"":
+-- 1. table""
+-- 2. metatable(metatable"")
+-- 3. keys""table
 function gg.deepcopy(o,seen)
     local typ = type(o)
     if typ ~= "table" then return o end
@@ -173,13 +173,13 @@ function gg.deepcopy(o,seen)
     return newtable
 end
 
---- 
---@param[type=int] num 
---@param[type=int,opt=1000000] limit 
---@param[type=func,opt] rand ,math.random
---@return[type=bool] true--,false--
---@usage local ok = gg.ishit(1,2)   -- 1/2
---@usage local ok = gg.ishit(1) -- 1/1000000
+--- ""
+--@param[type=int] num ""
+--@param[type=int,opt=1000000] limit ""
+--@param[type=func,opt] rand "",""math.random
+--@return[type=bool] true--"",false--""
+--@usage local ok = gg.ishit(1,2)   -- 1/2""
+--@usage local ok = gg.ishit(1) -- 1/1000000""
 function gg.ishit(num,limit,rand)
     limit = limit or 1000000
     rand = rand or math.random
@@ -187,11 +187,11 @@ function gg.ishit(num,limit,rand)
     return rand(1,limit) <= num
 end
 
---- (:list)
---@param[type=table] list 
---@param[type=int] num num,
---@param[type=func,opt] rand ,math.random
---@return[type=table] 
+--- ""("":""list)
+--@param[type=table] list ""
+--@param[type=int] num ""num"",""
+--@param[type=func,opt] rand "",""math.random
+--@return[type=table] ""
 function gg.shuffle(list,num,rand)
     local len = #list
     num = num or len
@@ -210,17 +210,17 @@ function gg.shuffle(list,num,rand)
     return list
 end
 
---- 
---@param[type=table] dct ,:{[1]=1,[2]=2,...}
---@param[type=func,opt] func ,
---@param[type=func,opt] rand ,math.random
---@return[type=any] 
+--- ""
+--@param[type=table] dct "","":{[""1]=""1,[""2]=""2,...}
+--@param[type=func,opt] func "",""
+--@param[type=func,opt] rand "",""math.random
+--@return[type=any] ""
 --@usage
---  local dct = {[1]="one",[2]="two",[7]="seven"}       -- :1+2+7=10
---  -- one=1/10,two=2/10,seven=7/10
+--  local dct = {[1]="one",[2]="two",[7]="seven"}       -- "":1+2+7=10
+--  -- one=1/10"",two=2/10"",seven=7/10""
 --  local val = gg.choosevalue(dct)
---  -- ,"one"0:2+7=9
---  -- : one=0/9,two=2/9,seven=7/9
+--  -- "","""one"""0，"":2+7=9
+--  -- "": one=0/9"",two=2/9"",seven=7/9""
 --  local val = gg.choosevalue(dct,function (k,v) return v == "one" and 0 or k end)
 function gg.choosevalue(dct,func,rand)
     rand = rand or math.random
@@ -242,17 +242,17 @@ function gg.choosevalue(dct,func,rand)
     return nil
 end
 
---- 
---@param[type=table] dct ,:{[1]=1,[2]=2,...}
---@param[type=func,opt] func ,
---@param[type=func,opt] rand ,math.random
---@return[type=any] 
+--- ""
+--@param[type=table] dct "","":{[""1]=""1,[""2]=""2,...}
+--@param[type=func,opt] func "",""
+--@param[type=func,opt] rand "",""math.random
+--@return[type=any] ""
 --@usage
---  local dct = {one=1,two=2,seven=7}       -- :1+2+7=10
---  -- one=1/10,two=2/10,seven=7/10
+--  local dct = {one=1,two=2,seven=7}       -- "":1+2+7=10
+--  -- one=1/10"",two=2/10"",seven=7/10""
 --  local val = gg.choosekey(dct)
---  -- ,"one"0:2+7=9
---  -- : one=0/9,two=2/9,seven=7/9
+--  -- "","""one"""0，"":2+7=9
+--  -- "": one=0/9"",two=2/9"",seven=7/9""
 --  local val = gg.choosekey(dct,function (k,v) return k == "one" and 0 or v end)
 function gg.choosekey(dct,func,rand)
     rand = rand or math.random
@@ -274,19 +274,19 @@ function gg.choosekey(dct,func,rand)
     return nil
 end
 
---- 
---@param[type=table] args 
---@param ... 
---@return[type=bool] true--,false--
---@return[type=table|string] (table):,(string):
+--- ""
+--@param[type=table] args ""
+--@param ... ""
+--@return[type=bool] true--"",false--""
+--@return[type=table|string] ""(table):"",""(string):""
 --@usage
--- -- : string,int/int
+-- -- "": ""string,""int/""int
 -- local isok,args = gg.checkargs(args,"string","int")
--- -- : string,int/int,0/
+-- -- "": ""string,""int/""int,""0/""
 -- local isok,args = gg.checkargs(args,"string","int","*")
--- -- : string,int/int,[1,5]
+-- -- "": ""string,""int/""int,""[1,5]
 -- local isok,args = gg.checkargs(args,"string","int:[1,5]")
--- -- : string,double/double,[3.5,5.5]
+-- -- "": ""string,""double/""double,""[3.5,5.5]
 -- local isok,args = gg.checkargs(args,"string","double:[3.5,5.5]")
 function gg.checkargs(args,...)
     local typs = {...}
@@ -351,13 +351,13 @@ function gg.checkargs(args,...)
     return true,ret
 end
 
---- 
+--- ""
 --@usage
---:
---  1. : 0--,0--
---  2. : trueyes--,--
---  3. : true--,false--
---  4. : 
+--"":
+--  1. "": ""0--"",0--""
+--  2. "": true""yes--"",""--""
+--  3. "": true--"",false--""
+--  4. "": ""
 function gg.istrue(val)
     if val then
         if type(val) == "number" then
@@ -380,16 +380,16 @@ end
 local compile_cmd = setmetatable({},{__index=getcmd})
 
 
---- 
---@param[type=string] cmd ,"string.len"
---@param ... 
+--- ""
+--@param[type=string] cmd "","""string.len"
+--@param ... ""
 --@return[type=table]
 --@usage
 --  local pack_data = gg.pack_function("string.len","hello")
 --  local func = gg.unpack_function(pack_data)
 --  local len = func()  -- string.len("hello") => 5
 function gg.pack_function(cmd,...)
-    -- nil
+    -- ""nil""
     local n = select("#",...)
     local args = {...}
     local pack_data = {
@@ -400,9 +400,9 @@ function gg.pack_function(cmd,...)
     return pack_data
 end
 
---- 
---@param[type=table] pack_data gg.pack_function
---@return[type=func] 
+--- ""
+--@param[type=table] pack_data ""gg.pack_function""
+--@return[type=func] ""
 --@usage
 --  local pack_data = gg.pack_function("string.len","hello")
 --  local func = gg.unpack_function(pack_data)
@@ -437,11 +437,11 @@ function gg.unpack_function(pack_data)
 end
 
 
---- 
---@param[type=table|string] mod table:,string:
---@param[type=string] method ("."+":")
---@param ... 
---@return 
+--- ""
+--@param[type=table|string] mod table:"",string:""
+--@param[type=string] method ""("""."""+":")
+--@param ... ""
+--@return ""
 --@usage
 --  local len = gg.exec(_G,"string.len","hello") -- 5
 function gg.exec(mod,method,...)
@@ -485,10 +485,10 @@ function gg.exec(mod,method,...)
     end
 end
 
---- 
---@param[type=string] code 
---@param[type=table] env 
---@return 
+--- ""
+--@param[type=string] code ""
+--@param[type=table] env ""
+--@return ""
 --@usage
 --  local code = "return string.len('hello')"
 --  local len = gg.eval(code)   -- 5
@@ -502,11 +502,11 @@ function gg.eval(code,env,...)
     return chunk(...)
 end
 
---- 
---@param[type=function] oldfunc 
---@parma[type=string] oldname 
---@param[type=string] newname 
---@return 
+--- ""
+--@param[type=function] oldfunc ""
+--@parma[type=string] oldname ""
+--@param[type=string] newname ""
+--@return ""
 --@usage
 --local todo_delete_func = function () end
 --todo_delete_func = gg.deprecated(todo_delete_func,"todo_delete_func","new_func")
@@ -525,7 +525,7 @@ function gg.tostring(obj,depth)
     if type(obj) ~= "table" then
         return tostring(obj)
     end
-    if rawget(obj,"__type") then  -- 
+    if rawget(obj,"__type") then  -- ""
         return tostring(obj)
     end
     local cache = {}
@@ -555,8 +555,70 @@ function gg.timeit(count,func,...)
     return gg.getms() - starttime
 end
 
+--"":"2014-09-07 08:23:05"""1410049385
+function gg.DateTimeToUnixStamp(date_time)
+    if date_time == nil or date_time == "" then
+        return 0
+    end
+    local date_time_list = string.split(date_time, " ")
+    if (date_time_list[1] == nil or date_time_list[1] == " ") or (date_time_list[2] == nil or date_time_list[2] == " ") then
+        return 0
+    end
+
+    local date_list = string.split(date_time_list[1], "-")
+    local time_list = string.split(date_time_list[2], ":")
+    if (date_list == nil or date_list == " ") or (time_list == nil or time_list == " ") then
+        return 0
+    end
+
+    return os.time{year=date_list[1], month=date_list[2], day=date_list[3], hour=time_list[1], min=time_list[2], sec=time_list[3]}
+end
+
+--"":1410049385"""2014-09-07 08:23:05"
+function gg.UnixStampToDateTime(unix_stamp)
+    local year = os.date("%Y", unix_stamp)
+    local month = os.date("%m", unix_stamp)
+    local day = os.date("%d", unix_stamp)
+    local hour = os.date("%H", unix_stamp)
+    local min = os.date("%M", unix_stamp)
+    local sec = os.date("%S", unix_stamp)
+    return string.format("%02d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, min, sec)
+end
+
+--""
+--""UnixStamp""UnixStamp
+function gg.TransformDawnTime(unix_stamp)
+    if unix_stamp < 86400 then return 0 end
+    local set_year = os.date("%Y", unix_stamp)
+    local set_month = os.date("%m", unix_stamp)
+    local set_day = os.date("%d", unix_stamp)
+    local set_hour = 0
+    local set_min = 0
+    local set_sec = 0
+    return os.time{year=set_year, month=set_month, day=set_day, hour=set_hour, min=set_min, sec=set_sec}
+end
+
+function gg.makeSignContent(params, md5Key)
+    local keys = {}
+    for k,v in pairs(params) do
+        table.insert(keys, k)
+    end
+    table.sort(keys, function (a, b)
+        if a < b then
+            return true
+        end
+        return false
+    end)
+    local content = ""
+    for k,v in ipairs(keys) do
+        content = content .. v .. "=" .. params[v] .. "&"
+    end
+    content = content .. md5Key
+    return content
+end
+
 if skynet then
--- skynet
+-- ""skynet
 if not skynet._getenv then
     skynet._getenv = skynet.getenv
     skynet.config = setmetatable({},{__index=function (self,k)
@@ -590,12 +652,12 @@ function skynet.setenv(key,value)
 end
 
 local skynet_starttime = skynet.starttime() * 1000
--- 
+-- ""
 function skynet.timestamp()
     return skynet.now2() + skynet_starttime
 end
 
---()
+--""("")
 function skynet.current()
     return skynet.now() * 10
 end

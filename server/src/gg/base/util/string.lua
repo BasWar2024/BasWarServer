@@ -1,12 +1,12 @@
---- string
+--- string""
 --@script gg.base.util.string
 --@author sundream
 --@release 2018/12/25 10:30:00
 
---- str,charsetcharset
---@param[type=string] str 
---@param[type=table,opt] charset ,
---@return[type=string] 
+--- ""str"",""charset，""charset""
+--@param[type=string] str ""
+--@param[type=table,opt] charset "",""
+--@return[type=string] ""
 function string.ltrim(str,charset)
     local patten
     if charset then
@@ -17,10 +17,10 @@ function string.ltrim(str,charset)
     return string.gsub(str,patten,"")
 end
 
---- str,charsetcharset
---@param[type=string] str 
---@param[type=table,opt] charset ,
---@return[type=string] 
+--- ""str"",""charset，""charset""
+--@param[type=string] str ""
+--@param[type=table,opt] charset "",""
+--@return[type=string] ""
 function string.rtrim(str,charset)
     local patten
     if charset then
@@ -32,24 +32,24 @@ function string.rtrim(str,charset)
     return string.gsub(str,patten,"")
 end
 
---- str,charsetcharset
---@param[type=string] str 
---@param[type=table,opt] charset ,
---@return[type=string] 
+--- ""str"",""charset，""charset""
+--@param[type=string] str ""
+--@param[type=table,opt] charset "",""
+--@return[type=string] ""
 function string.trim(str,charset)
     str = string.ltrim(str,charset)
     return string.rtrim(str,charset)
 end
 
---- 
+--- ""
 function string.isdigit(str)
     local ret = pcall(tonumber,str)
     return ret
 end
 
---- 16
---@param[type=string] str 
---@return[type=string] 16
+--- ""16""
+--@param[type=string] str ""
+--@return[type=string] 16""
 function string.str2hex(str)
     assert(type(str) == "string")
     local list = {"0x"}
@@ -68,11 +68,11 @@ function string.hex2str(hex)
 end
 
 local NON_WHITECHARS_PAT = "%S+"
---- 
---@param[type=string] str 
---@param[type=string,opt] pat ,
---@param[type=int,opt=-1] maxsplit ,-1
---@return[type=table] 
+--- ""，""
+--@param[type=string] str ""
+--@param[type=string,opt] pat "",""
+--@param[type=int,opt=-1] maxsplit "",""-1""
+--@return[type=table] ""
 --@usage
 --local str = "a.b.c"
 --local list = string.split(str,".",1)  -- {"a","b"}
@@ -119,9 +119,9 @@ end
 
 local UTF8_LEN_ARR  = {0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc}
 
---- utf8
---@param[type=string] input utf8
---@return[type=int] utf8
+--- ""utf8""
+--@param[type=string] input utf8""
+--@return[type=int] utf8""
 function string.utf8len(input)
     local len  = string.len(input)
     local left = len
@@ -142,9 +142,9 @@ function string.utf8len(input)
     return cnt
 end
 
---- utf8
---@param[type=string] input utf8
---@return[type=table] utf8
+--- ""utf8""
+--@param[type=string] input utf8""
+--@return[type=table] utf8""
 function string.utf8chars(input)
     local len  = string.len(input)
     local left = len
@@ -165,12 +165,11 @@ function string.utf8chars(input)
     return chars
 end
 
---- 
---@param[type=string] str ,:"YYYY-mm-dd HH:MM:SS"
---@return[type=int] 
+--- ""
+--@param[type=string] str "","":"YYYY-mm-dd HH:MM:SS"
+--@return[type=int] ""
 function string.totime(str)
     local year,mon,day,hour,min,sec = string.match(str,"^(%d+)[/-](%d+)[/-](%d+)%s+(%d+):(%d+):(%d+)$")
-
     return os.time({
         year = tonumber(year),
         month = tonumber(mon),
@@ -200,7 +199,7 @@ function string.extname(path)
     return path:match(".+%.(%w+)$")
 end
 
--- 62
+-- ""62""
 function string.gen62char()
     local map = {}
     for i=0,61 do
@@ -221,7 +220,7 @@ end
 -- 0-9A-Za-z
 string.CHAR_MAP = string.gen62char()
 
--- 0-9
+-- ""0-9""
 function string.randomnumber(len)
     len = len or 8
     local ret = {}
@@ -231,9 +230,9 @@ function string.randomnumber(len)
     return table.concat(ret,"")
 end
 
---- 260-9
---@param[type=int] len 
---@return[type=string] 
+--- ""26""0-9""
+--@param[type=int] len ""
+--@return[type=string] ""
 function string.randomkey(len)
     len = len or 32
     local ret = {}
@@ -244,11 +243,11 @@ function string.randomkey(len)
     return table.concat(ret,"")
 end
 
---- 
---@param[type=string] s 
---@param[type=string] prefix 
---@param[type=int,opt] from 
---@param[type=int,opt] to (),s[from:end]
+--- ""
+--@param[type=string] s ""
+--@param[type=string] prefix ""
+--@param[type=int,opt] from ""
+--@param[type=int,opt] to ""(""),""s[from:end]
 function string.startswith(s,prefix,from,to)
     from = from or 1
     to = to or #s
@@ -261,11 +260,11 @@ function string.startswith(s,prefix,from,to)
     return false
 end
 
---- 
---@param[type=string] s 
---@param[type=string] suffix 
---@param[type=int,opt] from 
---@param[type=int,opt] to (),s[from:end]
+--- ""
+--@param[type=string] s ""
+--@param[type=string] suffix ""
+--@param[type=int,opt] from ""
+--@param[type=int,opt] to ""(""),""s[from:end]
 function string.endswith(s,suffix,from,to)
     from = from or 1
     to = to or #s
@@ -278,7 +277,7 @@ function string.endswith(s,suffix,from,to)
     return false
 end
 
--- 
+-- ""
 function string.get_similar(str1,str2)
     local lutil = require "lutil"
     local distance = lutil.levenshtein(str1,str2)
@@ -291,4 +290,77 @@ end
 function string.gen_token(prefix)
     prefix = prefix or "token"
     return string.format("%s_%s_%s",prefix,skynet.hpc(),string.randomkey(8))
+end
+
+function string.trimBom(body)
+    local bodyLen = string.len(body)
+    if bodyLen >= 3 and string.byte(string.sub(body, 1, 1)) == 0xEF and string.byte(string.sub(body, 2, 2)) == 0xBB and string.byte(string.sub(body, 3, 3)) == 0xBF then
+        body = string.sub(4, bodyLen)
+    end
+    return body
+end
+
+function string.checkEmail(email)
+    if not string.find(email, "@") then
+        return false
+    end
+	-- email = email or ""
+	-- if string.len(email) < 6 then
+	-- 	return false
+	-- end
+	-- local b, e = string.find(email, "@")
+	-- local bStr = ""
+	-- local eStr = ""
+	-- if b then
+	-- 	bStr = string.sub(email, 1, b-1)
+	-- 	eStr = string.sub(email, e+1, -1)
+	-- else
+	-- 	return false
+	-- end
+	-- local p1, p2 = string.find(bStr, "[%w_]+")
+	-- if p1 ~= 1 or p2 ~= string.len(bStr) then
+	-- 	return false
+	-- end
+	-- if string.find(eStr, "^[%.]+") then
+	-- 	return false
+	-- end
+	-- if string.find(eStr, "%.[%.]+") then
+	-- 	return false
+	-- end
+	-- if string.find(eStr, "@") then
+	-- 	return false
+	-- end
+	-- if string.find(eStr, "[%.]+$") then
+	-- 	return false
+	-- end
+	-- local _, count = string.gsub(eStr, "%.", "")
+	-- if count < 1 or count > 3 then
+	-- 	return false
+	-- end
+	return true
+end
+
+function string.sortMyHttpParam(text)
+    local textList = string.split(text,"&")
+    local dataKey = {}
+    local data = {}
+    for k, v in pairs(textList) do
+        local tempList = string.split(v,"=")
+        table.insert(dataKey, tempList[1])
+        data[tempList[1]] = tempList[2]
+    end
+    table.sort(dataKey, function (a, b)
+        if a < b then
+            return true
+        end
+        return false
+    end)
+    local newText = ""
+    for k,v in pairs(dataKey) do
+        if newText ~= "" then
+            newText = newText .. "&"
+        end
+        newText = newText .. v .. "=" .. data[v]
+    end
+    return newText
 end
