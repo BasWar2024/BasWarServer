@@ -1,31 +1,31 @@
 syntax = "proto3";
 
-// ID(C2S: [0,10000), S2C: [10000,20000)),S2C=C2S+10000
-// [0,1000),1000
-// login()          [100,200)
-// scene()          [1000,1100)
-// msg()            [1100,1200)
-// player()         [1200,1300)
+// ID""(C2S: [0,10000), S2C: [10000,20000)),S2C=C2S+10000
+// [0,1000)"",""1000""
+// login("")          [100,200)
+// scene("")          [1000,1100)
+// msg("")            [1100,1200)
+// player("")         [1200,1300)
 
 message MessagePackage {
-    int32 cmd = 1;          // ID
-    bytes args = 2;         // 
-    bool response = 3;      // true=,false=
-    int32 session = 4;      // rpcID,0,,
-    bytes ud = 5;           // ,
+    int32 cmd = 1;          // ""ID
+    bytes args = 2;         // ""
+    bool response = 3;      // true="",false=""
+    int32 session = 4;      // rpc""ID,""0,"",""
+    bytes ud = 5;           // "",""
 }
 
 message BriefType {
-   int64 uuid = 1;              // ID
-   int32 pid = 2;               // id
-   string account = 3;          // 
-   string name = 4;             // 
-   int32 level = 5;             // 
-   int32 vip = 6;               // vip
-   int32 sceneId = 7;           // id
-   int32 mapId = 8;             // id
-   int32 mapLine = 9;           // id
-   int32 onlineState = 10;          //: 0= 1= 2=
-   int32 disconnectTime = 11;       // ()
-   int32 logoutTime = 12;           // ()
+   int64 uuid = 1;              // ""ID
+   int32 pid = 2;               // ""id
+   string account = 3;          // ""
+   string name = 4;             // ""
+   int32 level = 5;             // ""
+   int32 vip = 6;               // vip""
+   int32 sceneId = 7;           // ""id
+   int32 mapId = 8;             // ""id
+   int32 mapLine = 9;           // ""id
+   int32 onlineState = 10;          //"": 0="" 1="" 2=""
+   int32 disconnectTime = 11;       // ""("")
+   int32 logoutTime = 12;           // ""("")
 }

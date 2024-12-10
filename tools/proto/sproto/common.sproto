@@ -1,8 +1,8 @@
-# sprotoid: (id+1)*2 < 65535, 0 <= id <= 32766
-# ID(C2S: [0,10000), S2C: [10000,20000)),S2C=C2S+10000
+# sproto""id"": (id+1)*2 < 65535, ""0 <= id <= 32766
+# ID""(C2S: [0,10000), S2C: [10000,20000)),S2C=C2S+10000
 
 .package {
-    cmd 0 : integer      # ID(,,session)
-    session 1 : integer  # rpcID,0,,
-    ud 2 : binary        # ,
+    cmd 0 : integer      # ""ID("","",""session"")
+    session 1 : integer  # rpc""ID,""0,"",""
+    ud 2 : binary        # "",""
 }
