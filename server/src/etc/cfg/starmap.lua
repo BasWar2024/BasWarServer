@@ -1,0 +1,31 @@
+-- cfgId                            int                              ""ID
+-- type                             int                              ""
+-- subType                          int                              ""
+-- level                            int                              ""
+-- pos                              json                             ""
+-- worldPos                         json                             ""
+-- perMakeContribute                int                              ""
+-- occupyContribute                 int                              ""
+-- area                             string                           ""
+-- isBan                            int                              ""
+-- chainID                          int                              ""ID
+-- quality                          int                              ""
+-- name                             string                           ""
+-- resIcon                          string                           ""
+-- model                            string                           ""
+-- point                            int                              ""
+-- makeResTime                      int                              ""
+-- perMakeCarboxyl                  int                              ""
+-- perMakeRes                       json                             ""
+-- resBonus                         int                              ""("")
+-- bonuses                          int                              ""("")
+-- towerCount                       int                              ""
+-- mineLimit                        int                              ""
+-- presetLayoutId                   int                              ""ID
+-- captureLayoutId                  int                              ""
+-- parentGrid                       int                              ""ID
+-- groupGrid                        json                             ""ID
+-- belongType                       int                              ""
+
+return {
+}
