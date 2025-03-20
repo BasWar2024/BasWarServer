@@ -4,7 +4,7 @@ local queue = require "skynet.queue"
 
 local cclient = class("cclient")
 
---- cclient.new
+--- cclient.new""
 --@param[type=table] conf
 --@return a cclient's instance
 --@usage
@@ -14,7 +14,7 @@ function cclient:ctor()
     self.address = skynet.self()
     self.session = 0
     self.sessions = {}
-    -- 
+    -- ""
     self.linkobjs = ggclass.ccontainer.new()
     self.cmd = {}
     self.unauth_cmd = {}
@@ -22,7 +22,7 @@ function cclient:ctor()
 end
 
 function cclient:gen_session()
-    -- TODO: 64ID?
+    -- TODO: ""64""ID?
     repeat
         self.session = self.session + 1
     until not self.sessions[self.session]
@@ -41,7 +41,7 @@ function cclient:msend(linkobjs,cmd,args)
         end
         table.insert(gates[gate_node][gate_address],linkid)
         if gg.profile.open then
-            -- 
+            -- ""
             gg.profile:incr("client_send",cmd)
         end
     end
@@ -88,7 +88,7 @@ function cclient:_send(linkobj,cmd,args,callback)
         skynet.send(gate_address,"lua","write",linkid,cmd,args,is_response,session,ud)
     end
     if gg.profile.open then
-        -- 
+        -- ""
         gg.profile:incr("client_send",cmd)
     end
     return is_response,session,ud
@@ -113,14 +113,14 @@ function cclient:new_linkobj(linktype,linkid,addr,gate_node,gate_address)
     return linkobj
 end
 
---- 
---@param[type=int] linkid ID
+--- ""
+--@param[type=int] linkid ""ID
 function cclient:getlinkobj(linkid)
     return self.linkobjs:get(linkid)
 end
 
---- 
---@param[type=table] linkobj 
+--- ""
+--@param[type=table] linkobj ""
 function cclient:addlinkobj(linkobj)
     local linkid = assert(linkobj.linkid)
     if self.queue or linkobj.queue then
@@ -129,9 +129,9 @@ function cclient:addlinkobj(linkobj)
     return self.linkobjs:add(linkobj,linkid)
 end
 
---- ,
---@param[type=int] linkid ID
---@param[type=bool] close true=
+--- "",""
+--@param[type=int] linkid ""ID
+--@param[type=bool] close true=""
 function cclient:dellinkobj(linkid,close)
     local linkobj = self.linkobjs:del(linkid)
     if linkobj then
@@ -154,9 +154,9 @@ function cclient:dellinkobj(linkid,close)
     return linkobj
 end
 
---- 
---@param[type=int] master_linkid ID
---@param[type=int] slave_linkid ID
+--- ""
+--@param[type=int] master_linkid ""ID
+--@param[type=int] slave_linkid ""ID
 function cclient:slaveof(master_linkid,slave_linkid)
     local master_linkobj = self:getlinkobj(master_linkid)
     local slave_linkobj = self:getlinkobj(slave_linkid)
@@ -169,8 +169,8 @@ function cclient:slaveof(master_linkid,slave_linkid)
     slave_linkobj.master = master_linkobj
 end
 
---- 
---@param[type=table] master_linkobj 
+--- ""
+--@param[type=table] master_linkobj ""
 function cclient:unbind_slave(master_linkobj)
     local slave_linkobj = master_linkobj.slave
     if not slave_linkobj then
@@ -181,11 +181,11 @@ function cclient:unbind_slave(master_linkobj)
     slave_linkobj.master = nil
 end
 
---- gate
---@param[type=table] linkobj 
---@param[type=string] proto 
---@param[type=int|string] address 
---@param[type=string] node; 
+--- ""gate""
+--@param[type=table] linkobj ""
+--@param[type=string] proto ""
+--@param[type=int|string] address ""
+--@param[type=string] node; ""
 function cclient:forward(linkobj,proto,address,node)
     local linkid = linkobj.linkid
     local gate_node = linkobj.gate_node
@@ -197,9 +197,9 @@ function cclient:forward(linkobj,proto,address,node)
     end
 end
 
---- 
---@param[type=table] linkobj 
---@return 
+--- ""
+--@param[type=table] linkobj ""
+--@return ""
 function cclient:clone_linkobj(linkobj)
     local clone = {}
     for k,v in pairs(linkobj) do
@@ -215,10 +215,10 @@ function cclient:clone_linkobj(linkobj)
     return clone
 end
 
---- linkobj
---@param[type=table] linkobj 
---@param[type=int|string] address 
---@param[type=string] node; 
+--- ""linkobj""
+--@param[type=table] linkobj ""
+--@param[type=int|string] address ""
+--@param[type=string] node; ""
 function cclient:transfer(linkobj,address,node)
     local clone = self:clone_linkobj(linkobj)
     local function on_transfer()

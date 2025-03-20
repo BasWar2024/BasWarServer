@@ -1,28 +1,28 @@
----: ctoday
+---"": ctoday
 --@script gg.base.time.today
 --@author sundream
 --@date 2019/3/29 14:00:00
 
-local DAY_START_HOUR = 0    -- 
-local WEEK_START_DAY = 1    -- 
-local WEEK_START_DAY2 = 0   -- (thisweek2)
-local MONTH_START_DAY = 1   -- 
+local DAY_START_HOUR = 0    -- ""
+local WEEK_START_DAY = 1    -- ""
+local WEEK_START_DAY2 = 0   -- ""(thisweek2)
+local MONTH_START_DAY = 1   -- ""
 
 
---- ctoday: 
+--- ctoday"": ""
 local cdatabaseable = ggclass.cdatabaseable
 local ctoday = class("ctoday",cdatabaseable)
 
---- ctoday.new#conf
---@field[opt=0] day_start_hour 
---@field[opt=1] week_start_day 
---@field[opt=0] week_start_day2 (thisweek2)
---@field[opt=0] month_start_day 
---@field[opt] onclear 
+--- ctoday.new#conf""
+--@field[opt=0] day_start_hour ""
+--@field[opt=1] week_start_day ""
+--@field[opt=0] week_start_day2 ""(thisweek2)
+--@field[opt=0] month_start_day ""
+--@field[opt] onclear ""
 --@table ctoday_conf
 
 
---- ctoday.new
+--- ctoday.new""
 --@param[type=table] conf see @{ctoday_conf}
 --@return a ctoday's instance
 --@usage local today = ctoday.new()
@@ -47,8 +47,8 @@ function ctoday:ctor(conf)
     end
 end
 
---- 
---@return 
+--- ""
+--@return ""
 function ctoday:serialize()
     local data = {}
     data["dayno"] = self.dayno
@@ -63,8 +63,8 @@ function ctoday:serialize()
     return data
 end
 
---- 
---@param[type=table] data 
+--- ""
+--@param[type=table] data ""
 function ctoday:deserialize(data)
     if not data or not next(data) then
         return
@@ -80,8 +80,8 @@ function ctoday:deserialize(data)
     end
 end
 
---- 
---@param[type=int,opt] olddayno 
+--- ""
+--@param[type=int,opt] olddayno ""
 --@usage today:clear()
 function ctoday:clear(olddayno)
     olddayno = olddayno or self.dayno
@@ -98,9 +98,9 @@ function ctoday:clear(olddayno)
 	end
 end
 
---- 
---@param[type=string] key 
---@param[type=any] val 
+--- ""
+--@param[type=string] key ""
+--@param[type=any] val ""
 --@usage today:set("key",1)
 --@usage today:set("k1.k2.k3","hi")
 function ctoday:set(key,val)
@@ -108,10 +108,10 @@ function ctoday:set(key,val)
     return cdatabaseable.set(self,key,val)
 end
 
---- 
---@param[type=string] key 
---@param[type=any] default 
---@return[type=any] 
+--- ""
+--@param[type=string] key ""
+--@param[type=any] default ""
+--@return[type=any] ""
 --@usage local val = today:get("key",0)
 --@usage local val = today:get("k1.k2.k3")
 function ctoday:get(key,default)
@@ -119,13 +119,13 @@ function ctoday:get(key,default)
     return cdatabaseable.get(self,key,default)
 end
 
---- [deprecated] get
+--- [deprecated] get""
 ctoday.query = ctoday.get
 
---- 
---@param[type=string] key ()
---@param[type=number] val 
---@return[type=any] 
+--- ""
+--@param[type=string] key ""("")
+--@param[type=number] val ""
+--@return[type=any] ""
 --@usage data:add("key",1)
 function ctoday:add(key,val)
     self:checkvalid()

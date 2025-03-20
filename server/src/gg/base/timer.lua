@@ -1,4 +1,4 @@
---- 
+--- ""
 --@script gg.base.timer
 --@author sundream
 --@release 2019/3/29 14:00:00
@@ -11,14 +11,14 @@ function ctimer:ctor()
     self.timerpool = {}
 end
 
---- 
---@param[type=int|string|table] interval (),string|tablecrontab
---@param[type=func] callback 
---@return[type=int] ID
+--- ""
+--@param[type=int|string|table] interval ""(""),""string|table""，""crontab""
+--@param[type=func] callback ""
+--@return[type=int] ""ID
 --@usage
 --gg.timer = ggclass.ctimer.new()
---gg.timer:timeout(10,callback) <=> 10scallback
---gg.timer:timeout("*/5 * * * * *",,callback) <=> 5scallback
+--gg.timer:timeout(10,callback) <=> 10s""callback
+--gg.timer:timeout("*/5 * * * * *",,callback) <=> ""5s""callback
 function ctimer:timeout(interval,callback)
     local typ = type(interval)
     if typ == "string" or typ == "table" then  -- cronexpr
@@ -28,10 +28,10 @@ function ctimer:timeout(interval,callback)
     return self:timeout2(interval,callback)
 end
 
---- 
---@param[type=int] interval ()
---@param[type=func] callback 
---@return[type=int] ID
+--- ""
+--@param[type=int] interval ""("")
+--@param[type=func] callback ""
+--@return[type=int] ""ID
 function ctimer:timeout2(interval,callback)
     interval = interval < 0 and 0 or interval
     local id = self:addtimer(callback,interval)
@@ -41,12 +41,12 @@ function ctimer:timeout2(interval,callback)
     return id
 end
 
---- 
---@param[type=int] delay 
---@param[type=int] interval ()
---@param[type=int] loopcnt (-1--)
---@param[type=func] callback 
---@return[type=int] ID
+--- ""
+--@param[type=int] delay ""
+--@param[type=int] interval ""("")
+--@param[type=int] loopcnt ""(-1--"")
+--@param[type=func] callback ""
+--@return[type=int] ""ID
 function ctimer:timeloop(delay,interval,loopcnt,callback)
     delay = delay < 0 and 0 or delay
     interval = interval < 0 and 0 or interval
@@ -76,9 +76,9 @@ function ctimer:timeloop(delay,interval,loopcnt,callback)
     return id
 end
 
---- ()
---@param[type=string] name 
---@usage gg.timer:untimeout(name) <=> name
+--- ""("")
+--@param[type=string] name ""
+--@usage gg.timer:untimeout(name) <=> ""name""
 function ctimer:untimeout(name)
     local ids = self.timers[name]
     if not ids then
@@ -89,11 +89,11 @@ function ctimer:untimeout(name)
     end
 end
 
---- crontab
---@param[type=string|table] cron crontab
---@param[type=func] callback 
---@return[type=int] ID
---@usage gg.timer:cron_timeout("*/5 * * * * *",callback) <=> 5scallback
+--- ""crontab""
+--@param[type=string|table] cron crontab""
+--@param[type=func] callback ""
+--@return[type=int] ""ID
+--@usage gg.timer:cron_timeout("*/5 * * * * *",callback) <=> ""5s""callback
 function ctimer:cron_timeout(cron,callback)
     if type(cron) == "string" then
         cron = gg.cronexpr.new(cron)
@@ -149,8 +149,8 @@ function ctimer:gettimer(id)
     return self.timers[id]
 end
 
---- ID
---@param[type=int] id ID
+--- ""ID""
+--@param[type=int] id ""ID
 --@usage
 --gg.timer:deltimer(timerId)
 function ctimer:deltimer(id)
@@ -171,9 +171,9 @@ function ctimer:deltimer(id)
     return timer_obj
 end
 
---- 
---@param[type=int] id ID
---@param[type=string] name 
+--- ""
+--@param[type=int] id ""ID
+--@param[type=string] name ""
 function ctimer:name(id,name)
     local timer_obj = self:gettimer(id)
     if not timer_obj then

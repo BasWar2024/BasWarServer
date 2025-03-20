@@ -1,10 +1,10 @@
----bytestream
+---bytestream""
 --@script gg.codec.bytestream
 --@author sundream
 --@release 2019/6/20 10:30:00
 --@usage
---:
---  2byte()id + 
+--"":
+--  2byte("")""id + ""
 
 
 local bytestream = {}
