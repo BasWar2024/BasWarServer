@@ -1,24 +1,37 @@
---- 
+--- ""
 --@script gg.base.time
 --@author sundream
 --@release 2019/3/29 14:00:00
 
 local time = {}
 
---- 0(): 1970-01-01 00:00:00  
+--- ""0(""): 1970-01-01 00:00:00 "" ""
 time.STARTTIME0 = os.time({year=1970,month=1,day=1,hour=0,min=0,sec=0})
---- 1: 2014-08-25 00:00:00  825
+--- ""1: 2014-08-25 00:00:00 "" 8""25""
 time.STARTTIME1 = os.time({year=2014,month=8,day=25,hour=0,min=0,sec=0})
---- 2: 2014-08-24 00:00:00  824
+--- ""2: 2014-08-24 00:00:00 "" 8""24""
 time.STARTTIME2 = os.time({year=2014,month=8,day=24,hour=0,min=0,sec=0})
 time.HOUR_SECS = 3600
 time.DAY_SECS = 24 * time.HOUR_SECS
 time.WEEK_SECS = 7 * time.DAY_SECS
 
---- 1
---@param[type=int,opt] now ,
---@param[type=int,opt] starttime ,1
---@return[type=int] 
+local format_normal = "%Y-%m-%d %H:%M:%S"
+
+--- ""1""
+--@param[type=int,opt] now "",""
+--@param[type=int,opt] starttime "",""1
+--@return[type=int] ""
+function time.secondno(now,starttime)
+    now = now or os.time()
+    starttime = starttime or time.STARTTIME1
+    local diff = now - starttime
+    return math.floor(diff) + 1
+end
+
+--- ""1""
+--@param[type=int,opt] now "",""
+--@param[type=int,opt] starttime "",""1
+--@return[type=int] ""
 function time.minuteno(now,starttime)
     now = now or os.time()
     starttime = starttime or time.STARTTIME1
@@ -26,10 +39,10 @@ function time.minuteno(now,starttime)
     return math.floor(diff/60) + 1
 end
 
---- 5
---@param[type=int,opt] now ,
---@param[type=int,opt] starttime ,1
---@return[type=int] 
+--- ""5""
+--@param[type=int,opt] now "",""
+--@param[type=int,opt] starttime "",""1
+--@return[type=int] ""
 function time.fiveminuteno(now,starttime)
     now = now or os.time()
     starttime = starttime or time.STARTTIME1
@@ -37,10 +50,10 @@ function time.fiveminuteno(now,starttime)
     return math.floor(diff/300) + 1
 end
 
---- 
---@param[type=int,opt] now ,
---@param[type=int,opt] starttime ,1
---@return[type=int] 
+--- ""
+--@param[type=int,opt] now "",""
+--@param[type=int,opt] starttime "",""1
+--@return[type=int] ""
 function time.halfhourno(now,starttime)
     now = now or os.time()
     starttime = starttime or time.STARTTIME1
@@ -48,10 +61,10 @@ function time.halfhourno(now,starttime)
     return math.floor(2*diff/time.HOUR_SECS) + 1
 end
 
---- 
---@param[type=int,opt] now ,
---@param[type=int,opt] starttime ,1
---@return[type=int] 
+--- ""
+--@param[type=int,opt] now "",""
+--@param[type=int,opt] starttime "",""1
+--@return[type=int] ""
 function time.hourno(now,starttime)
     now = now or os.time()
     starttime = starttime or time.STARTTIME1
@@ -59,10 +72,10 @@ function time.hourno(now,starttime)
     return math.floor(diff/time.HOUR_SECS) + 1
 end
 
---- 
---@param[type=int,opt] now ,
---@param[type=int,opt] starttime ,1
---@return[type=int] 
+--- ""
+--@param[type=int,opt] now "",""
+--@param[type=int,opt] starttime "",""1
+--@return[type=int] ""
 function time.dayno(now,starttime)
     now = now or os.time()
     starttime = starttime or time.STARTTIME1
@@ -70,10 +83,10 @@ function time.dayno(now,starttime)
     return math.floor(diff/time.DAY_SECS) + 1
 end
 
---- 
---@param[type=int,opt] now ,
---@param[type=int,opt] starttime ,1
---@return[type=int] 
+--- ""
+--@param[type=int,opt] now "",""
+--@param[type=int,opt] starttime "",""1
+--@return[type=int] ""
 function time.weekno(now,starttime)
     now = now or os.time()
     starttime = starttime or time.STARTTIME1
@@ -81,10 +94,10 @@ function time.weekno(now,starttime)
     return math.floor(diff/time.WEEK_SECS) + 1
 end
 
---- 
---@param[type=int,opt] now ,
---@param[type=int,opt] starttime ,1
---@return[type=int] 
+--- ""
+--@param[type=int,opt] now "",""
+--@param[type=int,opt] starttime "",""1
+--@return[type=int] ""
 function time.monthno(now,starttime)
     now = now or os.time()
     starttime = starttime or time.STARTTIME1
@@ -95,43 +108,53 @@ function time.monthno(now,starttime)
     return (year2 - year1) * 12 + month2 - month1
 end
 
---- ()
---@param[type=int,opt] now ,
---@return[type=int] 
+--- ""monthno""month
+--@param[type=int,opt] monthno ""monthno
+--@param[type=int,opt] starttime "",""1
+--@return[type=int] ""
+function time.monthno2month(monthno, starttime)
+    starttime = starttime or time.STARTTIME1
+    local curYearDate = os.time({year=time.year(), month=1, day=1, hour=0, min=0, sec=0})
+    return monthno - time.monthno(curYearDate, starttime) + 1
+end
+
+--- ""("")
+--@param[type=int,opt] now "",""
+--@return[type=int] ""
 function time.time(now)
     return now or os.time()
 end
 
---- 
---@param[type=int,opt] now ,
---@return[type=int] 
+--- ""
+--@param[type=int,opt] now "",""
+--@return[type=int] ""
 function time.year(now)
     now = now or os.time()
     local s = os.date("%Y",now)
     return tonumber(s)
 end
 
---- 
---@param[type=int,opt] now ,
---@return[type=int] [1,12]
+--- ""
+--@param[type=int,opt] now "",""
+--@return[type=int] ""[1,12]
 function time.month(now)
     now = now or os.time()
     local s = os.date("%m",now)
     return tonumber(s)
 end
 
---- 
---@param[type=int,opt] now ,
---@return[type=int] [1,31]
+--- ""
+--@param[type=int,opt] now "",""
+--@return[type=int] ""[1,31]
 function time.day(now)
     now = now or os.time()
     local s = os.date("%d",now)
     return tonumber(s)
 end
 
---- 
---@param[type=int,opt] month ,
---@return[type=int] 
+--- ""
+--@param[type=int,opt] month "",""
+--@return[type=int] ""
 function time.howmuchdays(month)
     local month_zerotime = os.time({year=time.year(),month=month,day=1,hour=0,min=0,sec=0})
     for monthday in ipairs({31,30,29,28}) do
@@ -143,72 +166,72 @@ function time.howmuchdays(month)
     assert("Invalid month:" .. tostring(month))
 end
 
---- 
---@param[type=int,opt] now ,
---@return[type=int] [1,366]
+--- ""
+--@param[type=int,opt] now "",""
+--@return[type=int] ""[1,366]
 function time.yearday(now)
     now = now or os.time()
     local s = os.date("%j",now)
     return tonumber(s)
 end
 
---- (0)
---@param[type=int,opt] now ,
---@return[type=int] [0,6]
+--- ""(""0)
+--@param[type=int,opt] now "",""
+--@return[type=int] ""[0,6]
 function time.weekday(now)
     now = now or os.time()
     local s = os.date("%w",now)
     return tonumber(s)
 end
 
---- 
---@param[type=int,opt] now ,
---@return[type=int] [0,23]
+--- ""
+--@param[type=int,opt] now "",""
+--@return[type=int] ""[0,23]
 function time.hour(now)
     now = now or os.time()
     local s = os.date("%H",now)
     return tonumber(s)
 end
 
---- 
---@param[type=int,opt] now ,
---@return[type=int] [0,59]
+--- ""
+--@param[type=int,opt] now "",""
+--@return[type=int] ""[0,59]
 function time.minute(now)
     now = now or os.time()
     local s = os.date("%M",now)
     return tonumber(s)
 end
 
---- 
---@param[type=int,opt] now ,
---@return[type=int] [0,59]
+--- ""
+--@param[type=int,opt] now "",""
+--@return[type=int] ""[0,59]
 function time.second(now)
     now = now or os.time()
     local s = os.date("%S",now)
     return tonumber(s)
 end
 
---- 
---@param[type=int,opt] now ,
---@return[type=int] 
+--- ""
+--@param[type=int,opt] now "",""
+--@return[type=int] ""
 function time.daysecond(now)
     now = now or os.time()
     return time.hour(now) * time.HOUR_SECS + time.minute(now) * 60 + time.second(now)
 end
 
---- 0()
---@param[type=int,opt] now ,
---@return[type=int] 0()
+--- ""0""("")
+--@param[type=int,opt] now "",""
+--@return[type=int] ""0""("")
 function time.dayzerotime(now)
     now = now or os.time()
     return time.time(now) - time.daysecond(now)
 end
 
 
---- 0
---@param[type=int,opt] now ,
---@param[type=int,opt] week_start_day ,,,0
---@return[type=int] 0
+--- ""0""
+--@param[type=int,opt] now "",""
+--@param[type=int,opt] week_start_day "","","",""0
+--@return[type=int] ""0""
 function time.weekzerotime(now,week_start_day)
     now = now or os.time()
     week_start_day = week_start_day or 1
@@ -218,32 +241,51 @@ function time.weekzerotime(now,week_start_day)
     return time.dayzerotime(now-diffday*time.DAY_SECS)
 end
 
---- 0
---@param[type=int,opt] now ,
---@return[type=int] 0
+--- ""0""
+--@param[type=int,opt] now "",""
+--@return[type=int] ""0""
 function time.monthzerotime(now)
     now = now or os.time()
     local monthday = time.day(now)
     return time.dayzerotime(now-monthday*time.DAY_SECS)
 end
 
---- 0
---@param[type=int,opt] now ,
---@return[type=int] 0
+--- ""0""
+--@param[type=int,opt] now "",""
+--@return[type=int] ""0""
 function time.nextmonthzerotime(now)
     now = now or os.time()
     return os.time({year=time.year(now),month=time.month(now)+1,day=1,hour=0,min=0,sec=0,})
 end
 
---- {day=,hour=,min=,sec=}
---@param[type=table] fmt ,{day=true,hour=true,min=true,sec=true}
---@param[type=int] secs 
---@return[type=table] 
+
+function time.date_to_timestamp(year, month, day, hour, min, sec)
+    local now = os.time()
+    year = year or time.year(now)
+    month = month or time.month(now)
+    day = day or time.day(now)
+    hour = hour or time.hour(now)
+    min = min or time.minute(now)
+    sec = sec or time.second(now)
+    return os.time({
+        year = year,
+        month = month,
+        day = day,
+        hour = hour,
+        min = min,
+        sec = sec,
+    })
+end
+
+--- ""{day="",hour="",min="",sec=""}""
+--@param[type=table] fmt "",""{day=true,hour=true,min=true,sec=true}
+--@param[type=int] secs ""
+--@return[type=table] ""
 --@usage
 --  local secs = 3661
---  got {day=0,hour=1,min=0,sec=61},hour,hour
+--  got {day=0,hour=1,min=0,sec=61},""hour,""hour""
 --  local t = time.dhms_time({hour=true})
---  got {day=0,hour=1,min=1,sec=1},hour,min,sec,hour,min,sec
+--  got {day=0,hour=1,min=1,sec=1},""hour,min,sec,""hour,min,sec""
 --  local t = time.dhms_time({hour=true,min=true,sec=true})
 function time.dhms_time(fmt,secs)
     local day = math.floor(secs/time.DAY_SECS)
@@ -271,20 +313,20 @@ function time.dhms_time(fmt,secs)
 end
 
 
---- 
---@param[type=string] fmt 
---@param[type=int] secs 
---@return[type=string] 
+--- ""，""：""
+--@param[type=string] fmt ""
+--@param[type=int] secs ""
+--@return[type=string] ""
 --@usage
--- fmt:
+-- fmt"":
 -- %D : XX day
 -- %H : XX hour
 -- %M : XX minute
 -- %S : XX sec
--- %d/%h/%m/%s,0
+-- %d/%h/%m/%s"",""0""
 -- e.g:
--- time.strftime("%D%H%S",30*24*3600+3601) => 300101
--- time.strftime("%h%s",30*24*3600+3601) => 7211
+-- time.strftime("%D""%H""%S""",30*24*3600+3601) => 30""01""01""
+-- time.strftime("%h""%s""",30*24*3600+3601) => 721""1""
 function time.strftime(fmt,secs)
     local startpos = 1
     local endpos = string.len(fmt)
@@ -334,5 +376,14 @@ function time.strftime(fmt,secs)
     }
     return string.gsub(fmt,"%%([dhmsDHMS])",repls)
 end
+
+
+function time.MsToString( ms, format )
+	-- body--2017-09-02 12:12:12
+	ms = ms or os.time()
+	format = format or format_normal
+	return os.date(format,ms)
+end
+
 
 return time

@@ -1,4 +1,4 @@
----: cthistemp
+---"": cthistemp
 --@script gg.base.time.thistemp
 --@author sundream
 --@release 2019/3/29 14:00:00
@@ -11,8 +11,8 @@ function cthistemp:ctor()
     self.time = {}
 end
 
---- 
---@return 
+--- ""
+--@return ""
 function cthistemp:serialize()
     local data = {}
     data["data"] = self.data
@@ -20,8 +20,8 @@ function cthistemp:serialize()
     return data
 end
 
---- 
---@param[type=table] data 
+--- ""
+--@param[type=table] data ""
 function cthistemp:deserialize(data)
     if not data or not next(data) then
         return
@@ -30,7 +30,7 @@ function cthistemp:deserialize(data)
     self.time = data["time"]
 end
 
---- 
+--- ""
 function cthistemp:clear()
     cdatabaseable.clear(self)
     self.time = {}
@@ -51,14 +51,14 @@ function cthistemp:checkvalid(key)
     return true,expire
 end
 
---- ,,secs,
---@param[type=string] key 
---@param[type=any] val 
---@param[type=int] secs ,
---@param[type=func,opt] callback 
+--- "","",""secs"",""
+--@param[type=string] key ""
+--@param[type=any] val ""
+--@param[type=int] secs "",""
+--@param[type=func,opt] callback ""
 --@usage thistemp:set("firstset",1,10)
---@usage thistemp:set("firstset",20)    -- 20
---@usage thistemp:set("firstset",10,20) -- 10,20s
+--@usage thistemp:set("firstset",20)    -- ""20，""
+--@usage thistemp:set("firstset",10,20) -- ""10,""20s
 function cthistemp:set(key,val,secs)
     local expire = self:getexpire(key)
     local now = os.time()
@@ -81,9 +81,9 @@ function cthistemp:set(key,val,secs)
     return oldval,expire
 end
 
---- 
---@param[type=string] key ()
---@param[type=number] val 
+--- ""
+--@param[type=string] key ""("")
+--@param[type=number] val ""
 --@usage
 --      local oldval,expire = thistemp:get(key)
 --      if nil == oldval then
@@ -97,10 +97,10 @@ function cthistemp:add(key,val)
     return cdatabaseable.add(self,key,val)
 end
 
---- 
---@param[type=string] key 
---@param[type=any] default 
---@return[type=any] 
+--- ""
+--@param[type=string] key ""
+--@param[type=any] default ""
+--@return[type=any] ""
 --@usage local val = thistemp:get("key",0)
 --@usage local val = thistemp:get("k1.k2.k3")
 function cthistemp:get(key,default)
@@ -108,12 +108,12 @@ function cthistemp:get(key,default)
     return cdatabaseable.get(self,key,default),expire
 end
 
---- [deprecated] get
+--- [deprecated] get""
 cthistemp.query = cthistemp.get
 
---- 
---@param[type=string] key 
---@return[type=any] 
+--- ""
+--@param[type=string] key ""
+--@return[type=any] ""
 --@usage thistemp:del("key")
 --@usage thistemp:del("k1.k2.k3")
 function cthistemp:del(key)
@@ -121,12 +121,12 @@ function cthistemp:del(key)
     return cdatabaseable.del(self,key),self:__delattr(self.time,attrs)
 end
 
---- [deprecated] del
+--- [deprecated] del""
 cthistemp.delete = cthistemp.del
 
---- 
---@param[type=string] key 
---@return[type=int] 
+--- ""
+--@param[type=string] key ""
+--@return[type=int] ""
 --@usage local expire = thistemp:getexpire("key")
 --@usage local expire = thistemp:getexpire("k1.k2.k3")
 function cthistemp:getexpire(key)
@@ -139,9 +139,9 @@ end
 
 cthistemp.getexceedtime = cthistemp.getexpire
 
---- TTL
---@param[type=string] key 
---@return[type=int] TTL,
+--- ""TTL
+--@param[type=string] key ""
+--@return[type=int] ""TTL,""
 --@usage local ttl = thistemp:ttl("key")
 --@usage local ttl = thistemp:ttl("k1.k2.k3")
 function cthistemp:ttl(key)
@@ -152,10 +152,10 @@ function cthistemp:ttl(key)
     return expire - os.time()
 end
 
---- (key)
---@param[type=string] key 
---@param[type=int] expire ,
---@return[type=int] 
+--- ""(""key"")
+--@param[type=string] key ""
+--@param[type=int] expire "",""
+--@return[type=int] ""
 function cthistemp:expireat(key,expire)
     local old_expire = self:getexpire(key)
     if not old_expire then
@@ -171,10 +171,10 @@ function cthistemp:expireat(key,expire)
     return old_expire
 end
 
---- (key)
---@param[type=string] key 
---@param[type=int] ttl ,expireat(key,os.time()+ttl)
---@return[type=int] 
+--- ""(""key"")
+--@param[type=string] key ""
+--@param[type=int] ttl "",""expireat(key,os.time()+ttl)
+--@return[type=int] ""
 function cthistemp:expire(key,ttl)
     return self:expireat(key,os.time()+ttl)
 end

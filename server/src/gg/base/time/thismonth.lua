@@ -1,4 +1,4 @@
----: cthismonth,gg.class.ctoday
+---"": cthismonth,""gg.class.ctoday
 --@script gg.base.time.thismonth
 --@author sundream
 --@release 2019/3/29 14:00:00

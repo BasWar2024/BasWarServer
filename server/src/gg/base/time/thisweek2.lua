@@ -1,4 +1,4 @@
---- (),gg.class.ctoday
+--- ""(""),""gg.class.ctoday
 --@script gg.base.time.thisweek2
 --@author sundream
 --@release 2019/3/29 14:00:00

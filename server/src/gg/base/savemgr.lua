@@ -1,17 +1,17 @@
---- 
+--- ""
 --@script gg.base.savemgr
 --@author sundream
 --@release 2018/12/25 10:30:00
 --@usage
--- 
--- obj:save_to_db() = 
--- obj.savename = 
--- obj.savetick = skynet.getenv("savetick"))
+-- ""：
+-- obj:save_to_db() = ""
+-- obj.savename = ""，""
+-- obj.savetick = ""（""skynet.getenv("savetick"))
 --
 -- gg.savemgr = csavemgr.new()
--- gg.savemgr:closesave
--- gg.savemgr:autosave
--- gg.savemgr:closesave,gg.savemgr:autosave
+-- ""gg.savemgr:closesave""
+-- ""：""，""gg.savemgr:autosave，""
+-- ""gg.savemgr:closesave,""，""gg.savemgr:autosave""。
 
 local csavemgr = class("csavemgr")
 
@@ -21,8 +21,8 @@ function csavemgr:ctor()
     self.objs = {}
 end
 
----,,
---@param[type=table] obj 
+---"","",""
+--@param[type=table] obj ""
 function csavemgr:oncesave(obj)
     obj.savetype = "oncesave"
     assert(obj.savename,"no attribute: savename")
@@ -33,8 +33,8 @@ function csavemgr:oncesave(obj)
     logger.logf("debug","save","op=oncesave,id=%s,savename=%s",id,obj.savename)
 end
 
----
---@param[type=table] obj 
+---""
+--@param[type=table] obj ""
 function csavemgr:autosave(obj)
     obj.savetype = "autosave"
     assert(obj.savename,"no attribute: savename")
@@ -45,8 +45,8 @@ function csavemgr:autosave(obj)
     logger.logf("debug","save","op=autosave,id=%s,savename=%s",id,obj.savename)
 end
 
----
---@param[type=table] obj 
+---""
+--@param[type=table] obj ""
 function csavemgr:nowsave(obj)
     local id = obj.saveid
     if not id then
@@ -65,8 +65,8 @@ function csavemgr:nowsave(obj)
     end
 end
 
----
---@param[type=table] obj 
+---""
+--@param[type=table] obj ""
 function csavemgr:closesave(obj)
     local id = obj.saveid
     if not id then
@@ -78,7 +78,7 @@ function csavemgr:closesave(obj)
     obj.savetick = nil
 end
 
---- 
+--- ""
 function csavemgr:saveall()
     logger.logf("debug","save","op=saveall")
     for id,obj in pairs(self.objs) do

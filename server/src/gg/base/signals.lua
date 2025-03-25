@@ -2,12 +2,12 @@ local csignals = class("csignals")
 
 function csignals:ctor(id)
     self.id = id or tostring(self)
-    self.timeout = {}       -- 
+    self.timeout = {}       -- ""
     self.signals = {}
 end
 
---- ID
---@param ... 
+--- ""ID
+--@param ... ""
 --@usage
 --local signal = self:signal("lucky number",8888)
 function csignals:signal(...)
@@ -16,11 +16,11 @@ function csignals:signal(...)
     return table.concat(keys,".")
 end
 
---- 
---@param[type=string] signal 
---@param[type=int,opt] timeuot ,nil/<=0--
---@return[type=bool] 
---@return wakeup
+--- ""
+--@param[type=string] signal ""
+--@param[type=int,opt] timeuot "",nil/<=0--""
+--@return[type=bool] ""
+--@return wakeup""
 function csignals:wait(signal,timeout)
     local timer_id
     if timeout and timeout > 0 then
@@ -57,15 +57,15 @@ function csignals:_wakeup(signal,timeout,...)
     end
 end
 
---- 
---@param[type=string] signal 
---@param ... 
+--- ""
+--@param[type=string] signal ""
+--@param ... ""
 function csignals:wakeup(signal,...)
     self:_wakeup(signal,...)
 end
 
---- ,wait
---@param[type=string] signal 
+--- "",""wait""
+--@param[type=string] signal ""
 function csignals:timeout_wakeup(signal)
     self:_wakeup(signal,self.timeout)
 end
