@@ -1,0 +1,3706 @@
+syntax = "proto3";
+import "common.proto";
+
+
+//""
+message PosType {
+    float x = 1; // x""
+    float y = 2; // y""
+    float z = 3; // z""
+}
+
+// ""
+message ResType {
+    int32 resCfgId = 1;             // ""id
+    int64 count = 2;                // ""
+    bool bind = 3;
+}
+
+// ""
+message ResExchangeType {
+    int32 resCfgId = 1;           // ""id
+    int32 mit = 2;                // mit""
+    int32 carboxyl = 3;           // carboxyl""
+}
+
+// ""
+message PlayerResType {
+    int64 playerId = 1;
+    int64 starCoin = 2;
+    int64 ice = 3;
+    int64 gas = 4;
+    int64 carboxyl = 5;
+    int64 titanium = 6;
+}
+
+//""
+message PlayerBriefType {
+    int64 playerId = 1;
+    int32 playerScore = 2;
+    int32 playerLevel = 3;
+    string playerName = 4;
+    string playerHead = 5;
+    int32 unionId = 6;
+    string unionName = 7;
+    int32 donateTime = 8;
+}
+
+//""s
+message BuildBriefType {
+    int64 id = 1;                   // ""id
+    int32 cfgId = 2;                // ""id
+    int32 level = 3;                // ""
+    int32 quality = 4;              // ""
+    int32 life = 5;                 // ""
+    int32 curLife = 6;              // ""
+    PosType pos = 7;                // ""
+}
+
+// ""
+message BuildType {
+    int64 id = 1;                   // ""id
+    int32 cfgId = 2;                // ""id
+    int32 level = 3;                // ""
+    int32 quality = 4;              // ""
+    int32 life = 5;                 // ""
+    int32 curLife = 6;              // ""
+    PosType pos = 7;                // ""
+    int32 lessTick = 8;             // ""
+    int32 curStarCoin = 9;          // "",""0""
+    int32 curIce = 10;              // "",""0""
+    int32 curCarboxyl = 11;         // "",""0""
+    int32 curTitanium = 12;         // "",""0""
+    int32 curGas = 13;              // "",""0""
+    int32 soliderCfgId = 14;        // ""id
+    int32 soliderCount = 15;        // ""
+    int32 trainCfgId = 16;          // ""id
+    int32 trainCount = 17;          // ""
+    int32 lessTrainTick = 18;       // ""
+    int64 chain = 19;               // NFT"">0""NFT
+
+    int32 ref = 21;                   //"","" 0-"" 1-"" 2-"" 3-"" 4-"" 5-""("")
+    int64 refBy = 22;                 //""ref>0"","";""item"", ""ref=4""refBy==0, "", ""ref=4""refBy>0, refBy""cfgId
+    PlayerBriefType owner = 23;   
+    int32 mintCount = 24;          // ""
+    bool isNormal = 25;            // ""
+}
+
+// ""
+message BattleBuildType {
+    int64 id = 1;
+    int32 cfgId = 2;
+    int32 quality = 3;
+    int32 level = 4;
+    int32 x = 5;
+    int32 z = 6;
+}
+
+// ""
+message SoliderLevelType {
+    int32 cfgId = 1;                // ""id
+    int32 level = 2;                // ""
+    int32 lessTick = 3;             // ""
+}
+
+// ""
+message SoliderBattleType {
+    int64 id = 1;
+    int32 count = 2;        //""
+    int32 dieCount = 3;     //""
+    int32 cfgId = 4;        //""
+    int32 level = 5;        //""
+    int32 index = 6;        //""
+    
+}
+
+//""
+message HeroBattleType {
+    int64 id = 1;
+    int32 cfgId = 2;
+    int32 level = 3;
+    int32 quality = 4;
+    int32 index = 5;
+}
+
+//""
+message WarShipBattleType {
+    int64 id = 1;
+    int32 cfgId = 2;
+    int32 level = 3;
+    int32 quality = 4;
+}
+
+// ""
+message ForgeData {
+    int32 level = 1;
+}
+
+// ""
+message HeroType {
+    int64 id = 1;                   // ""id
+    int32 cfgId = 2;                // ""id
+    int32 level = 3;                // ""
+    int32 quality = 4;              // ""
+    int32 life = 5;                 // ""
+    int32 curLife = 6;              // ""
+    int32 skill1 = 7;
+    int32 skill2 = 8;
+    int32 skill3 = 9;
+    int32 skillLevel1 = 10;          // ""1""
+    int32 skillLevel2 = 11;          // ""2""
+    int32 skillLevel3 = 12;          // ""3""
+    int32 lessTick = 13;            // ""
+    int32 skillUp = 14;             // ""
+    int32 skillUpLessTick = 15;     // ""
+    int32 selectSkill = 16;         // ""(1,2,3)
+    int64 chain = 17;               // NFT"">0""NFT
+
+    int32 ref = 19;                   //"","" 0-"" 1-"" 2-"" 3-"" 4-"" 5-""("")
+    int64 refBy = 20;                 //""ref>0"","";""item"", ""ref=4""refBy==0, "", ""ref=4""refBy>0, refBy""cfgId
+    PlayerBriefType owner = 21;       
+    int32 mintCount = 22;          // ""
+    int64 battleCd = 23;           // ""cd""
+}
+
+// ""
+message WarShipType {
+    int64 id = 1;                   // ""id
+    int32 cfgId = 2;                // ""id
+    int32 level = 3;                // ""
+    int32 quality = 4;              // ""
+    int32 life = 5;                 // ""
+    int32 curLife = 6;              // ""
+    int32 skill1 = 7;
+    int32 skill2 = 8;
+    int32 skill3 = 9;
+    int32 skill4 = 10;
+    int32 skill5 = 11;
+    int32 skillLevel1 = 12;          // ""1""
+    int32 skillLevel2 = 13;          // ""2""
+    int32 skillLevel3 = 14;          // ""3""
+    int32 skillLevel4 = 15;         // ""4""
+    int32 skillLevel5 = 16;         // ""5""
+    int32 lessTick = 17;            // ""
+    int32 skillUp = 18;             // ""
+    int32 skillUpLessTick = 19;     // ""
+    int64 chain = 20;               // NFT"">0""NFT
+
+    int32 ref = 22;                   //"","" 0-"" 1-"" 2-"" 3-"" 4-"" 5-""("")
+    int64 refBy = 23;                 //""ref>0"","";""item"", ""ref=4""refBy==0, "", ""ref=4""refBy>0, refBy""cfgId
+    PlayerBriefType owner = 24;    
+
+    int32 launchLessTick = 25;      // ""
+    int32 mintCount = 26;          // ""
+}
+
+// ""
+message ArmyType {
+    WarShipType  warShip = 1;
+    HeroType hero = 2;
+    repeated SoliderBattleType soliders = 3;
+}
+
+// NFT""
+message NFTType {
+    int64 id = 1;                   // ""id
+    int32 cfgId = 2;                // ""id
+    int32 level = 3;                // ""
+    int32 quality = 4;              // ""
+    int32 life = 5;                 // ""
+    int32 curLife = 6;              // ""
+    int32 skill1 = 7;
+    int32 skill2 = 8;
+    int32 skill3 = 9;
+    int32 skill4 = 10;
+    int32 skill5 = 11;
+    int32 skillLevel1 = 12;          // ""1""
+    int32 skillLevel2 = 13;          // ""2""
+    int32 skillLevel3 = 14;          // ""3""
+    int32 skillLevel4 = 15;         // ""4""
+    int32 skillLevel5 = 16;         // ""5""
+    int64 chain = 17;               // NFT"">0""NFT
+
+    int32 ref = 18;                 //"","" 0-"" 1-"" 2-"" 3-"" 4-"" 5-""("")
+    int64 refBy = 19;               //""ref>0"","";""item"", ""ref=4""refBy==0, "", ""ref=4""refBy>0, refBy""cfgId
+    int32 donateTime = 20;
+    int64 ownerPid = 21;             // ""id
+    string ownerName = 22;          // ""
+    int32 itemType = 23;            //9"",10"",11""
+    int32 mintCount = 24;          // ""
+    int64 battleCd = 25;           // ""cd""
+}
+
+// ""
+message Item {
+    int64 id = 1;                    //""id
+    int32 cfgId = 2;                 //""ID
+    int32 num = 3;                   //""
+}
+
+// ""
+message ComposeItem {
+    Item  item = 1;                     //""
+    int32 lessTick = 2;                 //""
+    int32 hour = 3;                     //""
+}
+
+// ""
+message TipItem {
+    int32 cfgId = 1;                 //""ID
+    int32 num = 2;                   //""
+}
+
+// ""
+message FreightType {
+    int64 id = 1;   //""id
+    int32 num = 2;  //""
+}
+
+// ""
+message FightReportType {
+    int64 fightId = 1;                           //""ID
+    int32 resPlanetIndex = 2;                    //""
+    int64 fightTime = 3;                         //""
+    int32 fightType = 4;                         //"" 1"",2""
+    int64 playerId = 5;                          //""ID
+    int32 result = 6;                            //"" 0-"" 1-"" 2-""
+    bool isAttacker = 7;                         //""
+    int64 enemyPlayerId = 8;                     //""ID
+    string enemyPlayerName = 9;                  //""
+    int32 enemyPlayerLevel = 10;                 //""
+    int32 enemyPlayerScore = 11;                 //""
+    string enemyPlayerHead = 12;                 //""
+    int32 signinPosId = 13;                      //""
+    string bVersion = 14;                        //""
+    repeated HeroBattleType heros = 15;          //""
+    repeated SoliderBattleType soliders = 16;    //""
+    repeated ResType currencies = 17;            //""
+    int32 atkBadge = 18;                         //""/""
+    int32 defenBadge = 19;                       //""/""
+}
+
+//""1""
+message BattleTeamType {
+    int64 heroId = 1;                 //""id
+    int32 soliderCfgId = 2;           //""cfgId
+    int32 soliderCount = 3;           //""
+    int64 buildId = 4;                //""id
+}
+
+//""1""，""
+message ArmyTeamType {
+    int64 heroId = 1;                 //""id
+    int32 soliderCfgId = 2;            //""cfgId
+    int32 soliderCount = 3;           //""
+}
+
+//""
+message BattleArmy {
+    int64 warShipId = 1;                //""NFT""id
+    repeated BattleTeamType teams = 2;  //"", 1""1"", ""5""
+}
+
+//""
+message StarmapBattleReport {
+    int64 battleId = 1;
+    int32 battleTime = 2;
+    int64 playerId = 3;
+    string playerName = 4;
+    int32 unionId = 5;
+    string unionName = 6;
+    int32 result = 7;
+    int32 leftHp = 8;
+    int32 unionFlag = 9;
+    string presidentName = 10;
+    WarShipBattleType warShip = 11;              //""
+    repeated HeroBattleType heros = 12;          //""
+    repeated SoliderBattleType soliders = 13;    //""
+    int32 gridCfgId = 14;                         //""ID
+    int64 campaignId = 15;                        //""ID
+    int32 loseHp = 16;
+}
+
+//""
+message StarmapBattleDefender {
+    int64 playerId = 1;
+    string playerName = 2;
+    int32 unionId = 3;
+    string unionName = 4;
+    int32 unionFlag = 5;
+    string presidentName = 6;
+}
+
+//""
+message StarmapCampaignReport {
+    int64 campaignId = 1;                        //""ID
+    int32 gridCfgId = 2;                         //""ID
+    int32 startTime = 3;                         //""
+    StarmapBattleDefender defender = 4;          //""
+    int32 maxLoseHp = 5;                         //""
+    int32 maxHp = 6;                             //""
+    bool isEnd = 7;                              //""
+}
+
+//""
+message StarmapCampaignPlyStatistics {
+    int64 playerId = 1;                     //""ID
+    string playerName = 2;
+    int32 atkCnt = 3;                        //""
+    int32 atkHp = 4;                        //""
+}
+
+//""
+message GridShareTime {
+    int32 gridCfgId = 1;                         //""ID
+    int32 leftTime = 2;                          //""
+}
+
+//""
+message GridExclusiveType {
+    int32 cfgId = 1;                      //""ID
+    int32 chain = 2;                      //""id
+}
+
+//""
+message ToGridBuildInfo {
+    int64 id = 1;                   // ""id
+    PosType pos = 2;                //""
+}
+
+// ""
+message RankType {
+    int32 index = 1;
+    string name = 2;
+    int64 value = 3;
+    int32 upDown = 4;
+    int32 award = 5;
+    string headIcon = 6;
+}
+
+// ""
+message StarmapRankType {
+    int32 index = 1;
+    int32 unionId = 2;                         //""id
+    string unionName = 3;                      //""
+    int32 unionFlag = 4;                       //""
+    int32 memberCount = 5;                     //""
+    int32 score = 6;                           //""
+    int32 ratio = 7;                           //""
+    int64 hyt = 8;                             //""
+    int64 mit = 9;                             //""mit
+}
+
+// ""
+message PledgeType {
+    int32 cfgId = 1;
+    int32 mit = 2;
+}
+
+// ""
+message BattleEndInfo {
+    int32 cfgId = 1;
+    bool firstPass = 2;
+    int32 star = 3;
+    bool isNewStar = 4;
+}
+
+// ""
+message BattleOperate {
+    int32 GameFrame = 1;
+    int32 Order = 2;
+    float X = 3;
+    float Y = 4;
+    float Z = 5;
+}
+
+// PVP""
+message PvpEnemyType {
+    int64 playerId = 1;
+    int32 playerScore = 2;
+    int32 playerLevel = 3;
+    string playerName = 4;
+    string playerHead = 5;
+    string unionName = 6;
+    bool canAttack = 7;
+}
+
+// ""
+message BattleInfo {
+    repeated BuildInfo builds = 1;
+    repeated TrapInfo traps = 2;
+    repeated SoliderInfo soliders = 3;
+    repeated HeroInfo heros = 4;
+    MainShipInfo mainShip = 5;
+    repeated SkillInfo skills = 6;
+    repeated SkillInfo heroSkills = 7;
+    repeated BuffInfo buffs = 8;
+    PvpEnemyType enemy = 9;
+    repeated int32 attackCards = 10;
+    repeated int32 defenseCards = 11;
+    repeated SkillEffectInfo skillEffects = 12;
+    repeated SoliderInfo summonSoliders = 13;
+    BattleMapInfo battleMapInfo = 14;
+}
+
+//""
+message BattleMapInfo {
+    int32 sceneId = 1;
+    repeated SigninPos signinPos1 = 2;
+    repeated SigninScale signinScale1 = 3;
+    repeated SigninPos signinPos2 = 4;
+    repeated SigninScale signinScale2 = 5;
+    repeated SigninPos signinPos3 = 6;
+    repeated SigninScale signinScale3 = 7;
+    repeated SigninPos signinPos4 = 8;
+    repeated SigninScale signinScale4 = 9;
+    int32 length = 10;
+    int32 width = 11;
+    repeated SigninPos skillAreaPos = 12;
+    repeated SigninScale skillAreaScale = 13;
+}
+
+// ""
+message SigninPos {
+    int32 x = 1; // x""
+    int32 y = 2; // y""
+    int32 z = 3; // z""
+}
+
+// ""
+message SigninScale {
+    int32 length = 1; // ""
+    int32 width = 2; // ""
+    int32 hight = 3; // ""
+}
+
+
+// ""
+message BuildInfo {
+    int32 cfgId = 1;
+    string model = 2;
+    string explosionEffect = 3;
+    string wreckageModel = 4;
+    float x = 5;
+    float z = 6;
+    int32 maxHp = 7;
+    int32 atk = 8;
+    int32 atkSpeed = 9;
+    int32 atkRange = 10;
+    int32 radius = 11;
+    int32 atkAir = 12;
+    int32 atkSkillId = 13;
+    int32 isMain = 14;
+    int32 type = 15;
+    int32 subType = 16;
+    string center = 17;
+    int32 isConstruct = 18;
+    int32 direction = 19;
+    int32 atkReadyTime = 20;
+    int64 id = 21;
+    int32 atkSkillShowRadius = 22;
+    int32 inAtkRange = 23;
+    int32 hp = 24;
+    string floor = 25;
+    int32 deadSkillId = 26;
+    int32 bornSkillId = 27;
+    int32 race = 28;
+    int32 atkSkill1Id = 29;
+    int32 firstAtk = 30;
+    int32 intArgs1 = 31;
+    int32 intArgs2 = 32;
+    int32 intArgs3 = 33;
+    int32 level = 34;
+}
+
+// ""
+message TrapInfo {
+    int32 cfgId = 1;
+    string model = 2;
+    string explosionEffect = 3;
+    float x = 4;
+    float z = 5;
+    int32 buffCfgId = 6;
+    int32 alertRange = 7;
+    int32 atkRange = 8;
+    int32 radius = 9;
+    int32 delayExplosionTime = 10;
+    int64 id = 11;
+}
+
+// ""（""）""
+message SoliderInfo {
+    int32 cfgId = 1;
+    string model = 2;
+    string icon = 3;
+    int32 amount = 4;
+    int32 moveSpeed = 5;
+    int32 maxHp = 6;
+    int32 atk = 7;
+    int32 atkSpeed = 8;
+    int32 atkRange = 9;
+    int32 radius = 10;
+    int32 atkSkillId = 13;
+    int32 type = 15;
+    string center = 16;
+    string deadEffect = 17;
+    int32 isDeminer = 18;
+    int32 atkReadyTime = 19;
+    int64 id = 20;
+    int32 atkSkillShowRadius = 21;
+    int32 isMedical = 22;
+    int32 inAtkRange = 23;
+    int32 deadSkillId = 24;
+    int32 bornSkillId = 25;
+    int32 race = 26;
+    int32 index = 27;
+    int32 level = 28;
+}
+
+// ""
+message HeroInfo {
+    int32 cfgId = 1;
+    string model = 2;
+    string icon = 3;
+    int32 moveSpeed = 4;
+    int32 maxHp = 5;
+    int32 atk = 6;
+    int32 atkSpeed = 7;
+    int32 atkRange = 8;
+    int32 radius = 9;
+    int32 atkSkillId = 11;
+    string center = 12;
+    string deadEffect = 13;
+    int32 isDeminer = 14;
+    int32 atkReadyTime = 15;
+    int64 id = 16;
+    int32 level = 17;
+    int32 atkSkillShowRadius = 18;
+    int32 isMedical = 19;
+    int32 inAtkRange = 20;
+    int32 deadSkillId = 21;
+    int32 bornSkillId = 22;
+    int32 aroundSkillId = 23;
+    int32 race = 24;
+    int32 index = 25;
+    int64 skill1 = 26;
+    int64 skill2 = 27;
+    int64 skill3 = 28;
+    int32 quality = 29;
+}
+
+// ""
+message MainShipInfo {
+    int32 cfgId = 1;
+    string model = 2;
+    int32 skillPoint = 3;
+    int64 id = 4;
+    int64 skill1 = 5;
+    int64 skill2 = 6;
+    int64 skill3 = 7;
+    int64 skill4 = 8;
+    int32 maxHp = 9;
+    int32 atk = 10;
+}
+
+// ""
+message SkillInfo {
+    int64 id = 1;
+    int32 cfgId = 2;
+    string icon = 3;
+    int32 type = 4;
+    int32 skillType = 5;
+    int32 targetGroup = 6;
+    int32 skillEffectCfgId = 7;
+    int32 originCost = 8;
+    int32 addCost = 9;
+    int32 skillCd = 10;
+    int32 useArea = 11;
+    int32 intArg1 = 12;
+    int32 intArg2 = 13;
+    int32 intArg3 = 14;
+    int32 intArg4 = 15;
+    int32 intArg5 = 16;
+    int32 intArg6 = 17;
+    int32 intArg7 = 18;
+    int32 intArg8 = 19;
+    int32 intArg9 = 20;
+    int32 intArg10 = 21;
+    int32 intArg11 = 22;
+    int32 intArg12 = 23;
+    int32 intArg13 = 24;
+    int32 intArg14 = 25;
+    int32 intArg15 = 26;
+    string stringArg1 = 27;
+    string stringArg2 = 28;
+    string stringArg3 = 29;
+    string stringArg4 = 30;
+    string stringArg5 = 31;
+    string stringArg6 = 32;
+    string stringArg7 = 33;
+    string stringArg8 = 34;
+    string stringArg9 = 35;
+    string stringArg10 = 36;
+    int32 level = 37;
+    int32 quality = 38;
+    int32 releaseDistance = 39;
+    int32 skillAnimTime = 40;
+    int32 skillDelayTime = 41;
+}
+
+// buff""
+message BuffInfo {
+    int32 cfgId = 1;
+    string name = 2;
+    string model = 3;
+    int32 lifeTime = 4;
+    int32 frequency = 5;
+    int32 skillEffectCfgId = 6;
+}
+
+// skillEffect""
+message SkillEffectInfo {
+    int32 cfgId = 1;
+    int32 type = 2;
+    string args = 3;
+    int32 rangeType = 4;
+    int32 range = 5;
+    int32 skillEffectCfgId = 6;
+    int32 buffCfgId = 7;
+    int32 entityCfgId = 8;
+    int32 skillCfgId = 9;
+}
+
+// ""
+message SystemNotice {
+    string imageUrl = 1;
+    string url = 2;
+    string text = 3;
+    int32 createTime = 4;
+}
+
+// ""
+message Achievement {
+    int32 index = 1;  //""
+    int32 value = 2;  //""
+    bool drawed = 3;  //""
+}
+
+//""
+message Galaxy {
+    int32 cfgId = 1; //""id
+    int32 status = 2; //""0-"", 1-""
+}
+
+//""
+message UnionMemberType {
+    int64 playerId = 1;       //""id
+    string playerName = 2;    //""
+    string playerHead = 3;    //""
+    int32 playerScore = 4;    //""("")
+    int32 matchScore = 5;     //""
+    int32 unionJob = 6;       //"" 0-"" 1-"" 2-"" 3-""
+    int32 fightPower = 7;     //""
+    int64 starCoin = 8;       //""
+    int64 ice = 9;            //""
+    int64 titanium = 10;      //""
+    int64 gas = 11;           //""
+    int64 carboxyl = 12;      //""
+    bool online = 13;         //""
+    int64 contriDegree = 14;  //""
+    int32 grids = 15;         //""
+    int32 offline = 16;       //""
+    int32 chain = 17;         //""
+    int64 combatVal = 18;  //""
+}
+
+//""
+message UnionSoliderType {
+    int32 cfgId = 1;
+    int32 count = 2;
+    int32 genCount = 3;
+    int32 genTick = 4;
+    int32 level = 5;
+    float hpAddRatio = 6;
+    float atkAddRatio = 7;
+    float atkSpeedAddRatio = 8;
+}
+
+//""
+message UnionBuildType {
+    int32 cfgId = 1;
+    int32 count = 2;
+    int32 genCount = 3;
+    int32 genTick = 4;
+    int32 level = 5;
+    float hpAddRatio = 6;
+    float atkAddRatio = 7;
+    float atkSpeedAddRatio = 8;
+}
+
+//""
+message UnionTechType {
+    int32 cfgId = 1;
+    int32 level = 2;
+    int32 levelUpTick = 3;
+}
+
+//""
+message UnionBaseType {
+    int32 unionId = 1;                         //""id
+    string unionName = 2;                      //""
+    int32 unionFlag = 3;                       //""
+    string unionNotice = 4;                    //""
+    int32 unionSharing = 5;                    //"" 100%""
+    int32 enterType = 6;                       //""
+    int32 memberCount = 8;                     //""
+    int32 memberMax = 9;                       //""
+    int32 fightPower = 10;                     //""
+    int64 starCoin = 11;                       //""
+    int64 ice = 12;                            //""
+    int64 titanium = 13;                       //""
+    int64 gas = 14;                            //""
+    int64 carboxyl = 15;                       //""
+    int32 nftDefenseNum = 16;                  //NFT""
+    int32 nftHeroNum = 17;                     //NFT""
+    int32 nftShipNum = 18;                     //NFT""
+    string presidentName = 19;                 //""
+    int32 beginGridId = 20;                    //""ID
+    int64 starCoinLimit = 21;                  //""
+    int64 iceLimit = 22;                       //""
+    int64 gasLimit = 23;                       //""
+    int64 titaniumLimit = 24;                  //""
+    int64 carboxylLimit = 25;                  //""
+    int32 unionLevel = 26;                     //""
+    int32 exp = 27;                            //""
+    int32 score = 28;                          //""
+    int32 rank = 29;                           //""
+    int64 gridOutput = 30;                     //""
+    int64 plots = 31;                          //""
+    int32 unionChain = 32;                     //""
+}
+
+//""
+message UnionJoinType {
+    int32 unionId = 1;                         //""id
+    string unionName = 2;                      //""
+    int32 unionFlag = 3;                       //""
+    int32 unionSharing = 5;                    //"" 100%""
+    int32 enterType = 6;                       //""
+    int32 memberCount = 8;                     //""
+    int32 memberMax = 9;                       //""
+    int32 fightPower = 10;                     //""
+    int32 unionChain = 11;                     //""
+    int32 score = 12;                          //""
+}
+
+//""
+message UnionBriefType {
+    int32 unionId = 1;                         //""id
+    string unionName = 2;                      //""
+    int32 unionFlag = 3;                       //""
+    string unionNotice = 4;                    //""
+    int32 unionSharing = 5;                    //"" 100%""
+    int32 enterType = 6;                       //""
+    int32 enterScore = 7;                      //""
+    int32 memberCount = 8;                     //""
+    int32 memberMax = 9;                       //""
+    int32 fightPower = 10;                     //""
+    int64 starCoin = 11;                       //""
+    int64 ice = 12;                            //""
+    int64 titanium = 13;                       //""
+    int64 gas = 14;                            //""
+    int64 carboxyl = 15;                       //""
+    int32 nftDefenseNum = 16;                  //NFT""
+    int32 nftHeroNum = 17;                     //NFT""
+    int32 normalDefenseNum = 18;               //""
+    int32 normalHeroNum = 19;                  //""
+    int64 editArmyPid = 20;                    //""
+    int32 editArmyTick = 21;                   //""
+    int64 starCoinLimitAdd = 22;               //""
+    int64 gasLimitAdd = 23;                    //""
+    int64 iceLimitAdd = 24;                    //""
+    int64 titaniumLimitAdd = 25;               //""
+    int64 carboxylLimitAdd = 26;               //""
+    int32 unionChain = 27;                     //""
+} 
+
+//""
+message UnionApplyType {
+    int64 playerId = 1;     //""id
+    int32 playerScore = 2;  //""("")
+    int32 fightPower = 3;   //""
+    string playerName = 4;  //""
+    string playerHead = 5;  //""
+    string unionName = 6;   //""
+    int32 unionId = 7;      //""
+    int32 applyTime = 8;    //""
+    int32 answer = 9;      //""(0-"", 1-"" 2-"")
+    int32 baseLevel = 10;   //""
+    int32 chain = 11;       //""
+}
+
+//""
+message UnionInviteType {
+    UnionBaseType union = 1;               //""
+    UnionMemberType invitePlayer = 2;      //""
+    int32 answer = 3;                      //"" 0-"", 1-"" 2-""
+}
+
+//""
+message Mint {
+    int64 nftId1 = 1;                      //nft1
+    int64 nftId2 = 2;                      //nft2
+    int32 status = 3;                      //0."" 1.""
+    int32 startTime = 4;                   //""("")
+    int32 mintCfgId = 5;                   //""id
+    int32 nftType = 6;                     //1"",2"",3""
+}
+
+//""
+message ChatMsg {
+    int32 msgId = 1;         //""ID
+    int32 time = 2;          //""("")
+    int32 channelType = 3;   //"" 1-"" 2-""
+    int64 playerId = 4;      //""(0"")
+    string playerName = 5;   //""
+    string headIcon = 6;     //""
+    string text = 7;         //""
+    int32 unionId = 8;       //""id
+    int32 unionJob = 9;      //""
+    string unionName = 10;   //""
+    int32 vip = 11;          //vip
+    int32 hasHyperLink = 12; //"" 0-"" 1-""
+    int32 chain = 13;        //""
+}
+
+// ""
+message CompleteTask {
+    int32 cfgId = 1;
+    int32 stage = 2; //1""，2""
+}
+
+// ""
+message TaskTargetCond {
+    int32 condId = 1; //""id
+    int32 curVal = 2; //""
+}
+
+// ""
+message TaskTarget {
+    int32 tarId = 1;
+    repeated TaskTargetCond targetConds = 2;          //""
+}
+
+// ""
+message DailyTask {
+    int32 index = 1;  //""
+    int32 value = 2;  //""
+    bool drawed = 3;  //""
+}
+
+// ""
+message SoliderForgeLevelType {
+    int32 cfgId = 1;
+    int32 level = 2;
+}
+
+// ""
+message FoundationInfoType {
+    string playerName = 1;
+    int64 playerId = 2;
+    int32 playerLevel = 3;
+    int32 playerScore = 4;
+    string playerHead = 5;
+    bool isOnline = 6;
+    repeated BuildType builds = 7;
+    repeated ResType resInfo = 8;
+    int32 sceneId = 9;
+}
+
+// ""
+message MailBrief {
+    int64 id = 1;                            //""id
+    int32 sendPid = 2;                       //""id
+    string sendName = 3;                     //""
+    string title = 4;                        //""
+    int32 sendTime = 5;                      //""
+    bool read = 6;                           //""
+    bool canGet = 7;                         //""
+}
+
+// ""
+message MailAttachType {
+    int32 cfgId = 1;
+    int32 quality = 2;
+    int64 count = 3;
+    int32 type = 4;
+}
+
+//""
+message MailType {
+    int64 id = 1;                           //""id
+    int32 duration = 2;                      //""("")
+    int32 sendPid = 3;                       //""id
+    string sendName = 4;                     //""
+    string title = 5;                        //""
+    string content = 6;                      //""
+    int32 sendTime = 7;                      //""
+    repeated MailAttachType attachment = 8;  //""
+    bool read = 9;                           //""
+    bool get = 10;                            //""
+}
+
+// ""
+message GuideInfo {
+    int32 guideId = 1;
+    int32 skipOthers = 2;                 //0-"" 1-""
+}
+
+//""
+message GridBrief {
+    message Owner {
+        string unionName = 1;
+        string playerName = 2;
+        int32 unionFlag = 3;
+        string presidentName = 4;
+    }
+    int32 cfgId = 1;
+    int32 status = 2;    //0."" 1."" 2.""
+    int32 belong = 3;    //"":0-"" 1-"" 2-"" 3-""
+    int32 isFavorite = 4; //"" 0-"" 1-"" 2-"" 3-""
+    Owner owner = 5;      //""
+    int32 unionNum = 6;   //""
+    int32 battleEndTick = 7;   //""
+    int32 protectTime = 8;     
+}
+
+//""
+message GridDetail {
+    int32 cfgId = 1;
+    int32 status = 2;    //0."" 1."" 2.""
+    int32 belong = 3;    //"":0-"" 1-"" 2-"" 3-""
+    int32 carboxyl = 4;
+    int32 protectTime = 5;
+    repeated BuildType builds = 6;
+    PlayerBriefType owner = 7;
+    PlayerBriefType attacker = 8;
+    int32 sceneId = 9;
+    int32 battleEndTick = 10;   //""
+}
+
+// ""
+message StarmapMini {
+    int32 cfgId = 1;
+    int32 belong = 2;    //"":0-"" 1-"" 2-"" 3-""
+    int32 status = 3;    //0."" 1."" 2.""
+    string unionName = 4;
+    string tag = 5;  //""
+}
+
+// pvp""
+message PvpStageInfo {
+    int32 stage = 1;
+    repeated int32 score = 2;
+    float ratio = 3;
+}
+
+// pvp""mit""
+message PvpRankMitRewardInfo {
+    int32 min_rank = 1;
+    int32 max_rank = 2;
+    int32 mit = 3;
+}
+
+// pvp""
+message PvpMatchRewardRecord {
+    int32 rankTime = 1;
+    int32 season = 2;
+    int32 score = 3;
+    int32 rank = 4;
+    repeated ResType reward = 5;
+}
+
+// pvp""tips
+message PvpMatchRewardTips {
+    repeated ResType reward = 5;
+}
+
+//""
+message MyMatchReward {
+    int32 type = 1;   //""1-"" 2-"" 3-""
+    int32 weekno = 2; //""396
+    int32 rank = 3;   //""
+    int32 carboxyl = 4; //""
+    int32 mit = 5; //""MIT
+}
+
+//""(""2"")
+message GridRewardPart {
+    int32 rtype = 1; // ""1-""-""-"" 2-""-""-"" 3-""-""-"" 4-""-""-""
+    int32 percent = 2; //"" 70 ==> 70.00%
+    int32 total = 3; //""
+    int32 myVal = 4; //""
+    int32 carboxyl = 5; //""
+}
+
+//""
+message GridRewardRecord {
+    int32 cfgId = 1;                     //"" ""
+    repeated GridRewardPart rewards = 2; //""
+    int32 timestamp = 3;                 //""
+}
+
+//""
+message GridReward {
+    int32 unionMit = 1;
+    int32 unionCarboxyl = 2;
+    int32 otherUnionMit = 3;
+    int32 otherUnionCarboxyl = 4;
+    int32 personalUnionMit = 5;
+    int32 personalUnionCarboxyl = 6;
+}
+
+// ""
+message ChainType {
+    int32 chainId = 1;       //""id
+    string chainName = 2;    //""
+    int32 open = 3;          //"",1"",0""
+}
+
+// ""
+message LaunchBridgeRecord {
+    int32 time = 1;
+    int64 mit = 2;
+    int64 hyt = 3;
+    int64 fee = 4;
+    repeated int64 tokenIds = 5;
+    repeated int64 itemIds = 6;
+    repeated int32 itemCfgIds = 7;
+}
+
+// ""
+message LaunchBridgeFee {
+    int64 min = 1;
+    int64 max = 2;
+    int64 fee = 3;
+}
+
+// ""
+message EditorCreateBuilds {
+    int32 cfgId = 1;            // ""id
+    PosType pos = 2;            // ""
+    int32 level = 3;            // ""
+}
+
+// pve""
+message PVEPass {
+    int32 cfgId = 1;
+    int32 star = 2;
+}
+
+// pve""
+message PVEPassStar {
+    int32 cfgId = 1;
+    repeated int32 stars = 2;
+}
+
+//""
+message AutoPushType {
+    int32 autoPushCfgId = 1;
+    int32 status = 2;
+}
+
+//""
+message ReserveArmy {
+    int64 buildId = 1;             // ""id
+    int32 trainCfgId = 2;          // ""id
+    int32 trainCount = 3;          // ""
+    int32 trainTick = 4;           // ""
+    int32 count = 5;               // ""
+}
+
+//""
+message ArmyFormation {
+    int64 armyId = 1;             // ""id
+    string armyName = 2;          // ""
+    repeated ArmyTeamType teams = 3;           // ""
+}
+
+// ""
+message DrawCardInfo {
+    int32 cfgId = 1;                 //""id
+    int32 count = 2;                 //""
+    int32 drawTime = 3;              //""
+}
+
+// ""
+message DrawCardRec {
+    int32 cfgId = 1;                 //""id
+    int32 itemCfgId = 2;             //""id
+    int32 drawTime = 3;              //""
+}
+
+// ""
+message ResExchangeTar {
+    string starCoin = 1;        //""
+    string ice = 2;             //""
+    string titanium = 3;        //""
+    string gas = 4;             //""
+    string tesseract = 5;       //""
+}
+
+// ""
+message ResExchangeRate {
+    int32 from = 1;           // ""
+    ResExchangeTar to = 2;    // ""
+}
+
+//""
+message FavoriteGrids {
+    int32 cfgId = 1; //""ID
+    string tag = 2;  //""
+}
+
+// ""id""
+message Heros {
+    int64 id = 1;           // ""id
+}
+
+ // ""
+message Funds {
+    int32 cfgId = 1;    //""ID
+	int32 status = 2;   // ""  0"" 1"" 
+}
+ // ""
+message Pros {
+    string productId = 1;    //""CfgId
+}
+ // ""
+message Daily {
+	int32 status = 1;   // "" 0""  1 "" 2""
+    int32 isFirst = 2;    //""0  ， 1""
+}
+ // ""
+message Gift {
+    string productId = 1;    //Id
+    int32 num = 2;          //""
+}
+ // ""
+message Goods {
+    int32 cfgId = 1;   // ""cfgId
+    int32 num = 2;   // ""
+    int32 index = 3;  //
+}
+
+ // ""
+message LoginReward {
+    int32 day = 1;   // cfgId
+    int32 baseStatus = 2;   // -1"" 0"", 1""
+    int32 advStatus = 3;  //   -2"",-1"",  0"" 1""
+}
+
+// ""
+message StarPackInfo {
+    int32 cfgId = 1;
+    int32 day = 2;
+}
+
+// ""
+message SkillCard {
+    int64 id = 1;   // ""id
+    int32 num = 2;  // ""
+}
+
+// ""
+message ItemData {
+    int64 id = 1;   // ""id
+    int32 num = 2;  // ""
+}
+
+//////////////////////////////////////////////""///////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////""/////////////////////////////////////////////////////////////////////////
+// [1200,1300)
+// C2S
+
+// ""
+// @id=1200
+message C2S_Player_LookBriefs {
+   repeated int64 pids = 2;              // ""ID""
+   int32 session = 3;           // ""ID,""S2C_Player_LookBriefs"",""id""
+}
+
+// ""
+// @id=1204
+message C2S_Player_BuildCreate {
+   int32 cfgId = 1;            // ""id
+   PosType pos = 2;            // ""
+   int32 opType = 3;           // 0"",1"",2"",3""
+   bool guideNow = 4;
+}
+
+// ""
+// @id=1205
+message C2S_Player_BuildMove {
+   int64 id = 1;               // ""id
+   PosType pos = 2;            // ""
+}
+
+// ""
+// @id=1206
+message C2S_Player_BuildLevelUp {
+   int64 id = 1;               // ""id
+   int32 speedUp = 2;          // 0"",1"",2"",3""
+}
+
+// ""
+// @id=1207
+message C2S_Player_BuildExchange {
+   int64 fromId = 1;               // ""id
+   int64 toId = 2;                 // ""id
+}
+
+// ""
+// @id=1208
+message C2S_Player_BuildGetRes {
+   int64 id = 1;               // ""id
+}
+
+// ""
+// @id=1209
+message C2S_Player_ExpandItemBag {
+
+}
+
+// ""
+// @id=1210
+message C2S_Player_ResolveItem {
+    int64 id = 1;              //""
+    int32 count = 2;           //""
+}
+
+// ""
+// @id=1211
+message C2S_Player_UseItem {
+    int64 id = 1;              //""
+    int32 count = 2;           //""
+}
+
+
+// ""
+// @id=1214
+message C2S_Player_SoliderLevelUp {
+   int32 cfgId = 1;            // ""id
+   int32 speedUp = 2;          // 0"",1"",2"",3""
+}
+
+// ""
+// @id=1215
+message C2S_Player_MineLevelUp {
+   int32 cfgId = 1;            // ""id
+   int32 speedUp = 2;          // 0"",1"",2"",3""
+}
+
+// ""
+// @id=1216
+message C2S_Player_RemoveMess {
+   int64 id = 1;               // ""id
+}
+
+// ""
+// @id=1217
+message C2S_Player_SoliderTrain {
+   int64 id = 1;                         // ""id
+   int32 soliderCfgId = 2;               // ""id
+   int32 soliderCount = 3;               // ""
+   bool guideNow = 4;
+}
+
+// ""
+// @id=1218
+message C2S_Player_SoliderReplace {
+   int64 id = 1;                         // ""id
+   int32 soliderCfgId = 2;               // ""id
+   int32 soliderCount = 3;               // ""
+}
+
+// ""
+// @id=1219
+message  C2S_Player_ItemCompose {
+    int64 id = 1;                       //""
+    int64 hour = 2;                     //""
+}
+
+// ""
+// @id=1220
+message  C2S_Player_ItemComposeCancel {
+    int64 id = 1;                      //""
+}
+
+// ""
+// @id=1221
+message C2S_Player_ItemComposeSpeed {
+    int64 id = 1;
+}
+
+// ""
+// @id=1222
+message C2S_Player_HeroLevelUp {
+   int64 id = 1;                         // ""id
+   int32 speedUp = 2;                    // 0"",1"",2"",3""
+}
+
+// ""
+// @id=1223
+message C2S_Player_WarShipLevelUp {
+   int64 id = 1;                         // ""id
+   int32 speedUp = 2;                    // 0"",1"",2"",3""
+}
+
+// ""
+// @id=1224
+message C2S_Player_WarShipPutonSkill {
+   int64 id = 1;                         // ""id
+   int32 skillIndex = 2;                 // ""
+   int32 itemCfgId = 3;                  // ""id
+}
+
+// ""
+// @id=1225
+message C2S_Player_WarShipResetSkill {
+   int64 id = 1;                         // ""id
+   int32 skillIndex = 2;                 // ""
+}
+
+// ""
+// @id=1226
+message C2S_Player_WarShipForgetSkill {
+   int64 id = 1;                         // ""id
+   int32 skillIndex = 2;                 // ""
+}
+
+
+// ""
+// @id=1227
+message C2S_Player_HeroSkillUp {
+   int64 id = 1;                         // ""id
+   int32 skillUp = 2;                    // ""(1,2,3)
+   int32 speedUp = 3;                    // 0"",1"",2"",3""
+}
+
+// ""
+// @id=1228
+message C2S_Player_WarShipSkillUp {
+   int64 id = 1;                         // ""id
+   int32 skillUp = 2;                    // ""(1,2,3,4,5)
+   int32 speedUp = 3;                    // 0"",1"",2"",3""
+}
+
+
+// ""
+// @id=1229
+message C2S_Player_GetMyStarmapRewardList {
+    
+}
+
+// ""
+// @id=1230
+message C2S_Player_DrawMyStarmapReward {
+    
+}
+
+// ""
+// @id=1231
+message C2S_Player_ReserveArmyTrain {
+   int64 id = 1;                         // ""id
+   int32 soliderCfgId = 2;               // ""id
+   int32 soliderCount = 3;               // ""
+}
+
+// ""
+// @id=1232
+message C2S_Player_GetReserveArmy {
+    int64 id = 1;                         // ""id
+}
+
+// ""
+// @id=1233
+message C2S_Player_SpeedupReserveArmy {
+    int64 id = 1;                         // ""id
+    int32 soliderCfgId = 2;               // ""id
+    int32 soliderCount = 3;               // ""
+}
+
+
+//""
+// @id=1235
+message C2S_Player_SearchPlayer {
+    int64 playerId = 1;
+}
+
+// ""
+// @id=1236
+message C2S_Player_HeroSelectSkill {
+   int64 id = 1;                         // ""id
+   int32 selectSkill = 2;                // ""(1,2,3)
+}
+
+// ""
+// @id=1237
+message C2S_Player_SpeedUp_BuildLevelUp {
+   int64 id = 1;               // ""id
+}
+
+// ""
+// @id=1238
+message C2S_Player_HeroPutonSkill {
+   int64 id = 1;                         // ""id
+   int32 skillIndex = 2;                 // ""
+   int32 itemCfgId = 3;                  // ""id
+}
+
+// ""
+// @id=1239
+message C2S_Player_HeroResetSkill {
+   int64 id = 1;                         // ""id
+   int32 skillIndex = 2;                 // ""
+}
+
+// ""
+// @id=1240
+message C2S_Player_HeroForgetSkill {
+   int64 id = 1;                         // ""id
+   int32 skillIndex = 2;                 // ""
+}
+
+// ""
+// @id=1241
+message C2S_Player_SpeedUp_WarShipSkillUp {
+   int64 id = 1;               // ""id
+}
+
+// ""
+// @id=1242
+message C2S_Player_SpeedUp_SoliderLevelUp {
+   int32 cfgId = 1;            // ""id
+}
+
+// ""
+// @id=1243
+message C2S_Player_SpeedUp_MineLevelUp {
+   int32 cfgId = 1;            // ""id
+}
+
+// ""
+// @id=1244
+message C2S_Player_SpeedUp_SoliderTrain {
+   int64 id = 1;                         // ""id
+}
+
+// ""
+// @id=1246
+message C2S_Player_StartBattle {
+    int32 battleType = 1;                           // "",1"",2"",3PVE,4"",100""("")
+    int32 enemyId = 2;                             // ""id, battleType""1""id, battleType""2""id
+    int32 armyType = 3;                            // "": 1-"" 2-""
+    int64 armyId = 4;
+    repeated BattleArmy armys = 5;                 // ""
+    int32 signinPosId = 6;                         // "" ("")
+    string bVersion = 7;                           // "" ("")
+    repeated BattleOperate operates = 8;           // "" ("")
+}
+
+// ""
+// @id=1247
+message C2S_Player_EndBattle {
+    int64 battleId = 1;                            // ""id
+    int32 ret = 2;                                 // "", 0"", 1"" 2""
+    int32 signinPosId = 3;                         // ""
+    string bVersion = 4;                           // ""
+    repeated BattleOperate operates = 5;           // ""
+    repeated SoliderBattleType soliders = 6;       // ""
+    int32 endStep = 7;                             // ""
+    int32 destoryDefendCount = 8;                  // ""
+    int32 destoryDevelopCount = 9;                 // ""
+    int32 destoryEconomyCount = 10;                // ""
+}
+
+// ""
+// @id=1248
+message C2S_Player_GetDrawCardRecord {
+}
+
+// ""
+// @id=1249
+message C2S_Player_Draw_Card {
+    int32 cfgId = 1;                //""id
+    int32 drawCount = 2;            //""
+}
+
+// ""
+// @id=1250
+message C2S_Player_Exchange_Rate {
+    int32 tipType = 1;                //""
+}
+
+// ""
+// @id=1251
+message C2S_Player_Exchange_Res {
+    int32 from = 1;           // ""
+    int32 fromCount = 2;      // ""
+    int32 to = 3;             //""
+}
+
+// ""
+// @id=1252
+message C2S_Player_FirstGetGridRank {
+}
+
+// ""
+// @id=1257
+message C2S_Player_Rank_Info {
+    int32 rankType = 1;            //"",1"",2mit"",3"",4pvp"",5""
+    int32 version = 2;             //""
+}
+
+// ""
+// @id=1258
+message C2S_Player_UploadBattle {
+    int64 battleId = 1;                            // ""id
+    int32 signinPosId = 2;                         // ""
+    string bVersion = 3;                           // ""
+    repeated BattleOperate operates = 4;           // ""
+}
+
+// ""
+// @id=1260
+message C2S_Player_QueryStarmapBattleReports {
+    int64 campaignId = 1;                        //""ID
+    int32 pageNo = 2;            // ""
+    int32 pageSize = 3;          // ""
+}
+
+// ""
+// @id=1261
+message C2S_Player_QueryStarmapCampaignReports {
+    int32 pageNo = 1;            // ""
+    int32 pageSize = 2;          // ""
+}
+
+// ""
+// @id=1262
+message C2S_Player_QueryFightReports {
+    int32 battleType = 1;
+}
+
+// ""
+// @id=1263
+message C2S_Player_LookBattlePlayBack {
+    int64 battleId = 1;
+    string bVersion = 2;                           // ""
+}
+
+// ""
+// @id=1264
+message C2S_Player_ChangePvpPlayers {
+
+}
+
+// ""
+// @id=1265
+message C2S_Player_PvpScoutFoundation {
+    int64 playerId = 1;
+}
+
+// ""Pvp""
+// @id=1266
+message C2S_Player_QueryPvpPlayers {
+
+}
+
+// ""pvp""
+// @id=1267
+message C2S_Player_AddPvpBattleNum {
+    
+}
+
+// ""
+// @id=1268
+message C2S_Player_DrawAchievement {
+    int32 index = 1;
+}
+
+// ""
+// @id=1269
+message C2S_Player_FinishNewPlayerGuide {
+    int32 step = 1;
+}
+
+////////////////////""
+
+// ""
+// @id=1271
+message C2S_Player_GetMyGirdList {
+    
+}
+
+// ""
+// @id=1272
+message C2S_Player_GetMyFavoriteGridList {
+    
+}
+
+// ""
+// @id=1273
+message C2S_Player_DelMyFavoriteGrid {
+    int32 cfgId = 1; //""
+}
+
+
+// ""
+// @id=1274
+message C2S_Player_GiveUpMyGrid {
+    int32 cfgId = 1; //""
+}
+
+// ""
+// @id=1275
+message C2S_Player_GiftWithMyGrid {
+    int32 cfgId = 1;
+    int64 playerId = 2; //""ID 
+}
+
+// ""
+// @id=1276
+message C2S_Player_AddMyFavoriteGrid {
+    int32 cfgId = 1; //""ID
+    string tag = 2;  //""
+}
+
+////////////////////////""//////////
+// ""
+// @id=1278
+message C2S_Player_CreateUnion {
+    string unionName = 1;        //""
+    string unionNotice = 2;      //""
+    int32 unionFlag = 3;         //""
+    int32 enterType = 4;         //""0-"" 1-"" 2-""
+    int32 enterScore = 5;        //""
+    int32 unionSharing = 6;      //""0%
+}
+
+// ""
+// @id=1279
+message C2S_Player_JoinUnion {
+    int32 unionId = 1; // ""id
+}
+
+// ""
+// @id=1280
+message C2S_Player_SearchUnion {
+    string keyWord = 1; //""
+}
+
+//""
+// @id=1281
+message C2S_Player_QueryUnionBaseInfo {
+    int32 unionId = 1; // ""id
+}
+
+// ""
+// @id=1282
+message C2S_Player_EditUnionJob {
+    int32 unionId = 1;
+    int64 playerId = 2;
+    int32 unionJob = 3; // ""
+    int32 editType = 4; // 1-"" 2-"" 3-"" 4-""
+}
+
+// ""
+// @id=1283
+message C2S_Player_TickOutUnion {
+    int32 unionId = 1;
+    int64 playerId = 2;
+}
+
+// ""
+// @id=1284
+message C2S_Player_QuitUnion {
+    int32 unionId = 1;
+}
+
+//""dao""
+// @id=1286
+message C2S_Player_ModifyUnionInfo {
+    int32 unionId = 1;
+    int32 unionFlag = 2;         //""
+    int32 enterType = 3;         //""0-"" 1-"" 2-""
+    int32 enterScore = 4;        //""
+    int32 unionSharing = 5;      //"" 100%""
+    string unionNotice = 6;      //""
+    string unionName = 7;        //""
+}
+
+//""
+// @id=1287
+message C2S_Player_JoinUnionAnswer {
+    int32 answer = 1;       // 1-"" 2-""
+    int64 playerId = 2;     // ""Id
+    int32 unionId = 3;      // ""ID
+}
+
+//""
+// @id=1288
+message C2S_Player_QueryMyUnionInfo {
+
+}
+
+//""
+// @id=1289
+message C2S_Player_InviteJoinUnion {
+    int64 playerId = 1;      //""
+    int32 unionId = 2;       //""
+}
+
+//""
+// @id=1290
+message C2S_Player_AnswerUnionInvite {
+    int32 unionId = 1;        //""
+    int32 answer = 2;         //"" 1-"" 2-""
+}
+
+//""
+// @id=1291
+message C2S_Player_GetUnionInviteList {
+    
+}
+
+//""
+// @id=1292
+message C2S_Player_GetUnionApplyList {
+    int32 unionId = 1;
+}
+
+//""
+// @id=1293
+message C2S_Player_UnionClearAllApply {
+    
+}
+
+//""
+// @id=1294
+message C2S_Player_UnionDonate {
+    int32 unionId = 1;
+    int64 starCoin = 2;                       //""
+    int64 ice = 3;                            //""
+    int64 titanium = 4;                       //""
+    int64 gas = 5;                            //""
+    int64 carboxyl = 6;                       //""
+}
+
+//""
+// @id=1295
+message C2S_Player_UnionTrainSolider {
+    int32 unionId = 1;
+    int32 cfgId = 2;                        //""ID
+    int32 count = 3;                        //""
+}
+
+//""
+// @id=1296
+message C2S_Player_UnionTechLevelUp {
+    int32 unionId = 1;
+    int32 cfgId = 2;
+}
+
+
+// ""
+// @id=1297
+message C2S_Player_SendChatMsg {
+    int32 channelType = 1;      //"" 1-"" 2-""
+    string text = 2;            //""
+    int32 hasHyperLink = 3;     //"" 0-"" 1-""
+}
+
+// ""
+// @id=1298
+message C2S_Player_QueryChatMsgs {
+    int32 channelType = 1;      //"" 1-"" 2-""
+    int32 cMsgId = 2;           //""id
+}
+
+// ""
+// @id=1299
+message C2S_Player_OneKeyTrainSoldiers {
+    repeated int64 ids = 1;
+}
+
+// ""
+// @id=1300
+message C2S_Player_OneKeySpeedTrainSoldiers {
+    repeated int64 ids = 1;
+}
+
+// ""
+// @id=1301
+message C2S_Player_DrawTask {
+    int64 index = 1;
+}
+
+// ""
+// @id=1302
+message C2S_Player_OneKeySpeedAndFullTrainSoldiers {
+    repeated int64 ids = 1;
+}
+
+// ""
+// @id=1303
+message C2S_Player_QueryPlayerInfo {
+
+}
+
+// ""
+// @id=1304
+message C2S_Player_ModifyPlayerName {
+    string name = 1;
+}
+
+// ""
+// @id=1305
+message C2S_Player_ModifyPlayerInfo {
+    bool canInvite = 1;        //""dao""
+    bool canVisit = 2;          //""
+    string text = 3;            //""
+    string headIcon = 4;        //""
+    int32 race = 5;             //
+}
+
+//""
+// @id=1306
+message C2S_Player_ChatVisitFoundation {
+    int64 playerId = 1;
+}
+
+// ""
+// @id=1307
+message C2S_Player_SoliderQualityUpgrade {
+    int32 cfgId = 1;            // ""id
+    int32 speedUp = 2;          // 0"",1"",2"",3""
+ }
+
+// ""
+// @id=1308
+message C2S_Player_SoliderQualityUpgradeSpeed {
+    int32 cfgId = 1;            // ""id
+ }
+
+// ""
+// @id=1309
+message C2S_Player_SoliderForge {
+    int32 cfgId = 1;    //
+    int32 addRatio = 2; //"" 30%""30
+}
+
+//""
+// @id=1310
+message C2S_Player_UnionVisitFoundation {
+    int64 playerId = 1;
+}
+
+//""
+// @id=1311
+message C2S_Player_UnionGenBuild {
+    int32 unionId = 1;
+    int32 cfgId = 2;                        //""ID
+    int32 count = 3;                        //""
+}
+
+//""
+// @id=1312
+message C2S_Player_StartEditUnionArmys {
+    int32 unionId = 1;
+}
+
+//""
+// @id=1313
+message C2S_Player_GetStarmapScore {
+}
+
+// ""
+// @id=1314
+message C2S_Player_AddUnionFavoriteGrid {
+    int32 cfgId = 1; //""ID
+    string tag = 2;  //""
+}
+
+// ""
+// @id=1315
+message C2S_Player_DelUnionFavoriteGrid {
+    int32 cfgId = 1; //""ID
+}
+
+// ""
+// @id=1316
+message C2S_Player_GetMail {
+    int64 id = 1;       // ""id
+}
+
+// ""
+// @id=1317
+message C2S_Player_DelMail {
+    int64 id = 1;       // ""id
+}
+
+// ""
+// @id=1318
+message C2S_Player_OneKeyDelMails {
+}
+
+// ""
+// @id=1319
+message C2S_Player_OneKeyReadMails {
+}
+
+// ""
+// @id=1320
+message C2S_Player_ReceiveMailAttach {
+    int64 id = 1;       // ""id
+}
+
+
+// ""
+// @id=1325
+message C2S_Player_finishGuides {
+    repeated GuideInfo guides = 1;
+}
+
+// ""
+// @id=1326
+message C2S_Player_enterStarmap {
+    repeated int32 gridCfgIds = 1;                         //""ID
+}
+
+// ""
+// @id=1327
+message C2S_Player_leaveStarmap {
+
+}
+
+// ""
+// @id=1328
+message C2S_Player_scoutStarmapGrid {
+    int32 cfgId = 1;
+}
+
+// ""
+// @id=1329
+message C2S_Player_putBuildOnGrid {
+    int32 cfgId = 1;
+    int64 buildId = 2;
+    PosType pos = 3;
+}
+
+// ""
+// @id=1330
+message C2S_Player_moveBuildOnGrid {
+    int32 cfgId = 1;
+    int64 buildId = 2;
+    PosType pos = 3;
+}
+
+// ""
+// @id=1331
+message C2S_Player_delBuildOnGrid {
+    int32 cfgId = 1;
+    int64 buildId = 2;
+}
+
+// ""
+// @id=1332
+message C2S_Player_storeBuildOnGrid {
+    int32 cfgId = 1;
+    int64 buildId = 2;
+}
+
+// ""
+// @id=1333
+message C2S_Player_subscribeGrids {
+    repeated int32 cfgIds = 1;
+}
+
+// ""
+// @id=1334
+message C2S_Player_unsubscribeGrids {
+    repeated int32 cfgIds = 1;
+}
+
+// ""
+// @id=1335
+message C2S_Player_StarmapMatchRank {
+    int32 matchType = 1; //1-"" 2-"" 3-""
+    int32 unionChain = 2; //""
+}
+
+// ""
+// @id=1336
+message C2S_Player_StarmapMatchUnionGrids {
+}
+
+// ""
+// @id=1337
+message C2S_Player_ChainBridgeInfo {
+
+}
+
+// ""
+// @id=1338
+message C2S_Player_LaunchToBridge {
+    int32 chainId = 1;                      //""Id
+    int64 warShipId = 2;                    //""Id
+    int64 mit = 3;                          //mit""
+    int64 hyt = 4;                          //hyt""
+    repeated int64 tokenIds = 5;            //tokenIds
+    repeated int32 tokenKinds = 6;          //token"",1"",2"",3""
+}
+
+// ""
+// @id=1339
+message C2S_Player_SetUseWarShip {
+    int64 id = 1;                   // ""id
+}
+
+// ""
+// @id=1340
+message C2S_Player_SetUseHero {
+    int64 id = 1;                   // ""id
+}
+
+// ""
+// @id=1341
+message C2S_Player_BuyBattleNum {
+    int32 battleNum = 1;
+}
+
+// ""Pvp""
+// @id=1342
+message C2S_Player_queryGmRobotPlayers {
+
+}
+
+// ""
+// @id=1343
+message C2S_Player_QueryWallet {
+
+}
+
+// ""
+// @id=1344
+message C2S_Player_GetLaunchBridgeRecrods {
+
+}
+
+// ""
+// @id=1345
+message C2S_Player_ReapGuideRes {
+    int64 id = 1;                   // ""id
+    int32 resId = 2;                // ""id
+}
+
+//""NFT
+// @id=1346
+message C2S_Player_UnionDonateNft {
+    int32 unionId = 1;
+    repeated int64 idList = 2;
+}
+
+//""NFT
+// @id=1347
+message C2S_Player_UnionTakeBackNft {
+    int32 unionId = 1;
+    repeated int64 idList = 2;
+}
+
+//""("")
+// @id=1348
+message C2S_Player_ResetGOLevel {
+    int32 goType = 1;        // "",1"", 2""，3""，4""，5nft""
+    int64 id = 2;            // ""id
+    int32 cfgId = 3;        // ""id
+    int32 op = 4;          // ""，1""，2""，3""，4""
+    int32 level = 5;        // ""
+    int32 skillIdx = 6;     // ""
+    int32 skillLv = 7;     // ""
+    int32 quality = 8;     // ""
+}
+
+// gm""("")
+// @id=1349
+message C2S_Player_GMBuildCreate {
+    int32 cfgId = 1;            // ""id
+    PosType pos = 2;            // ""
+    int32 opType = 3;           // 0"",1"",2"",3""
+    bool guideNow = 4;
+}
+
+// gm""("")
+// @id=1350
+message C2S_Player_GMBuildBatchCreate {
+    repeated EditorCreateBuilds builds = 1;
+}
+
+// ""
+// @id=1351
+message C2S_Player_QueryUnionStarmapCampaignReports {
+    int32 pageNo = 1;            // ""
+    int32 pageSize = 2;          // ""
+}
+
+// ""
+// @id=1352
+message C2S_Player_StarmapMatchPersonalGrids {
+}
+
+// ""
+// @id=1353
+message C2S_Player_StarmapTransferBeginGrid {
+    int32 cfgId = 1; //""ID
+}
+
+// ""
+// @id=1354
+message C2S_Player_QueryJoinableUnionList {
+    
+}
+
+// ""
+// @id=1355
+message C2S_Player_ReceiveMintItem {
+    int32 index = 1;
+}
+
+// ""
+// @id=1356
+message C2S_Player_QueryUnionRes {
+    
+}
+
+// ""
+// @id=1357
+message C2S_Player_QueryUnionStarmapBattleReports {
+    int64 campaignId = 1;                        //""ID
+    int32 pageNo = 2;            // ""
+    int32 pageSize = 3;          // ""
+}
+
+// ""
+// @id=1358
+message C2S_Player_QueryUnionSoliders {
+    
+}
+
+// ""
+// @id=1359
+message C2S_Player_QueryStarmapCampaignPlyStatistics {
+    int64 campaignId = 1;                        //""ID
+}
+
+// ""
+// @id=1360
+message C2S_Player_QueryUnionBuilds {
+    
+}
+
+// ""
+// @id=1361
+message C2S_Player_QueryStarmapHyJackpot {
+    
+}
+
+// ""nft
+// @id=1362
+message C2S_Player_QueryUnionNfts {
+    
+}
+
+// ""
+// @id=1363
+message C2S_Player_GetMints {
+    
+}
+
+// ""
+// @id=1364
+message C2S_Player_QueryUnionMembers {
+    
+}
+
+// ""
+// @id=1365
+message C2S_Player_AddMint {
+    int64 nftId1 = 1;                      //nft1
+    int64 nftId2 = 2;                      //nft2
+    int32 nftType = 3;                     //1"",2"",3""
+}
+
+// ""
+// @id=1366
+message C2S_Player_QueryUnionTechs {
+    
+}
+
+// ""pve""
+// @id=1367
+message C2S_Player_PVEScoutFoundation {
+    int32 cfgId = 1;
+}
+
+// pve""
+// @id=1368
+message C2S_Player_PVERecvDailyRewards {
+    int32 cfgId = 1;
+}
+
+//""("")
+// @id=1369
+message C2S_Player_GOChangeSkill {
+    int32 goType = 1;        // "",1"", 2""，3""，4""，5nft""
+    int64 id = 2;            // ""id
+    int32 skillIdx = 3;     // ""
+    int32 skillId = 4;     // ""
+}
+
+//""("")
+// @id=1370
+message C2S_Player_OPLandShipSoldier {
+    int64 id = 1;            // ""id
+    int32 soliderCfgId = 2;     // ""id
+    int32 soliderCount = 3;     // ""
+}
+
+// ""
+// @id=1371
+message C2S_Player_ModifyPlayerLanguage {
+    string language = 1;
+}
+
+//""("")
+// @id=1372
+message C2S_Player_OPMoveBuild {
+    int64 id = 1;               // ""id
+    PosType pos = 2;            // ""
+}
+
+// ""
+// @id=1375
+message C2S_Player_putBuildListOnGrid {
+    int32 cfgId = 1;                        //""id
+    repeated ToGridBuildInfo buildList = 2; //""
+    int32 from = 3;                         //""1"",2""
+}
+
+// ""
+// @id=1376
+message C2S_Player_HeroRepair {
+   int64 id = 1;                         // ""id
+}
+
+// ""
+// @id=1378
+message C2S_Player_WarShipRepair {
+   int64 id = 1;                         // ""id
+}
+
+// ""nft
+// @id=1380
+message C2S_Player_BuildRepair {
+   int64 id = 1;                         // ""id
+}
+
+// ""
+// @id=1381
+message C2S_Player_PutUnionBuildOnGrid {
+    int32 cfgId = 1;
+    int64 buildId = 2;
+    PosType pos = 3;
+}
+
+// ""
+// @id=1382
+message C2S_Player_ArmyFormationAdd {
+    int64 armyId = 1;                       //""
+    string armyName = 2;
+    repeated ArmyTeamType teams = 3;  //"", 1""1"", ""5""
+}
+
+// ""
+// @id=1383
+message C2S_Player_ArmyFormationQuery {
+    
+}
+
+// ""
+// @id=1384
+message C2S_Player_ArmyFormationDelete {
+    int64 armyId = 1;                       //""
+}
+
+// ""
+// @id=1385
+message C2S_Player_ArmyFormationUpdate {
+    int64 armyId = 1;                       //""
+    int32 index = 2;                       // ""
+    string armyName = 3;
+    repeated ArmyTeamType teams = 4;  //"", 1""1"", ""5""
+}
+
+// ""
+// @id=1386
+message C2S_Player_EditedArmyFormation {
+    int64 armyId = 1;                       //""
+    int32 index = 2;                       // ""
+    string armyName = 3;
+    repeated ArmyTeamType teams = 4;  //"", 1""1"", ""5""
+}
+
+// ""|""
+// @id=1387
+message C2S_Player_automaticForces {
+    int32 autoStatus = 1;                     // ""|""  1|0
+}
+
+// ""
+// @id=1388
+message C2S_Player_UpdateSanctuaryHero {
+    int64 buildId = 1;          // ""Id
+    int32 index = 2;            // ""
+    int64 heroId = 3;           // ""id
+}
+
+// "" ""|"" ""
+// @id=1389
+message C2S_Player_IsUseGuidArmy {
+    int32 isUseGuidArmy = 1;                     // ""|""  1|0
+}
+
+// ""
+// @id=1390
+message C2S_Player_AddGuildReserveCount {
+    int32 guildReserveCount = 1;                  // ""
+}
+
+// ""
+// @id=1391
+message C2S_Player_StarmapMinimap {
+}
+
+// ""
+// @id=1392
+message C2S_Player_GetUnionFavoriteGridList {
+    
+}
+
+// ""
+// @id=1393
+message C2S_Player_GetCumulativeFunds {
+    int32 cfgId = 1;              // ""cfgId
+}
+
+// ""
+// @id=1394
+message C2S_Player_GetRechargeReward {
+    int32 giftCfgId = 1;      //""cfgId 1003 ""  1004""
+}
+
+// ""
+// @id=1398
+message  C2S_Player_PayChannelInfo {
+    string platform = 1;                      //""
+}
+
+// ""
+// @id=1399
+message  C2S_Player_BuyMoreBuilder {
+    int32 cfgId = 1;            // ""cfgId
+}
+
+// ""dao""
+// @id=1400
+message C2S_Player_DonateDaoItem {
+    int64 id = 1;                    //""id
+    int32 count = 2;                 // ""
+}
+
+// ""
+// @id=1401
+message C2S_Player_GetDailyReward {
+    int32 weekDay = 1;                 // ""
+}
+
+// ""
+// @id=1402
+message C2S_Player_BuyGoods {
+    int32 index = 1;                 // ""
+}
+
+// ""
+// @id=1403
+message C2S_Player_FreshShoppingMall {
+    
+}
+
+// ""
+// @id=1406
+message C2S_Player_UseGiftCode {
+    string code = 1;                      //""
+}
+
+// ""
+// @id=1407
+message C2S_Player_CleanAllArmy {
+
+}
+
+// ""autoPush""
+// @id=1410
+message C2S_Player_AutoPushStatus_Del {
+    int32 autoPushCfgId = 1;
+}
+
+// ""
+// @id=1408
+message C2S_Player_DismantleHero {
+    repeated int64 heroIds = 1;           // ""id
+}
+
+// ""
+// @id=1411
+message C2S_Player_GetLoginActReward {
+    int32 day = 1;                 // ""
+    bool isAdvReward = 2;         // ""  false""，true""
+}
+
+// ""
+// @id=1412
+message C2S_Player_OneKeyFillUpSoliders {
+    repeated int32 armyIds = 1;	        // ""id
+}
+
+// ""
+// @id=1413
+message C2S_Player_freshBuild {
+    int64 buildId = 1;	        // ""id
+}
+
+// ""
+// @id=1414
+message C2S_Player_UnlockLoginAdv { 
+    int32 day = 1;	       
+}
+
+// ""
+// @id=1415
+message C2S_Player_DismantleWarShip {
+    repeated int64 warShipIds = 1;           // ""id
+}
+
+// ""，""，""
+// @id=1416
+message C2S_Player_SellEntity {
+    repeated int64 idList = 1;           // id
+    int32 type = 2;                     // 1.""，2.""，3.""
+}
+
+// ""
+// @id=1417
+message C2S_Player_DismantleSkillCard {
+    repeated SkillCard skillCardData = 1;      // ""
+}
+
+// ""
+// @id=1418
+message C2S_Player_SellItem {
+    repeated ItemData itemData = 1;           // ""
+}
+
+//////////////////////////////////////////""S2C///////////////////////////////////////////////////////
+
+
+// S2C
+
+// ""
+// @id=11200
+message S2C_Player_LookBriefs {
+    repeated BriefType briefs = 1;       // ""
+    int32 session = 2;                  // ""id
+}
+
+// ""("")
+// @id=11201
+message S2C_Player_UpdateBrief {
+    BriefType brief = 1;                // ""
+}
+
+// ""
+// @id=11203
+message S2C_Player_BuildData {
+    repeated BuildType buildData = 1;                    //""
+}
+
+// ""
+// @id=11204
+message S2C_Player_BuildAdd {
+    BuildType build = 1;                    //""
+}
+
+// ""
+// @id=11205
+message S2C_Player_BuildMove {
+    int32 ret = 1;                          //0"",1""
+    BuildType build = 2;                    //""
+}
+
+// ""
+// @id=11206
+message S2C_Player_BuildLevelUp {
+   BuildType build = 1;                    //""
+}
+
+// ""
+// @id=11207
+message S2C_Player_BuildUpdate {
+   BuildType build = 1;                    //""
+}
+
+// ""
+// @id=11208
+message S2C_Player_BuildGetRes {
+    int64 id = 1;                   // ""id
+    int32 getStarCoin = 2;          // ""
+    int32 getIce = 3;               // ""
+    int32 getCarboxyl = 4;          // ""
+    int32 getTitanium = 5;          // ""
+    int32 getGas = 6;               // ""
+}
+
+// ""
+// @id=11209
+message S2C_Player_BuildDel {
+    int64 id = 1;
+}
+
+
+// ""
+// @id=11211
+message S2C_Player_ResData {
+    repeated ResType resData = 1;        //""
+}
+
+// ""
+// @id=11212
+message S2C_Player_ResChange {
+    int32 resCfgId = 1;               //""id
+    int64 count = 2;                  //""
+    int64 change = 3;                 // >0--"",<=0--""
+    bool bind = 4;
+}
+
+// ""
+// @id=11213
+message S2C_Player_ItemBag {
+    int32 maxSpace = 1;              //""
+    int32 expandSpace = 2;           //""
+    repeated Item items = 3;         //""
+}
+
+// ""
+// @id=11214
+message S2C_Player_SoliderLevelData {
+    repeated SoliderLevelType soliderLevelData = 1;                    //""
+}
+
+// ""
+// @id=11215
+message S2C_Player_SoliderLevelUpdate {
+   SoliderLevelType soliderLevel = 1;                             //""
+}
+
+// ""
+// @id=11216
+message S2C_Player_ExpandItemBag {
+    int32 expandSpace = 1;           //""
+}
+
+
+// ""
+// @id=11217
+message S2C_Player_ItemUpdate {
+    Item item = 1;
+}
+
+// ""
+// @id=11218
+message S2C_Player_ItemAdd {
+    Item item = 1;
+}
+
+// ""
+// @id=11219
+message S2C_Player_ItemDel {
+    int64 id = 1;
+}
+
+// ""
+// @id=11220
+message S2C_Player_RemoveMess {
+   int64 id = 1;                          //""id
+   int32 getMit = 2;                      //""Mit
+}
+
+// ""
+// @id=11221
+message S2C_Player_HeroData {
+    repeated HeroType heroData = 1;         //""
+    int64 useId = 2;     //""
+}
+
+// ""
+// @id=11222
+message S2C_Player_HeroAdd {
+    HeroType hero = 1;                     //""
+}
+
+// ""
+// @id=11223
+message S2C_Player_HeroDel {
+    int64 id = 1;                         //""id
+}
+
+// ""
+// @id=11224
+message S2C_Player_HeroUpdate {          //""
+    HeroType hero = 1;
+}
+
+
+
+// ""
+// @id=11225
+message  S2C_Player_ComposeItemData {
+    repeated ComposeItem items = 1;     //3""
+}
+
+//""
+// @id=11226
+message S2C_Player_ItemCompose {
+    int64 id = 1;                      //""id
+    Item  item = 2;                    //""
+}
+
+//""
+// @id=11227
+message S2C_Player_ItemComposeCancel {
+    Item item = 1;                     //""
+}
+
+// ""
+// @id=11228
+message S2C_Player_DrawCardData {
+    int32 op_type = 1;              //"" 1"",2"",3""
+    repeated DrawCardInfo cardData = 2;     //""
+    float discount = 3;                     //""
+}
+
+// ""
+// @id=11229
+message S2C_Player_DrawCardResult {
+    repeated int32 cfgIds = 1;     //""
+	repeated int32 newCfgIds = 2;     //""
+}
+
+// ""
+// @id=11230
+message S2C_Player_WarShipData {
+    repeated WarShipType warShipData = 1;     //""
+    int64 useId = 2;     //""
+}
+
+// ""
+// @id=11231
+message S2C_Player_WarShipAdd {
+    WarShipType warShip = 1;                  //""
+}
+
+// ""
+// @id=11232
+message S2C_Player_WarShipDel {
+    int64 id = 1;                            //""id
+}
+
+// ""
+// @id=11233
+message S2C_Player_WarShipUpdate {           //""
+    WarShipType warShip = 1;
+}
+
+// ""
+// @id=11234
+message  S2C_Player_ItemComposeAdd {
+    ComposeItem item = 1;
+}
+
+// ""
+// @id=11235
+message S2C_Player_DrawCardRecords {
+    repeated DrawCardRec records = 1;
+}
+
+// ""
+message BoatResType {
+    int64 boatId = 1;
+    repeated ResType currencies = 2;
+    repeated Item items = 3;
+}
+
+// ""
+// @id=11236
+message S2C_Player_StarmapTransferBeginGrid {
+    int32 cfgId = 1; //""ID
+}
+
+// ""
+// @id=11237
+message S2C_Player_StarmapMinimap {
+    repeated StarmapMini list = 1;
+}
+
+// ""
+// @id=11238
+message S2C_Player_UseItem {
+    int32 cfgId = 1;           //""id
+    int32 count = 2;           //""
+}
+
+// ""
+// @id=11240
+message S2C_Player_GetMyStarmapRewardList {
+    GridReward gridReward = 1;                      //""
+    repeated GridRewardRecord gridRewardRecords = 2;//""
+    repeated MyMatchReward matchRewards = 3;        //""
+}
+
+// ""
+// @id=11241
+message S2C_Player_DrawMyStarmapReward {
+    GridReward gridReward = 1;                      //""
+}
+
+
+// ""
+// @id=11242
+message S2C_Player_StarmapCampaignReports {
+    repeated StarmapCampaignReport reports = 1; //""
+}
+
+// ""
+// @id=11243
+message S2C_Player_StarmapCampaignReportUpdate {
+    int32 op_type = 1;         //"" 1"",2"",3""
+    StarmapCampaignReport report = 2; //""
+}
+
+// ""
+// @id=11244
+message S2C_Player_UnionStarmapCampaignReports {
+    repeated StarmapCampaignReport reports = 1; //""
+}
+
+
+// ""
+// @id=11245
+message S2C_Player_SearchPlayer {
+    int64 playerId = 1;
+    string playerName = 2;
+    int32 fightPower = 3;
+    int32 baseLevel = 4;
+    int32 chain = 5;
+}
+
+// ""
+// @id=11246
+message S2C_Player_UnionStarmapCampaignReportUpdate {
+    int32 op_type = 1;         //"" 1"",2"",3""
+    StarmapCampaignReport report = 2; //""
+}
+
+// ""
+// @id=11247
+message S2C_Player_StarmapBattleReports {
+    repeated StarmapBattleReport reports = 1; //""
+}
+
+// ""
+// @id=11248
+message S2C_Player_ReserveArmyUpdate {
+    int32 op_type = 1;              //"" 1"",2"",3""
+    repeated ReserveArmy armys = 2;                    //""
+}
+
+// ""
+// @id=11249
+message S2C_Player_StarmapBattleReportUpdate {
+    int32 op_type = 1;         //"" 1"",2"",3""
+    StarmapBattleReport report = 2; //""
+}
+
+
+//""
+// @id=11250
+message S2C_Player_FightReports {
+    repeated FightReportType reports = 1;
+    int32 battleType = 2;
+}
+
+//""
+// @id=11251
+message S2C_Player_FightReportAdd {
+    FightReportType report = 1;
+}
+
+// ""
+// @id=11252
+message S2C_Player_PickBoatResNotify {
+    repeated BoatResType boats = 1; //""
+}
+
+// ""
+// @id=11253
+message S2C_Player_StartBattle {
+    int64 battleId = 1;            // ""id
+    BattleInfo battleInfo = 2;         // ""
+    int32 battleType = 3;
+}
+
+
+// ""
+// @id=11254
+message S2C_Player_EndBattle {
+    int64 battleId = 1;                     // ""id
+    int32 starCoin = 2;                     // ""
+    int32 ice = 3;                          // ""
+    int32 carboxyl = 4;                     // ""
+    int32 titanium = 5;                     // ""
+    int32 gas = 6;                          // ""
+    int32 badge = 7;                        // ""
+    int32 result = 8;                       // ""
+    repeated SoliderBattleType soliders = 9;
+    int32 battleType = 10;                  // "",1"",2"",3PVE,4""
+    BattleEndInfo endInfo = 11;
+}
+
+// ""
+// @id=11255
+message S2C_Player_Exchange_Rate {
+    repeated ResExchangeRate rates = 1;      // ""
+    int32 tipType = 2;            //""
+}
+
+// ""
+// @id=11256
+message S2C_Player_EndBattle_NotCompletely {
+    int64 battleId = 1;                   // ""id
+    int32 code = 2;                       // ""
+}
+
+// ""
+// @id=11257
+message S2C_Player_UnionStarmapBattleReports {
+    repeated StarmapBattleReport reports = 1; //""
+}
+
+// ""
+// @id=11258
+message S2C_Player_UnionStarmapBattleReportUpdate {
+    int32 op_type = 1;         //"" 1"",2"",3""
+    StarmapBattleReport report = 2; //""
+}
+
+// ""
+// @id=11259
+message S2C_Player_StarmapCampaignPlyStatistics {
+    int64 campaignId = 1;                       //""ID
+    repeated StarmapCampaignPlyStatistics reports = 2; //""
+}
+
+// ""
+// @id=11260
+message S2C_Player_StarmapHyJackpot {
+    int64 jackpot  = 1;                       //""
+}
+
+//""
+// @id=11261
+message S2C_Player_FightReportUpdate {
+    FightReportType report = 1;
+}
+
+// ""
+// @id=11263
+message S2C_Player_FirstGetGridRank {
+    repeated RankType list = 1;
+    RankType selfRank = 2;
+}
+
+// ""
+// @id=11264
+message S2C_Player_Rank_Info {
+    int32 rankType = 1;            //"",1"",2mit"",3""
+    int32 version = 2;             //""
+    repeated RankType rank = 3;
+    RankType selfRank = 4;
+}
+
+// ""
+// @id=11265
+message S2C_Player_UploadBattle {
+    int64 battleId = 1;
+}
+
+// ""
+// @id=11267
+message S2C_Player_LookBattlePlayBack {
+    int64 battleId = 1;
+    BattleInfo battleInfo = 2;                     // ""
+    int32 signinPosId = 3;                         // ""
+    string bVersion = 4;                           // ""
+    repeated BattleOperate operates = 5;           // ""
+	int32 endStep = 6;
+}
+
+// pvp""
+// @id=11268
+message S2C_Player_PvpData {
+    int32 battleNum = 1;
+    int32 battleTotal = 2;
+    int32 banLessTime = 3; //ban""
+    int32 banTotalTime = 4; //ban""
+    repeated PvpEnemyType enemies = 5;
+    int32 battleNumPurchased = 6;
+    int64 jackpot = 7;
+    int64 myreward = 8;
+    int32 myScore = 9;
+    int32 refreshCount = 10;
+    int32 season = 11;                         //""
+    int32 lifeTime = 12;                       //""
+}
+
+// ""
+// @id=11269
+message S2C_Player_FoundationData {
+    string playerName = 1;
+    int64 playerId = 2;
+    int32 playerLevel = 3;
+    int32 playerScore = 4;
+    bool isOnline = 5;
+    repeated BuildType builds = 6;
+    repeated ResType resInfo = 7;
+}
+
+// ""
+// @id=11270
+message S2C_Player_SystemNotice {
+    repeated SystemNotice notices = 1;
+}
+
+
+// ""
+// @id=11271
+message S2C_Player_AchievementData {
+    repeated Achievement achievements = 1;
+}
+
+// ""
+// @id=11272
+message S2C_Player_AchievementUpdate {
+    Achievement achievement = 1; 
+}
+
+// ""
+// @id=11273
+message S2C_Player_AchievementReplace {
+    Achievement achievement = 1; 
+}
+
+// vip""
+// @id=11274
+message S2C_Player_VipData {
+    int32 mit = 1;
+    int32 vipLevel = 2;
+    int32 endTime = 3;      // ""vip""
+}
+
+//////////////////////////////""
+
+// ""
+// @id=11275
+message S2C_Player_GetMyGirdList {
+    repeated GridBrief grids = 1;
+}
+
+// ""
+// @id=11276
+message S2C_Player_GetMyFavoriteGridList {
+    repeated StarmapMini grids = 1;
+    repeated StarmapMini unionGrids = 2;
+}
+
+// ""
+// @id=11277
+message S2C_Player_MyFavoriteGridDel {
+    int32 cfgId = 1;
+}
+
+// ""
+// @id=11278
+message S2C_Player_MyGridDel {
+    int32 cfgId = 1;
+}
+
+// ""
+// @id=11279
+message S2C_Player_MyGridAdd {
+    GridBrief grid = 1;
+}
+
+// ""NFT""
+// @id=11280
+message S2C_Player_GetMyOwnNftTowers {
+    repeated Item items = 1;
+}
+
+// ""NFT""
+// @id=11281
+message S2C_Player_MyOwnNftTowerLevelUp {
+    Item item = 1;
+}
+
+
+/////////////////""/////////////
+
+// ""("")
+// @id=11282
+message S2C_Player_MyUnionInfo {
+    UnionBaseType union = 1;       //""
+}
+
+// ""
+// @id=11283
+message S2C_Player_JoinableUnionList {
+    repeated UnionJoinType unions = 1; //""
+}
+
+// ""
+// @id=11284
+message S2C_Player_UnionJob {
+    int32 unionJob = 1;       //""
+}
+
+//""
+// @id=11285
+message S2C_Player_UnionMemberDel {
+    int32 unionId = 1;
+    int64 playerId = 2;
+}
+
+//""
+// @id=11287
+message S2C_Player_UnionApplyList {
+    repeated UnionApplyType applys = 1;
+}
+
+//""
+// @id=11289
+message S2C_Player_SearchUnionResult {
+    repeated UnionBaseType unions = 1;
+}
+
+//""dao""
+// @id=11290
+message S2C_Player_DonateDaoItem {
+    int32 exp = 1;          //""
+    int32 unionLevel = 2;   //""
+    int64 contriDegree = 3; //""
+}
+
+//""
+// @id=11295
+message S2C_Player_UnionInviteList {
+    repeated UnionInviteType invites = 1;
+}
+
+// ""
+// @id=11296
+message S2C_Player_UnionGridDel {
+    int32 cfgId = 1;
+}
+
+//""
+// @id=11301
+message S2C_Player_ChatMsgs {
+    repeated ChatMsg msgs = 1;   //""
+    int32 sMsgId = 2;            //""id
+    int32 channelType = 3;       //"" 1-"" 2-""
+}
+
+//mit""
+// @id=11302
+message S2C_Player_MitNotEnoughTips {
+    
+}
+
+//""
+// @id=11303
+message S2C_Player_TaskUpdate {
+    int32 op_type = 1;              //"" 1"",2"",3""
+    int32 chapterId = 2;            //""id
+    repeated int32 completeChapters = 3;              //""
+    repeated CompleteTask completeTasks = 4;          //""
+    repeated TaskTarget taskTargets = 5;          //""
+    int32 activation = 6;            //""
+    repeated int32 activationBox = 7;          //""
+    int32 dailyResetTick = 8;          //""
+    int32 chapterState = 9; //1""
+    repeated TaskTarget dailyTargets = 10;          //""
+}
+
+//""
+// @id=11304
+message S2C_Player_TaskReplace {
+    DailyTask task = 1;         //""
+}
+
+//""
+// @id=11305
+message S2C_Player_TaskData {
+    repeated DailyTask tasks = 1;  //""
+    int32 lessTime = 2;            //""("")
+    int32 playerLevel = 3;         //""
+}
+
+//""
+// @id=11306
+message S2C_Player_PlayerInfo {
+    bool canInvite = 1;
+    bool canVisit = 2;
+    int64 pid = 3;
+    int32 badge = 4;
+    string name = 5;
+    string headIcon = 6;
+    string text = 7;
+    int32 unionId = 8;
+    string unionName = 9;
+    int32 unionFlag = 10;
+    int32 modifyNameNum = 11;
+    int32 vipLevel = 12;
+    int32 race = 13;
+    string inviteCode = 14;
+    int32 modifyNameLessTick = 15;
+    string language = 16;           //"": zh_CN="",en_US="",zh_TW=""
+}
+
+//""
+// @id=11307
+message S2C_Player_SoliderForgeLevelUpdate {
+    SoliderForgeLevelType forgeLevelInfo = 1;
+    bool result = 2;                            //""
+}
+
+//""
+// @id=11308
+message S2C_Player_SoliderForgeLevelData {
+    repeated SoliderForgeLevelType forgeLevelInfos = 1;
+}
+
+//""
+// @id=11309
+message S2C_Player_BuildQueueData {
+    int32 buildQueueCount = 1;
+}
+
+// pvp""
+// @id=11310
+message S2C_Player_PvpScoutFoundation {
+    FoundationInfoType info = 1;
+    bool canAttack = 2;
+}
+
+// ""
+// @id=11311
+message S2C_Player_ChatVisitFoundation {
+    FoundationInfoType info = 1;
+}
+
+// ""
+// @id=11312
+message S2C_Player_UnionVisitFoundation {
+    FoundationInfoType info = 1;
+}
+
+// ""
+// @id=11315
+message S2C_Player_UnionTechs {
+    repeated UnionTechType techs = 1;         //""
+}
+
+// ""
+// @id=11319
+message S2C_Player_ResAnimation {
+    int32 resCfgId = 1;               //""id
+    int64 count = 2;                  //""
+    int32 change = 3;                 // >0--"",<=0--""
+    int64 buildId = 4;                // ""id
+    int32 animationId = 5;            // ""id,1"",2"",3"",4""
+    int64 fromId = 6;                // ""
+}
+
+// ""
+// @id=11320
+message S2C_Player_MailUpdate {
+    int32 op_type = 1;              //"" 1"",2"",3""
+    repeated MailBrief mailList = 2; //""
+}
+
+// ""
+// @id=11321
+message S2C_Player_MailDetail {
+    MailType mail = 1; //""
+}
+
+
+// ""
+// @id=11324
+message S2C_Player_NextGuides {
+    repeated GuideInfo guides = 1;
+}
+
+// ""
+// @id=11325
+message S2C_Player_EnterStarmap {
+    repeated GridBrief grids = 1;
+    int32 beginGridId = 2;                    //""ID
+    int32 season = 3;                         //""
+    int32 lifeTime = 4;                       //""
+    int32 score = 5;                          //""
+    repeated int32 unionFavGrids = 6; //""
+    repeated int32 myFavGrids = 7; //""
+}
+
+// ""
+// @id=11326
+message S2C_Player_ScoutStarmapGrid {
+    GridDetail grid = 1;
+}
+
+// ""
+// @id=11327
+message S2C_Player_buildOnGridAdd {
+    int32 cfgId = 1;
+    BuildType build = 2;
+}
+
+// ""
+// @id=11328
+message S2C_Player_buildOnGridUpdate {
+    int32 cfgId = 1;
+    int64 buildId = 2;
+    PosType pos = 3;
+}
+
+// ""
+// @id=11329
+message S2C_Player_buildOnGridDel {
+    int32 cfgId = 1;
+    int64 buildId = 2;
+}
+
+// ""
+// @id=11330
+message S2C_Player_starmapGridUpdate {
+    GridDetail grid = 1;
+}
+
+// ""
+// @id=11331
+message S2C_Player_UseWarShipUpdate {
+    int64 useId = 1;
+}
+
+// ""
+// @id=11332
+message S2C_Player_UseHeroUpdate {
+    int64 useId = 1;
+}
+
+// pvp""
+// @id=11333
+message S2C_Player_PvpGmRobotPlayers {
+    repeated PvpEnemyType enemies = 1;
+    repeated int64 pveWinIds = 2;
+    int64 pveScore = 3;
+}
+
+// ""
+// @id=11334
+message S2C_Player_Wallet {
+    string ownerAddress = 1;
+    int32 chainId = 2;
+}
+
+// ""
+// @id=11336
+message S2C_Player_ChainBridgeInfo {
+    repeated ChainType chains = 1;
+}
+
+// pvp""
+// @id=11337
+message S2C_Player_sendPvpBackGroundCfg {
+    repeated PvpStageInfo stage = 1;    //pvp""
+    repeated PvpRankMitRewardInfo reward = 2;   //pvp""mit""
+}
+
+// ""
+// @id=11338
+message S2C_Player_GetLaunchBridgeRecrods {
+    repeated LaunchBridgeRecord records = 1;
+}
+
+// ""
+// @id=11339
+message S2C_Player_LaunchBridgeFees {
+    repeated LaunchBridgeFee fees = 1;
+    int32 lastTick = 2;
+    bool needShip = 3;
+}
+
+// pvp""
+// @id=11340
+message S2C_Player_pvpMatchRewardRecords {
+    repeated PvpMatchRewardRecord records = 1;
+}
+
+// pvp""
+// @id=11341
+message S2C_Player_pvpMatchRewardTips {
+    repeated PvpMatchRewardTips rewards = 1;
+}
+
+// ""
+// @id=11342
+message C2S_Player_DrawChapterTask {
+}
+
+// ""
+// @id=11343
+message C2S_Player_DrawTaskActivation {
+    int32 cfgId = 1;
+}
+
+// ""
+// @id=11345
+message S2C_Player_UnionStartEditArmy {
+    int64 editArmyPid = 1;                    //""
+    int32 editArmyTick = 2;                   //""
+}
+
+// ""
+// @id=11347
+message S2C_Player_StarmapBattleCancel {
+    int64 campaignId = 1;                        //""ID
+    int32 gridCfgId = 2;                         //""ID
+    int32 armyType = 3;                          // "": 1-"" 2-""
+}
+
+// ""
+// @id=11348
+message S2C_Player_SubscribeGrids {
+    repeated GridBrief grids = 1;
+    repeated int32 unionFavGrids = 2; //""
+    repeated int32 myFavGrids = 3; //""
+}
+
+// ""
+// @id=11349
+message S2C_Player_StarmapRankList {
+    int32 rankType = 1;            //"",1-"" 2-"" 3-""
+    int32 version = 2;             //""
+    repeated StarmapRankType rankList = 3;
+    StarmapRankType selfRank = 4;
+    int32 matchCfgId = 5;          //""id
+    int32 chainId = 6;             //""id
+    int32 shareRatio = 7;          //""
+}
+
+// ""
+// @id=11350
+message S2C_Player_StarmapMatchUnionGrids {
+    repeated GridShareTime list = 1;
+    int32 personScore = 2;
+}
+
+// ""
+// @id=11351
+message S2C_Player_StarmapMatchPersonalGrids {
+    repeated GridShareTime list = 1;
+}
+
+// ""
+// @id=11352
+message S2C_Player_MintsUpdate {
+    int32 op_type = 1;              //"" 1"",2"",3""
+    repeated Mint list = 2;
+}
+
+// ""
+// @id=11353
+message S2C_Player_StarmapScore {
+    int32 starScore = 1;            //""
+}
+
+// ""
+// @id=11354
+message S2C_Player_StarmapGridCount {
+    int32 pGridCount = 1;            //""
+    int32 uGridCount = 2;            //""
+    int32 pGridMax = 3;            //""
+    int32 uGridMax = 4;            //""
+}
+
+// ""
+// @id=11355
+message S2C_Player_MyFavoriteGridAdd {
+    int32 cfgId = 1; //""ID
+    string tag = 2;  //""
+}
+
+// ""
+// @id=11356
+message S2C_Player_UnionFavoriteGridAdd {
+    int32 cfgId = 1; //""ID
+    string tag = 2;  //""
+}
+
+// ""
+// @id=11357
+message S2C_Player_UnionFavoriteGridDel {
+    int32 cfgId = 1;
+}
+
+// ""
+// @id=11358
+message S2C_Player_GetUnionFavoriteGridList {
+    repeated StarmapMini grids = 1;
+}
+
+// ""
+// @id=11359
+message S2C_Player_UnionBaseInfo {
+    UnionBaseType union = 1;               //""
+}
+
+// ""
+// @id=11360
+message S2C_Player_UnionRes {
+    int64 starCoin = 1;     //""
+    int64 ice = 2;          //""
+    int64 titanium = 3;    //""
+    int64 gas = 4;         //""
+    int64 carboxyl = 5;    //""
+    int64 contriDegree = 6;    //""
+}
+
+// ""
+// @id=11362
+message S2C_Player_UnionSoliders {
+    repeated UnionSoliderType soliders = 1;
+}
+
+// ""
+// @id=11364
+message S2C_Player_UnionBuilds {
+    repeated UnionBuildType builds = 1;
+}
+
+// ""NFT""
+// @id=113366
+message S2C_Player_UnionNfts {
+    repeated NFTType items = 1;
+    int64 contriDegree = 2;    //""
+}
+
+//""
+// @id=113368
+message S2C_Player_UnionMembers {
+    repeated UnionMemberType members = 1;
+}
+
+//pve""
+// @id=113369
+message S2C_Player_PveInfo {
+    repeated PVEPass pass = 1;
+    repeated int32 dailyRewards = 2;
+    int32 dailyResetTick = 3;
+    repeated PVEPassStar dayPass = 4;
+}
+
+// pve""
+// @id=113370
+message S2C_Player_PveScoutFoundation {
+    FoundationInfoType info = 1;
+    bool canAttack = 2;
+}
+
+// autoPush""
+// @id=113372
+message S2C_Player_AutoPushStatus {
+    repeated AutoPushType data = 1;
+}
+
+// ""
+// @id=113373
+message S2C_Player_ArmysQuery {
+    int32 autoStatus = 1;         // ""  0|1
+    repeated ArmyFormation data = 2;
+}
+
+// "" ""
+// @id=113374
+message S2C_Player_UnionSelfBattleResult {
+    int32 battleTotal = 1;           // ""
+    int32 reserveTotal = 2;         // ""
+    int32 battleResult = 3;         // "" ""|"" 1|0（-1""）
+    int32 gridCfgId = 4;            // ""cfgId
+}
+
+// @id=113375
+message S2C_Player_SanctuaryHeros {
+    int64 buildId = 1;               // ""Id
+    repeated Heros data = 2;         // ""
+}
+
+// @id=113376
+message S2C_Player_GuildReserveArmy {
+    int32 isUseGuildArmy = 1;               // ""
+    int32 guildReserveCount = 2;                // ""
+}
+
+// ""
+// @id=113377
+message S2C_Player_CumulativeFunds {
+	int32 funds100 = 1;						// 100""
+	int32 funds300 = 2;						//  300""
+    repeated Funds info = 3;               // ""           
+}
+
+// ""
+// @id=113378
+message S2C_Player_Recharge {
+	int32 firstRec = 1;			        //""		0"" 1 ""
+    int64 rechargeVal = 2;             //""   
+    int32 rechargeStat = 3;           //""   0"" 1 ""
+}
+
+// ""
+// @id=113379
+message S2C_Player_DoubelRecharge {
+	repeated Pros data = 1;      
+}
+
+// ""
+// @id=113380
+message S2C_Player_MoonCard {
+	int32 day = 1;          // ""   
+}
+
+// ""
+// @id=113384
+message S2C_Player_PayChannelInfo {
+    string info = 1;                     //""                      
+}
+
+// ""
+// @id=113385
+message S2C_Player_MoreBuilder {
+	int32 day = 1;          // ""   
+}
+
+// ""
+// @id=113386
+message S2C_Player_DailyCheck {
+	repeated Daily data = 1;
+    int32 flushTime = 2;    // ""
+}
+
+// ""
+// @id=113387
+message S2C_Player_DailyGift {
+	repeated Gift data = 1;
+}
+
+// ""
+// @id=113388
+message S2C_Player_ShoppingMall {
+    int32 overTimes = 1;                 //""
+	repeated Goods data = 2;
+    int32 freshNum = 3;         // ""
+}
+
+// ""
+// @id=113390
+message S2C_Player_UseGiftCode {
+    string code = 1;                     //""
+    bool ret = 2;                        //""
+    int32 cfgId = 3;                     //""cfgId
+    int32 itemCfgId = 4;                 //""itemCfgId
+}
+
+// ""
+// @id=113391
+message S2C_Player_DismantleReward {
+    bool result = 1;                            //""
+    repeated Item items = 2;                    //""
+}
+
+// ""
+// @id=113392
+message S2C_Player_TipNote {
+    int32 tipType = 1;                            //"" ""1
+    repeated ResType resInfo = 2;                 //""
+    repeated TipItem items = 3;                   //""
+}
+
+// ""
+// @id=113393
+message S2C_Player_LoginActivityInfo {
+    int32 endTime = 1;                             //""
+    repeated LoginReward data = 2;                 //""
+}
+
+// ""
+// @id=113396
+message S2C_Player_Starmap_Exclusive_Grids {
+    repeated GridExclusiveType data = 1;                 //""
+}
+
+// ""
+// @id=113397
+message S2C_Player_StarPack {
+	repeated StarPackInfo data = 1; 
+}
+
+// ""url""
+// @id=113399
+message S2C_Player_Url_Config {
+    string baseUrl = 1;                     //""
+    string marketUrl = 2;                   //""
+}
+
